@@ -176,7 +176,7 @@ namespace TunnelTone.Charts
                 transform =
                 {
                     parent = gbptr.transform,
-                    localPosition = spline.EvaluatePosition((time * noteRenderer.ChartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
+                    localPosition = spline.EvaluatePosition((time * noteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
                     rotation = Quaternion.Euler(0, 0, 45),
                     localScale = scale
                 }

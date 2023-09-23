@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 // TODO: Refactor
@@ -17,20 +18,28 @@ namespace TunnelTone.Elements
         [SerializeField] private Material left, right, none;
         private Transform _transform;
 
-        public float ChartSpeedModifier;
+        public float chartSpeedModifier;
 
         public float offsetTime;
+        public const float StartDelay = 2500f;
+        
+        private float _dspSongStartTime, _dspSongEndTime;
 
         private void Start()
         {
             _transform = GetComponent<Transform>();
             _transform.localPosition = Vector3.zero;
-            offsetTime = -820;
+            audioSource.PlayDelayed(StartDelay / 1000f);
+            
+            // Set up song start and end times
+            _dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
+            _dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
+            Debug.Log($"Start time: {_dspSongStartTime}\nEnd time: {_dspSongEndTime}");
         }
 
         private void Update()
         {
-            _transform.localPosition = new Vector3(0, 0, ChartSpeedModifier * (-1000 * audioSource.time + offsetTime));
+            _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - _dspSongStartTime) + offsetTime + StartDelay));
         }
 
         public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool tapEmbedded)
@@ -39,8 +48,8 @@ namespace TunnelTone.Elements
             startCoordinate = new Vector2(startCoordinate.x * gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             endCoordinate = new Vector2(endCoordinate.x * gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             
-            var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * ChartSpeedModifier);
-            var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * ChartSpeedModifier);
+            var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * chartSpeedModifier);
+            var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * chartSpeedModifier);
             #endregion
             
             #region GameObject setup
@@ -101,7 +110,7 @@ namespace TunnelTone.Elements
                         gb.GetComponent<MeshFilter>().mesh = new Mesh();
             
             if (newTrail)
-                BuildHead(ref gb, startCoordinate, startTime * ChartSpeedModifier, direction);
+                BuildHead(ref gb, startCoordinate, startTime * chartSpeedModifier, direction);
             
             for(var i = 0f; i < 1; i += (10 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
             {
