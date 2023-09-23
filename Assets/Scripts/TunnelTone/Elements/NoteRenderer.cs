@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using TunnelTone.Charts;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,16 +14,18 @@ namespace TunnelTone.Elements
 {
     public class NoteRenderer : MonoBehaviour
     {
+        #region References
         [SerializeField] private GameObject gameArea;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private Material left, right, none;
+        #endregion
+        
         private Transform _transform;
 
         public float chartSpeedModifier;
-
+        
         public float offsetTime;
         public const float StartDelay = 2500f;
-        
         private float _dspSongStartTime, _dspSongEndTime;
 
         private void Start()
