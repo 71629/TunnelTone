@@ -1,4 +1,6 @@
-﻿namespace TunnelTone.Charts
+﻿// ReSharper disable InconsistentNaming
+// ReSharper disable IdentifierTypo
+namespace TunnelTone.Charts
 {
     public enum Easing
     {
