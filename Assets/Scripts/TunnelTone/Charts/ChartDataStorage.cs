@@ -6,8 +6,8 @@ namespace TunnelTone.Charts
 {
     public class ChartDataStorage : MonoBehaviour
     {
-        public static List<GameObject> TapList = new List<GameObject>();
-        public static List<GameObject> TrailList = new List<GameObject>();
+        public static List<GameObject> TapList = new();
+        public static List<GameObject> TrailList = new();
 
         public static GameObject TrailReference => TrailList.Last();
     }

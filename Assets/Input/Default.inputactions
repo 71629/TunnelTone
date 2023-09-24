@@ -6,8 +6,8 @@
             "id": "8b7959b8-affe-4e06-a7f9-88957d0e5e48",
             "actions": [
                 {
-                    "name": "Tap",
-                    "type": "Value",
+                    "name": "Tap0",
+                    "type": "PassThrough",
                     "id": "76dacbf6-d45d-4604-8796-5e1c6d91f76f",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -15,35 +15,195 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Flick",
-                    "type": "Value",
-                    "id": "6e715bc6-10ab-498e-b379-a98c32f3eb1f",
+                    "name": "Tap1",
+                    "type": "PassThrough",
+                    "id": "7f886bc8-9695-4aad-b72a-949acd1c2d79",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap2",
+                    "type": "PassThrough",
+                    "id": "d91c9ae8-959a-4d8a-844e-9f719d1dac69",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap3",
+                    "type": "PassThrough",
+                    "id": "3a93acf9-0eef-412b-a1bd-8ac84eb7d6c3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap4",
+                    "type": "PassThrough",
+                    "id": "1fbaff68-f9cf-4f1c-97bd-d50939ddcb66",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap5",
+                    "type": "PassThrough",
+                    "id": "4f1820ff-5e34-4df3-81da-c95dd9f669d8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap6",
+                    "type": "PassThrough",
+                    "id": "9c4f6648-0c3c-4cfa-b029-568bb6f39e30",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap7",
+                    "type": "PassThrough",
+                    "id": "c4a0417a-3f57-4fa3-870c-38215651f5e9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap8",
+                    "type": "PassThrough",
+                    "id": "01b21947-292b-40f9-918c-e0b5b4f357bc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap9",
+                    "type": "PassThrough",
+                    "id": "bff170ac-d0c2-4a0b-a2e3-41f2b6e06e09",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "98cb085d-66e8-4916-9066-bc9365fbb3a1",
-                    "path": "<Touchscreen>/position",
+                    "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Tap",
+                    "action": "Tap0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "434dcc9c-c915-4159-a051-390d85cd5d5c",
-                    "path": "<Touchscreen>/delta",
+                    "id": "4bf75bf9-0e0b-4567-8c4a-af5694ecae96",
+                    "path": "<Touchscreen>/touch1/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Flick",
+                    "action": "Tap1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b44cd440-637d-47e4-bcae-7e2955128207",
+                    "path": "<Touchscreen>/touch2/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eacecbd9-7019-4d9c-92a5-34a3a3a7be91",
+                    "path": "<Touchscreen>/touch3/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4ad395b-fa14-44fe-bc41-6cfb1f705f95",
+                    "path": "<Touchscreen>/touch4/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be4bcaba-9537-44c9-a2fe-f63351928b8d",
+                    "path": "<Touchscreen>/touch5/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f322e12a-a88f-47f4-98e0-3d9eec45f8f1",
+                    "path": "<Touchscreen>/touch6/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49137571-abfb-450f-b949-d367eebd99bc",
+                    "path": "<Touchscreen>/touch7/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap7",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b953df2-c1f2-47ff-8c0f-753082e0dc6a",
+                    "path": "<Touchscreen>/touch8/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1613d01-320d-4d3b-8380-d832a6145a82",
+                    "path": "<Touchscreen>/touch9/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap9",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

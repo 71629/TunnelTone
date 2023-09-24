@@ -7,8 +7,12 @@ namespace TunnelTone.Charts
 {
     public class LevelScanner : MonoBehaviour
     {
+        /// <summary>
+        /// This class is used to translate .aff files into TunnelTone charts (.ttc format in the future)
+        /// </summary>
         [SerializeField] private NoteRenderer noteRenderer;
         public Sprite hitHint;
+        
         private void Start()
         {
             int none = 0;
