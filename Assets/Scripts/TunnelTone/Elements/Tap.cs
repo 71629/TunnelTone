@@ -59,7 +59,7 @@ namespace TunnelTone.Elements
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.1f);
             if (image.color.a <= 0)
             {
-                Destroy(0);
+                Destroy();
                 yield break;
             }
 
@@ -88,28 +88,26 @@ namespace TunnelTone.Elements
         }
         public void Hit()
         {
-            var offset = Mathf.Abs(NoteRenderer.dspSongStartTime - time);
+            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) - time);
             
             if (offset <= 50)
             {
                 Debug.Log("Perfect");
-                GetComponent<Image>().color = Color.cyan;
-                Destroy(1);
+                Destroy();
             }
             if (offset <= 100)
             {
                 Debug.Log("Off");
-                GetComponent<Image>().color = Color.green;
-                Destroy(1);
+                Destroy();
             }
             Debug.Log("Way off");
-            Destroy(1);
+            Destroy();
         }
         
-        private void Destroy(float delay)
+        private void Destroy()
         {
             Destroy(hitHint);
-            Destroy(this.gameObject, delay);
+            Destroy(this.gameObject);
         }
     }
     
