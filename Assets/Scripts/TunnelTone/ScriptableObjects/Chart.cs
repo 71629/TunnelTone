@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using TextAsset = UnityEngine.TextCore.Text.TextAsset;
 
 namespace TunnelTone
@@ -7,6 +8,7 @@ namespace TunnelTone
     public class Chart : ScriptableObject
     {
         [Range(1, 20)]public int Difficulty;
+        public string ChartDesigner;
         public TextAsset ChartFile;
     }
 }

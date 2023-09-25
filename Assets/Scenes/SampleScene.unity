@@ -2612,6 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8501ac2af85425aaeb8a72f2a85e4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchInput: {fileID: 1069925634}
 --- !u!114 &1069925634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,8 +2644,40 @@ MonoBehaviour:
     m_ActionName: InGameMap/Tap[/Touchscreen/position]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 6e715bc6-10ab-498e-b379-a98c32f3eb1f
-    m_ActionName: InGameMap/Flick[/Touchscreen/delta]
+    m_ActionId: 7f886bc8-9695-4aad-b72a-949acd1c2d79
+    m_ActionName: InGameMap/Tap1
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d91c9ae8-959a-4d8a-844e-9f719d1dac69
+    m_ActionName: InGameMap/Tap2
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a93acf9-0eef-412b-a1bd-8ac84eb7d6c3
+    m_ActionName: InGameMap/Tap3
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1fbaff68-f9cf-4f1c-97bd-d50939ddcb66
+    m_ActionName: InGameMap/Tap4
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f1820ff-5e34-4df3-81da-c95dd9f669d8
+    m_ActionName: InGameMap/Tap5
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9c4f6648-0c3c-4cfa-b029-568bb6f39e30
+    m_ActionName: InGameMap/Tap6
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c4a0417a-3f57-4fa3-870c-38215651f5e9
+    m_ActionName: InGameMap/Tap7
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 01b21947-292b-40f9-918c-e0b5b4f357bc
+    m_ActionName: InGameMap/Tap8
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bff170ac-d0c2-4a0b-a2e3-41f2b6e06e09
+    m_ActionName: InGameMap/Tap9
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: InGameMap

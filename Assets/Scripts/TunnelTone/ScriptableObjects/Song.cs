@@ -17,7 +17,7 @@ namespace TunnelTone
         public AudioClip Music;
         
         [Header("Chart Container")]
-        public ScriptableObject[] Chart = new ScriptableObject[4];
+        public Chart[] Chart = new Chart[4];
 
         [Header("Preview Options")] 
         public bool Loop;

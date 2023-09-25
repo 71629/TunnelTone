@@ -2,6 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 using TunnelTone.Charts;
+using TunnelTone.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -41,6 +42,11 @@ namespace TunnelTone.PlayAreaManager
         private static void OnTap(InputAction.CallbackContext ctx)
         {
             Debug.Log(ctx.ReadValue<Vector2>());
+            var filteredNotes = ChartDataStorage.TapList.Where(tap => Vector2.Distance(tap.GetComponent<Tap>().position, ctx.ReadValue<Vector2>()) <= 100).OrderBy(tap => tap.GetComponent<Tap>().time).ToList();
+            if (filteredNotes.Count > 0)
+            {
+                
+            }
         }
     }
 }

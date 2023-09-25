@@ -26,7 +26,7 @@ namespace TunnelTone.Elements
         
         public float offsetTime;
         public const float StartDelay = 2500f;
-        private float _dspSongStartTime, _dspSongEndTime;
+        public static float dspSongStartTime, dspSongEndTime;
 
         private void Start()
         {
@@ -35,14 +35,14 @@ namespace TunnelTone.Elements
             audioSource.PlayDelayed(StartDelay / 1000f);
             
             // Set up song start and end times
-            _dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
-            _dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
-            Debug.Log($"Start time: {_dspSongStartTime}\nEnd time: {_dspSongEndTime}");
+            dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
+            dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
+            Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
         }
 
         private void Update()
         {
-            _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - _dspSongStartTime) + offsetTime + StartDelay));
+            _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - dspSongStartTime) + offsetTime + StartDelay));
         }
 
         public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool tapEmbedded)

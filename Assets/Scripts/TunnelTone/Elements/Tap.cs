@@ -59,8 +59,7 @@ namespace TunnelTone.Elements
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.1f);
             if (image.color.a <= 0)
             {
-                Destroy(hitHint);
-                Destroy(this.gameObject);
+                Destroy();
                 yield break;
             }
 
@@ -87,5 +86,30 @@ namespace TunnelTone.Elements
             
             StartCoroutine(ShowHitHint(image, hitHint));
         }
+        public void Hit()
+        {
+            var offset = Mathf.Abs(NoteRenderer.dspSongStartTime - time);
+            
+            if (offset <= 50)
+            {
+                Debug.Log("Perfect");
+                Destroy();
+            }
+            if (offset <= 100)
+            {
+                Debug.Log("Off");
+                Destroy();
+            }
+            Debug.Log("Way off");
+            Destroy();
+        }
+        
+        private void Destroy()
+        {
+            Destroy(hitHint);
+            Destroy(this.gameObject);
+        }
     }
+    
+    
 }
