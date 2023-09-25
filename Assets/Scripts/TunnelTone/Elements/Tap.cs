@@ -59,7 +59,7 @@ namespace TunnelTone.Elements
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.1f);
             if (image.color.a <= 0)
             {
-                Destroy();
+                Destroy(0);
                 yield break;
             }
 
@@ -93,21 +93,23 @@ namespace TunnelTone.Elements
             if (offset <= 50)
             {
                 Debug.Log("Perfect");
-                Destroy();
+                GetComponent<Image>().color = Color.cyan;
+                Destroy(1);
             }
             if (offset <= 100)
             {
                 Debug.Log("Off");
-                Destroy();
+                GetComponent<Image>().color = Color.green;
+                Destroy(1);
             }
             Debug.Log("Way off");
-            Destroy();
+            Destroy(1);
         }
         
-        private void Destroy()
+        private void Destroy(float delay)
         {
             Destroy(hitHint);
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, delay);
         }
     }
     

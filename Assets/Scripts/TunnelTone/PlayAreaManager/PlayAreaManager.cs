@@ -45,7 +45,7 @@ namespace TunnelTone.PlayAreaManager
             var filteredNotes = ChartDataStorage.TapList.Where(tap => Vector2.Distance(tap.GetComponent<Tap>().position, ctx.ReadValue<Vector2>()) <= 100).OrderBy(tap => tap.GetComponent<Tap>().time).ToList();
             if (filteredNotes.Count > 0)
             {
-                
+                filteredNotes[0].GetComponent<Tap>().Hit();
             }
         }
     }
