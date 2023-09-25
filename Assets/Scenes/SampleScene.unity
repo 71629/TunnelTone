@@ -280,8 +280,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1519967913}
   m_HandleRect: {fileID: 1519967912}
   m_Direction: 2
-  m_Value: 0.9995646
-  m_Size: 0.39943147
+  m_Value: 0.12835656
+  m_Size: 0.45489463
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1664,7 +1664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 367.33527, y: -1366.7848}
+  m_AnchoredPosition: {x: 367.33527, y: -67.99896}
   m_SizeDelta: {x: 734.672, y: 2735}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -1962,7 +1962,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833852806}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
@@ -4048,7 +4048,7 @@ MonoBehaviour:
   left: {fileID: 2100000, guid: 3cce455cb1c416e4a9d4c0007c55f640, type: 2}
   right: {fileID: 2100000, guid: f658eff183e8aa648938609e00fe1575, type: 2}
   none: {fileID: 2100000, guid: 2afffd32bdbee214dbb839f85bcea655, type: 2}
-  ChartSpeedModifier: 3.5
+  ChartSpeedModifier: 0
   offsetTime: 0
 --- !u!33 &2134286325
 MeshFilter:
