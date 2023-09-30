@@ -1,0 +1,13 @@
+﻿{
+  "Song":
+  {
+    "title": {"$type": "string", "$value": "Prismatic"},
+    "artist": {"$type": "string", "$value": ""},
+    "bpm": {"$type": "float", "$value": 120},
+    
+    "jacketPath": {"$type": "string", "$value": ""},
+    "songPath": {"$type": "string", "$value": ""},
+    
+    "difficulty": {"$type": "int[]", "$value": [1, 4, 7, 14]}
+  }
+}

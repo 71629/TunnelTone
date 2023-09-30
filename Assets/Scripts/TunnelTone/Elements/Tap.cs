@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 namespace TunnelTone.Elements
 {
+    [RequireComponent(typeof(CircleCollider2D))]
     public class Tap : MonoBehaviour
     {
         public Vector2 position;
         public float time;
         private GameObject hitHint;
         private GameObject audioSource;
-
+        private CircleCollider2D collider => GetComponent<CircleCollider2D>();
         private void Start()
         {
             hitHint = new GameObject()

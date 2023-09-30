@@ -1,0 +1,30 @@
+{
+  "Trails":
+  [
+    {
+      "startTime": {"$type": "float", "$value": "0f"},
+      "endTime": {"$type": "float", "$value": "0f"},
+      "startPosX": {"$type": "float", "$value": "0f"},
+      "startPosY": {"$type": "float", "$value": "0f"},
+      "endPosX": {"$type": "float", "$value": "0f"},
+      "endPosY": {"$type": "float", "$value": "0f"},
+      "direction": {"$type": "int", "$value": "1"},
+      "easing": {"$type": "int", "$value": "1"},
+      "easingRatio": {"$type": "float", "$value": "0f"},
+      "head": {"$type": "bool", "$value": "true"},
+      "tapEmbed": {"$type": "bool", "$value": "false"},
+
+      "tap": [
+        { "time": {"$type": "float", "$value": "0f"} }
+      ]
+    }
+  ],
+  
+  "Timing": 
+  [
+    {
+      "time": {"$type": "float", "$value": "1f"},
+      "speed": {"$type": "float", "$value": "1f"}
+    }          
+  ]
+}

@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Tap0",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "76dacbf6-d45d-4604-8796-5e1c6d91f76f",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -16,84 +16,84 @@
                 },
                 {
                     "name": "Tap1",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "7f886bc8-9695-4aad-b72a-949acd1c2d79",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap2",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "d91c9ae8-959a-4d8a-844e-9f719d1dac69",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap3",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "3a93acf9-0eef-412b-a1bd-8ac84eb7d6c3",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap4",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "1fbaff68-f9cf-4f1c-97bd-d50939ddcb66",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap5",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "4f1820ff-5e34-4df3-81da-c95dd9f669d8",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap6",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "9c4f6648-0c3c-4cfa-b029-568bb6f39e30",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap7",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "c4a0417a-3f57-4fa3-870c-38215651f5e9",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap8",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "01b21947-292b-40f9-918c-e0b5b4f357bc",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Tap9",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "bff170ac-d0c2-4a0b-a2e3-41f2b6e06e09",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

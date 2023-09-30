@@ -2597,7 +2597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25.000004}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: -420, y: -232.00006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1069925633
@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8501ac2af85425aaeb8a72f2a85e4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchInput: {fileID: 1069925634}
+  touchInput: {fileID: 0}
 --- !u!114 &1069925634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4488,7 +4488,7 @@ MonoBehaviour:
   left: {fileID: 2100000, guid: 3cce455cb1c416e4a9d4c0007c55f640, type: 2}
   right: {fileID: 2100000, guid: f658eff183e8aa648938609e00fe1575, type: 2}
   none: {fileID: 2100000, guid: 2afffd32bdbee214dbb839f85bcea655, type: 2}
-  chartSpeedModifier: 2.5
+  chartSpeedModifier: 2
   offsetTime: -1820
 --- !u!33 &2134286325
 MeshFilter:
