@@ -1,9 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using JetBrains.Annotations;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using TextAsset = UnityEngine.TextCore.Text.TextAsset;
 
 namespace TunnelTone
 {

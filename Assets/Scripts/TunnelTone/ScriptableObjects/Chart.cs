@@ -1,6 +1,6 @@
-﻿using Unity.VisualScripting;
+﻿using System.IO;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
-using TextAsset = UnityEngine.TextCore.Text.TextAsset;
 
 namespace TunnelTone
 {
@@ -9,6 +9,29 @@ namespace TunnelTone
     {
         [Range(1, 20)]public int Difficulty;
         public string ChartDesigner;
-        public TextAsset ChartFile;
+        
+        public ChartObject[] objects;
+        
+        public void LoadFile(string path)
+        {
+            var rawText = File.ReadAllText(path);
+            JsonUtility.FromJsonOverwrite(rawText, this);
+        }
+        
+        [System.Serializable]
+        public class ChartObject
+        {
+            public float startTime;
+            public float endTime;
+            public float startPosX;
+            public float startPosY;
+            public float endPosX;
+            public float endPosY;
+            public string direction;
+            public string easing;
+            public string easingRatio;
+            public string head;
+            public string tapEmbed;
+        }
     }
 }
