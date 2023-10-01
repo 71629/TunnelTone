@@ -1,21 +1,25 @@
 ﻿using System.Collections;
+using TMPro;
 using TunnelTone.Events;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UI;
+using Sprite = UnityEngine.Sprite;
 
 namespace TunnelTone.Elements
 {
-    [RequireComponent(typeof(CircleCollider2D))]
+    [RequireComponent(typeof(SphereCollider))]
     public class Tap : MonoBehaviour
     {
         public Vector2 position;
         public float time;
-        private GameObject hitHint;
-        private GameObject audioSource;
-        private CircleCollider2D collider => GetComponent<CircleCollider2D>();
+        private GameObject _hitHint;
+        private GameObject _audioSource;
+        private SphereCollider Collider => GetComponent<SphereCollider>();
         private void Start()
         {
-            hitHint = new GameObject()
+            gameObject.tag = "Note";
+            _hitHint = new GameObject()
             {
                 transform =
                 {
@@ -45,15 +49,16 @@ namespace TunnelTone.Elements
                 }
             };
             StartCoroutine(FadeColor(GetComponent<Image>()));
-            var hitHintImage = hitHint.AddComponent<Image>();
+            var hitHintImage = _hitHint.AddComponent<Image>();
             hitHintImage.sprite = Resources.Load<Sprite>("Sprites/HitHint");
             hitHintImage.color = new Color(1, 1, 1, 0);
-            StartCoroutine(ShowHitHint(hitHintImage, hitHint));
+            Collider.radius = 150;
+            StartCoroutine(ShowHitHint(hitHintImage, _hitHint));
         }
 
         private bool CheckZPosition(float target) => transform.position.z > target;
 
-        private IEnumerator FadeColor(Image image)
+        private IEnumerator FadeColor(Graphic image)
         {
             yield return new WaitWhile(() => CheckZPosition(0));
             
@@ -67,7 +72,7 @@ namespace TunnelTone.Elements
             StartCoroutine(FadeColor(image));
         }
 
-        private IEnumerator ShowHitHint(Image image, GameObject hitHint)
+        private IEnumerator ShowHitHint(Graphic image, GameObject hitHint)
         {
             yield return new WaitWhile(() => CheckZPosition(300));
 
@@ -89,28 +94,31 @@ namespace TunnelTone.Elements
         }
         public void Hit()
         {
-            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) - time);
+            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time);
             
             if (offset <= 50)
             {
-                Debug.Log("Perfect");
+                GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                    $"Perfect\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
                 Destroy();
+                return;
             }
             if (offset <= 100)
             {
-                Debug.Log("Off");
+                GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                    $"Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
                 Destroy();
+                return;
             }
-            Debug.Log("Way off");
+            GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                $"Way Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
             Destroy();
         }
         
         private void Destroy()
         {
-            Destroy(hitHint);
+            Destroy(_hitHint);
             Destroy(this.gameObject);
         }
     }
-    
-    
 }
