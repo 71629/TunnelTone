@@ -13,9 +13,11 @@ namespace TunnelTone.Charts
         [SerializeField] private NoteRenderer noteRenderer;
         public Sprite hitHint;
         
+        public static float Score = 0;
+        
         private void Start()
         {
-            int none = 0;
+            const int none = 0;
 
             arc(891, 965, 0.00, 0.87, Easing.s, 0.40, 0.40, 0, none, true);
             arctap(891);
@@ -45,7 +47,7 @@ namespace TunnelTone.Charts
             arc(1781,1930,1.00,1.00,Easing.s,0.80,0.80,1,none,true);
             arctap(1781);
             arctap(1930);
-            arc(1781,1930,0.00,0.00,Easing.s,0.20,0.20,1,none,true);
+            arc(1781,1930,0.00,0.00,Easing.s,0.20, 0.20,1,none,true);
             arctap(1855);
             arc(1930,2078,0.00,0.50,Easing.soso,0.20,0.40,1,none,true);
             arc(1930, 2078, 1.00, 0.50, Easing.soso, 0.80, 0.40, 1, none, true);
@@ -171,9 +173,9 @@ namespace TunnelTone.Charts
         // ReSharper disable once InconsistentNaming
         private void arctap(int time)
         {
-            Spline spline = ChartDataStorage.TrailReference.GetComponent<SplineContainer>().Spline;
-            Vector3 scale = new Vector3(0.6f, 0.6f, 0.6f);
-            GameObject gb = new GameObject("Tap")
+            var spline = ChartDataStorage.TrailReference.GetComponent<SplineContainer>().Spline;
+            var scale = new Vector3(0.6f, 0.6f, 0.6f);
+            var gb = new GameObject("Tap")
             {
                 transform =
                 {
@@ -184,7 +186,7 @@ namespace TunnelTone.Charts
                 }
             };
             gb.AddComponent<Image>();
-            Tap noteConfig = gb.AddComponent<Tap>();
+            var noteConfig = gb.AddComponent<Tap>();
             noteConfig.position = gb.transform.localPosition;
             noteConfig.time = time;
             

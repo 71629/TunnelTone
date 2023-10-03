@@ -5,6 +5,7 @@ using TunnelTone.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TunnelTone.Events;
+using UnityEditor;
 using UnityEngine.EventSystems;
 
 namespace TunnelTone.PlayAreaManager
@@ -15,6 +16,11 @@ namespace TunnelTone.PlayAreaManager
         [SerializeField] private Camera mainCamera;
         [SerializeField] private NoteRenderer noteRenderer;
 
+        private void Awake()
+        {
+            Application.targetFrameRate = 120;
+        }
+        
         private void Update()
         {
             if(Touchscreen.current == null) return;

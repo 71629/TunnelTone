@@ -11,6 +11,8 @@ namespace TunnelTone.Elements
     [RequireComponent(typeof(SphereCollider))]
     public class Tap : MonoBehaviour
     {
+        public const float StandardOffset = 700;
+        
         public Vector2 position;
         public float time;
         private GameObject _hitHint;
@@ -94,31 +96,39 @@ namespace TunnelTone.Elements
         }
         public void Hit()
         {
-            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time);
+            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - (time + StandardOffset));
             
-            if (offset <= 50)
+            switch (offset)
             {
-                GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                    $"Perfect\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-                Destroy();
-                return;
+                case <= 50:
+                    StopAllCoroutines();
+                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                        $"Perfect\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
+                    Destroy();
+                    break;
+                case <= 100:
+                    StopAllCoroutines();
+                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                        $"Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
+                    Destroy();
+                    break;
+                default:
+                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
+                        $"Way Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
+                    Destroy();
+                    break;
             }
-            if (offset <= 100)
-            {
-                GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                    $"Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-                Destroy();
-                return;
-            }
-            GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                $"Way Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-            Destroy();
         }
         
         private void Destroy()
         {
             Destroy(_hitHint);
             Destroy(this.gameObject);
+        }
+
+        private void Update()
+        {
+            if (transform.position.z <= 0) Hit();
         }
     }
 }
