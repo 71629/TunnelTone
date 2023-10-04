@@ -5,7 +5,7 @@
         Straight,
         EaseIn,
         EaseOut,
-        EaseInOut,
+        Bezier,
         HorizontalInVerticalOut,
         VerticalInHorizontalOut,
     }

@@ -84,7 +84,7 @@ namespace TunnelTone.Elements
                     spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)), quaternion.identity));
                     spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
                     break;
-                case EasingMode.EaseInOut:
+                case EasingMode.Bezier:
                     spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)), quaternion.identity));
                     spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)), 0, quaternion.identity));
                     break;

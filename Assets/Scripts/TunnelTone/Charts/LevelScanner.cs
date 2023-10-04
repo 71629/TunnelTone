@@ -207,7 +207,7 @@ namespace TunnelTone.Charts
                 Easing.siso => EasingMode.HorizontalInVerticalOut,
                 Easing.sisi => EasingMode.EaseIn,
                 Easing.soso => EasingMode.EaseOut,
-                Easing.b => EasingMode.EaseInOut,
+                Easing.b => EasingMode.Bezier,
                 _ => throw new System.ArgumentOutOfRangeException(nameof(easingMode), easingMode, null)
             };
             
