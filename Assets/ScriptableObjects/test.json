@@ -1,0 +1,21 @@
+{
+  "trails": [
+    {
+      "startX": 0,
+      "startY": 0.4,
+      "endX": 0.87,
+      "endY": 0.4,
+      "startTime": 891,
+      "endTime": 965,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0,
+      "virtualTrail": true,
+      "taps": [
+        {
+          "time": 915
+        }
+      ]
+    }
+  ]
+}

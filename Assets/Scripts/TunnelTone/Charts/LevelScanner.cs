@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using TunnelTone.Elements;
 using UnityEngine.Splines;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ namespace TunnelTone.Charts
 {
     public class LevelScanner : MonoBehaviour
     {
+        public string ChartData { get; set; }
+        
         /// <summary>
         /// This class is used to translate .aff files into TunnelTone charts (.ttc format in the future)
         /// </summary>
@@ -17,8 +20,9 @@ namespace TunnelTone.Charts
         
         private void Start()
         {
+            #region obsolute
             const int none = 0;
-
+            
             arc(891, 965, 0.00, 0.87, Easing.s, 0.40, 0.40, 0, none, true);
             arctap(891);
             arc(891,965,1.00,0.13,Easing.s,0.40,0.40,0,none,true);
@@ -167,6 +171,7 @@ namespace TunnelTone.Charts
             arctap(10247);
             arctap(10321);
             arctap(10396);
+            #endregion
         }
 
         // ReSharper disable once IdentifierTypo
@@ -186,7 +191,7 @@ namespace TunnelTone.Charts
                 }
             };
             gb.AddComponent<Image>();
-            var noteConfig = gb.AddComponent<Tap>();
+            var noteConfig = gb.AddComponent<TunnelTone.Elements.Tap>();
             noteConfig.position = gb.transform.localPosition;
             noteConfig.time = time;
             

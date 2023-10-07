@@ -4754,6 +4754,7 @@ GameObject:
   - component: {fileID: 2134286324}
   - component: {fileID: 2134286327}
   - component: {fileID: 2134286328}
+  - component: {fileID: 2134286329}
   m_Layer: 5
   m_Name: Note Container
   m_TagString: Untagged
@@ -4892,13 +4893,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134286322}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c836fef82e74ffba9f146837f4f99ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   noteRenderer: {fileID: 2134286324}
   hitHint: {fileID: 21300000, guid: 52049e9f4420ca04f875f53262bf4858, type: 3}
+--- !u!114 &2134286329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134286322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d347e1a17c94216a659b677ab3d30b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chartFile: {fileID: 4900000, guid: 4f86cc376013cbd4999715ff9c96c9dd, type: 3}
+  _noteRenderer: {fileID: 2134286324}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

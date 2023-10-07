@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using TunnelTone.Elements;
 using Unity.Mathematics;
 using UnityEngine.Serialization;
+using UnityEngine.Splines;
+using UnityEngine.UI;
 
 // ReSharper disable InconsistentNaming
 namespace TunnelTone.Charts
@@ -17,6 +19,7 @@ namespace TunnelTone.Charts
         {
             // Deserialize chartFile to Chart object
             var chart = new Chart();
+            
             chart = JsonConvert.DeserializeObject<Chart>(chartFile.text);
             
             foreach(var trail in chart.trails)
@@ -26,9 +29,27 @@ namespace TunnelTone.Charts
                     new Vector2((float)trail.startX, (float)trail.startY),
                     new Vector2((float)trail.endX, (float)trail.endY), directionDictionary[trail.color],
                     easingDictionary[trail.easing], 0.6f, true, false);
+                ChartDataStorage.TrailList.Add(gb);
                 foreach(var tap in trail.taps)
                 {
-                    
+                    var spline = ChartDataStorage.TrailReference.GetComponent<SplineContainer>().Spline;
+                    var scale = new Vector3(0.6f, 0.6f, 0.6f);
+                    var tgb = new GameObject("Tap")
+                    {
+                        transform =
+                        {
+                            parent = ChartDataStorage.TrailReference.transform,
+                            localPosition = spline.EvaluatePosition((tap.time * _noteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
+                            rotation = Quaternion.Euler(0, 0, 45),
+                            localScale = scale
+                        }
+                    };
+                    tgb.AddComponent<Image>();
+                    var noteConfig = tgb.AddComponent<Tap>();
+                    noteConfig.position = tgb.transform.localPosition;
+                    noteConfig.time = tap.time;
+            
+                    ChartDataStorage.TapList.Add(tgb);
                 }
             }
         }
