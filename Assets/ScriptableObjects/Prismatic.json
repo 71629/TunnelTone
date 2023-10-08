@@ -9,7 +9,7 @@
       "endTime": 2758,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -22,7 +22,7 @@
       "endTime": 2758,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -35,7 +35,7 @@
       "endTime": 5516,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -48,7 +48,7 @@
       "endTime": 5516,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -61,7 +61,7 @@
       "endTime": 5517,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -74,7 +74,7 @@
       "endTime": 5517,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -87,7 +87,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -100,7 +100,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -113,7 +113,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -126,7 +126,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -139,7 +139,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -152,7 +152,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -165,7 +165,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -178,7 +178,7 @@
       "endTime": 8275,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -191,7 +191,7 @@
       "endTime": 9655,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -204,7 +204,7 @@
       "endTime": 9655,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -217,7 +217,7 @@
       "endTime": 9655,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -230,7 +230,7 @@
       "endTime": 9655,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -243,7 +243,7 @@
       "endTime": 9655,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -256,7 +256,7 @@
       "endTime": 11034,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -269,7 +269,7 @@
       "endTime": 11034,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -282,7 +282,7 @@
       "endTime": 11034,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -295,7 +295,7 @@
       "endTime": 11034,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -308,7 +308,7 @@
       "endTime": 11034,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -321,7 +321,7 @@
       "endTime": 11034,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": []
     },
@@ -334,7 +334,7 @@
       "endTime": 16551,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -360,7 +360,7 @@
       "endTime": 16551,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -380,7 +380,7 @@
       "endTime": 16551,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -415,7 +415,7 @@
       "endTime": 13793,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -456,7 +456,7 @@
       "endTime": 13793,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -482,7 +482,7 @@
       "endTime": 16551,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -520,7 +520,7 @@
       "endTime": 16551,
       "color": 0,
       "easing": 2,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -564,7 +564,7 @@
       "endTime": 16551,
       "color": 0,
       "easing": 2,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -590,7 +590,7 @@
       "endTime": 22068,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -625,7 +625,7 @@
       "endTime": 19310,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -651,7 +651,7 @@
       "endTime": 19310,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -692,7 +692,7 @@
       "endTime": 22068,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -733,7 +733,7 @@
       "endTime": 22068,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -753,7 +753,7 @@
       "endTime": 22068,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -779,7 +779,7 @@
       "endTime": 22068,
       "color": 1,
       "easing": 2,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -808,7 +808,7 @@
       "endTime": 22068,
       "color": 1,
       "easing": 2,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -852,7 +852,7 @@
       "endTime": 22586,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -865,7 +865,7 @@
       "endTime": 22327,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -878,7 +878,7 @@
       "endTime": 32758,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -907,7 +907,7 @@
       "endTime": 32758,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -933,7 +933,7 @@
       "endTime": 32758,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -950,7 +950,7 @@
       "endTime": 32758,
       "color": 0,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -973,7 +973,7 @@
       "endTime": 32758,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -999,7 +999,7 @@
       "endTime": 32758,
       "color": 1,
       "easing": 0,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
@@ -1019,7 +1019,7 @@
       "endTime": 23103,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1032,7 +1032,7 @@
       "endTime": 23362,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1045,7 +1045,7 @@
       "endTime": 23706,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1058,7 +1058,7 @@
       "endTime": 23879,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1071,7 +1071,7 @@
       "endTime": 24482,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1084,7 +1084,7 @@
       "endTime": 24655,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1097,7 +1097,7 @@
       "endTime": 24568,
       "color": 1,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     },
@@ -1110,7 +1110,7 @@
       "endTime": 25000,
       "color": 0,
       "easing": 1,
-      "easingRatio": 0,
+      "easingRatio": 0.65,
       "virtualTrail": false,
       "taps": []
     }

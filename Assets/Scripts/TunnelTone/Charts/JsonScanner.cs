@@ -28,7 +28,7 @@ namespace TunnelTone.Charts
                 _noteRenderer.BuildTrail(out gb, trail.startTime, trail.endTime,
                     new Vector2((float)trail.startX - 0.5f, (float)trail.startY - 0.4f),
                     new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), directionDictionary[trail.color],
-                    easingDictionary[trail.easing], 0.6f, true, trail.virtualTrail);
+                    easingDictionary[trail.easing], trail.easingRatio, true, trail.virtualTrail);
                 NoteRenderer.TrailList.Add(gb);
                 foreach(var tap in trail.taps)
                 {
