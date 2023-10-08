@@ -1,0 +1,4 @@
+{
+  "gameVersion": {"$type": "string", "$value": "1.0"},
+  "renderingAccuracy": {"$type": "int", "$value": "20"}
+}

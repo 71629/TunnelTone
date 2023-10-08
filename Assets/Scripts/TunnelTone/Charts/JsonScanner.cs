@@ -52,6 +52,9 @@ namespace TunnelTone.Charts
                     NoteRenderer.TapList.Add(tgb);
                 }
             }
+            
+            // Start gameplay after finishes rendering
+            _noteRenderer.StartSong();
         }
 
         private Dictionary<int, EasingMode> easingDictionary = new()

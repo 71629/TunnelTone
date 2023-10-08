@@ -41,17 +41,21 @@ namespace TunnelTone.Elements
         {
             _transform = GetComponent<Transform>();
             _transform.localPosition = Vector3.zero;
-            audioSource.PlayDelayed(StartDelay / 1000f);
-            
-            // Set up song start and end times
-            dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
-            dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
-            Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
         }
 
         private void Update()
         {
             _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - dspSongStartTime) + offsetTime + StartDelay));
+        }
+
+        public void StartSong()
+        {
+            // Set up song start and end times
+            dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
+            dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
+            Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
+            
+            audioSource.PlayDelayed(StartDelay / 1000f);
         }
 
         public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
@@ -131,7 +135,7 @@ namespace TunnelTone.Elements
             if (newTrail)
                 BuildHead(ref gb, startCoordinate, startTime * chartSpeedModifier, direction, virtualTrail);
             
-            for(var i = 0f; i < 1; i += (10 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
+            for(var i = 0f; i < 1; i += (100 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
             {
                 BuildSubsegment(ref gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
             }

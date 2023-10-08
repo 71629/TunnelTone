@@ -4207,7 +4207,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8cb50872798550f47a65b73298057019, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d126e1fd3ce234a42a9ba5717e1e3460, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4794,7 +4794,7 @@ MonoBehaviour:
   left: {fileID: 2100000, guid: 3cce455cb1c416e4a9d4c0007c55f640, type: 2}
   right: {fileID: 2100000, guid: f658eff183e8aa648938609e00fe1575, type: 2}
   none: {fileID: 2100000, guid: 2afffd32bdbee214dbb839f85bcea655, type: 2}
-  chartSpeedModifier: 2
+  chartSpeedModifier: 4.5
   offsetTime: -1820
 --- !u!33 &2134286325
 MeshFilter:
@@ -4912,7 +4912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d347e1a17c94216a659b677ab3d30b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chartFile: {fileID: 4900000, guid: 4f86cc376013cbd4999715ff9c96c9dd, type: 3}
+  chartFile: {fileID: 4900000, guid: 2eacdec64929b95498bb7685b6319fa5, type: 3}
   _noteRenderer: {fileID: 2134286324}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
