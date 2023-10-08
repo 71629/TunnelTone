@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using TunnelTone.Elements;
 using UnityEngine.Splines;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 namespace TunnelTone.Charts
 {
+    
+    [Obsolete]
     public class LevelScanner : MonoBehaviour
     {
         public string ChartData { get; set; }
@@ -20,7 +23,7 @@ namespace TunnelTone.Charts
         
         private void Start()
         {
-            #region obsolute
+            #region obsolete
             const int none = 0;
             
             arc(891, 965, 0.00, 0.87, Easing.s, 0.40, 0.40, 0, none, true);
@@ -178,13 +181,13 @@ namespace TunnelTone.Charts
         // ReSharper disable once InconsistentNaming
         private void arctap(int time)
         {
-            var spline = ChartDataStorage.TrailReference.GetComponent<SplineContainer>().Spline;
+            var spline = NoteRenderer.TrailReference.GetComponent<SplineContainer>().Spline;
             var scale = new Vector3(0.6f, 0.6f, 0.6f);
             var gb = new GameObject("Tap")
             {
                 transform =
                 {
-                    parent = ChartDataStorage.TrailReference.transform,
+                    parent = NoteRenderer.TrailReference.transform,
                     localPosition = spline.EvaluatePosition((time * noteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
                     rotation = Quaternion.Euler(0, 0, 45),
                     localScale = scale
@@ -195,7 +198,7 @@ namespace TunnelTone.Charts
             noteConfig.position = gb.transform.localPosition;
             noteConfig.time = time;
             
-            ChartDataStorage.TapList.Add(gb);
+            NoteRenderer.TapList.Add(gb);
         }
 
         // ReSharper disable once InconsistentNaming
@@ -226,7 +229,7 @@ namespace TunnelTone.Charts
             
             noteRenderer.BuildTrail(out var newGb, startTime, endTime, startPosition, endPosition, Direction.None, easing, 0.75f, true, false);
             
-            ChartDataStorage.TrailList.Add(newGb);
+            NoteRenderer.TrailList.Add(newGb);
         }
     }
 }

@@ -26,19 +26,19 @@ namespace TunnelTone.Charts
             {
                 GameObject gb;
                 _noteRenderer.BuildTrail(out gb, trail.startTime, trail.endTime,
-                    new Vector2((float)trail.startX, (float)trail.startY),
-                    new Vector2((float)trail.endX, (float)trail.endY), directionDictionary[trail.color],
-                    easingDictionary[trail.easing], 0.6f, true, false);
-                ChartDataStorage.TrailList.Add(gb);
+                    new Vector2((float)trail.startX - 0.5f, (float)trail.startY - 0.4f),
+                    new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), directionDictionary[trail.color],
+                    easingDictionary[trail.easing], 0.6f, true, trail.virtualTrail);
+                NoteRenderer.TrailList.Add(gb);
                 foreach(var tap in trail.taps)
                 {
-                    var spline = ChartDataStorage.TrailReference.GetComponent<SplineContainer>().Spline;
+                    var spline = NoteRenderer.TrailReference.GetComponent<SplineContainer>().Spline;
                     var scale = new Vector3(0.6f, 0.6f, 0.6f);
                     var tgb = new GameObject("Tap")
                     {
                         transform =
                         {
-                            parent = ChartDataStorage.TrailReference.transform,
+                            parent = NoteRenderer.TrailReference.transform,
                             localPosition = spline.EvaluatePosition((tap.time * _noteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
                             rotation = Quaternion.Euler(0, 0, 45),
                             localScale = scale
@@ -49,7 +49,7 @@ namespace TunnelTone.Charts
                     noteConfig.position = tgb.transform.localPosition;
                     noteConfig.time = tap.time;
             
-                    ChartDataStorage.TapList.Add(tgb);
+                    NoteRenderer.TapList.Add(tgb);
                 }
             }
         }

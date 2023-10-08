@@ -14,6 +14,15 @@ namespace TunnelTone.Elements
 {
     public class NoteRenderer : MonoBehaviour
     {
+        #region Element Container
+
+        public static List<GameObject> TrailList = new();
+        public static List<GameObject> TapList = new();
+        public static List<GameObject> FlickList = new();
+        public static GameObject TrailReference => TrailList.Last();
+        
+        #endregion
+        
         #region References
         [SerializeField] private GameObject gameArea;
         [SerializeField] private AudioSource audioSource;
@@ -45,7 +54,7 @@ namespace TunnelTone.Elements
             _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - dspSongStartTime) + offsetTime + StartDelay));
         }
 
-        public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool tapEmbedded)
+        public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
             #region Convert coordinates
             startCoordinate = new Vector2(startCoordinate.x * gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
@@ -103,27 +112,34 @@ namespace TunnelTone.Elements
             
             #region Create subsegments
             gb.AddComponent<MeshFilter>();
-                        gb.AddComponent<MeshRenderer>().material = direction switch
-                        {
-                            Direction.Left => left,
-                            Direction.Right => right,
-                            Direction.None => none,
-                            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
-                        };
-                        gb.GetComponent<MeshFilter>().mesh = new Mesh();
+            if (!virtualTrail)
+            {
+                gb.AddComponent<MeshRenderer>().material = direction switch
+                {
+                    Direction.Left => left,
+                    Direction.Right => right,
+                    _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+                };
+            }
+            else
+            {
+                gb.AddComponent<MeshRenderer>().material = none;
+            }
+            
+            gb.GetComponent<MeshFilter>().mesh = new Mesh();
             
             if (newTrail)
-                BuildHead(ref gb, startCoordinate, startTime * chartSpeedModifier, direction);
+                BuildHead(ref gb, startCoordinate, startTime * chartSpeedModifier, direction, virtualTrail);
             
             for(var i = 0f; i < 1; i += (10 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
             {
-                BuildSubsegment(ref gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction);
+                BuildSubsegment(ref gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
             }
-            BuildSubsegment(ref gb, (Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction);
+            BuildSubsegment(ref gb, (Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction, virtualTrail);
             #endregion
         }
 
-        private void BuildHead(ref GameObject gb, Vector2 coordinate, float time, Direction direction)
+        private void BuildHead(ref GameObject gb, Vector2 coordinate, float time, Direction direction, bool virtualTrail)
         {
             #region Set up local variables
             MeshFilter meshFilter = gb.GetComponent<MeshFilter>();
@@ -131,8 +147,8 @@ namespace TunnelTone.Elements
             #endregion
 
             #region Set up mesh
-                #region Determine head shape based on direction
-            vertices = direction != Direction.None
+                #region Determine head shape based on trail type
+            vertices = !virtualTrail
                 ? new List<Vector3>
                 {
                     (Vector3)(coordinate) + new Vector3(0, 0, -15 + time),
@@ -185,13 +201,13 @@ namespace TunnelTone.Elements
             meshFilter.mesh = mesh1;
         }
 
-        private void BuildSubsegment(ref GameObject gb, Vector2 coordinate, float time, Direction direction)
+        private void BuildSubsegment(ref GameObject gb, Vector2 coordinate, float time, Direction direction, bool virtualTrail)
         {
             Vector3 position = new Vector3(coordinate.x, coordinate.y, time);
             
             #region Concatinate new vertices
             Vector3[] vertices;
-            vertices = direction != Direction.None
+            vertices = !virtualTrail
                 ? new Vector3[]
                 {
                     position + new Vector3(0, 25, 0),
