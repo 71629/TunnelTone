@@ -16,8 +16,8 @@ namespace TunnelTone.Elements
     {
         #region Element Container
 
-        public static List<GameObject> TrailList = new();
-        public static List<GameObject> TapList = new();
+        public static readonly List<GameObject> TrailList = new();
+        public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
         public static GameObject TrailReference => TrailList.Last();
         
@@ -91,10 +91,10 @@ namespace TunnelTone.Elements
                     break;
                 case EasingMode.EaseIn:
                     spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)), 0, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.EaseOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)), quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * chartSpeedModifier, quaternion.identity));
                     spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
                     break;
                 case EasingMode.Bezier:
@@ -102,12 +102,12 @@ namespace TunnelTone.Elements
                     spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)), 0, quaternion.identity));
                     break;
                 case EasingMode.HorizontalInVerticalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)), quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)), 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * chartSpeedModifier, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * chartSpeedModifier)), quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * chartSpeedModifier, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * chartSpeedModifier)), 0, quaternion.identity));
                     break;
                 case EasingMode.VerticalInHorizontalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)), quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)), 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * chartSpeedModifier, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * chartSpeedModifier)), quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * chartSpeedModifier, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * chartSpeedModifier)), 0, quaternion.identity));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);

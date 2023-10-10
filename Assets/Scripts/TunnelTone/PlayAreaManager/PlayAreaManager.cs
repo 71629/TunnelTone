@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TunnelTone.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TunnelTone.Events;
-using UnityEditor;
-using UnityEngine.EventSystems;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace TunnelTone.PlayAreaManager
 {
@@ -26,9 +22,9 @@ namespace TunnelTone.PlayAreaManager
             if(Touchscreen.current == null) return;
             
             // Debug.Log(Touchscreen.current.touches.Where(touch => touch.isInProgress).Aggregate("", (current, touch) => current + $"{touch.position.value}     "));
-            foreach (var touch in Touchscreen.current.touches.Where(touch => touch.isInProgress))
+            foreach (var touch in Touchscreen.current.touches.Where(touch => touch.phase.value == TouchPhase.Began))
             {
-                var touchPosition = mainCamera.ScreenToWorldPoint((Vector3)touch.position.value + Vector3.forward * 100);
+                var touchPosition = mainCamera.ScreenToWorldPoint((Vector3)touch.startPosition.value + Vector3.forward * 100);
                 var ray = new Ray(touchPosition + Vector3.back * 120, Vector3.forward);
                 
                 if (Physics.Raycast(ray, out var hit, 600))

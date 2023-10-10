@@ -1,9 +1,9 @@
 {
   "trails": [
     {
-      "startX": 0,
+      "startX": 0.5,
       "startY": 0.4,
-      "endX": 0.87,
+      "endX": 0.5,
       "endY": 0.4,
       "startTime": 891,
       "endTime": 965,

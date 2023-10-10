@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 171639931}
   - component: {fileID: 171639933}
   - component: {fileID: 171639932}
+  - component: {fileID: 171639934}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -747,7 +748,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -787,6 +788,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171639930}
   m_CullTransparentMesh: 1
+--- !u!114 &171639934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171639930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e187cc0d2301477a8609588c81ee833a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &173829785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 576267554}
   - component: {fileID: 576267555}
+  - component: {fileID: 576267556}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -1461,18 +1475,31 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1007543807}
   m_FillRect: {fileID: 173829786}
   m_HandleRect: {fileID: 1007543806}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &576267556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576267553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28dbfeb014844829bb1d19c8335f2fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_audioSource: {fileID: 1852588494}
 --- !u!1 &604149445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2268,6 +2295,7 @@ GameObject:
   - component: {fileID: 833852809}
   - component: {fileID: 833852808}
   - component: {fileID: 833852810}
+  - component: {fileID: 833852811}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2335,6 +2363,18 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &833852811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833852806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f112fe873a4258af7426e63f6a4718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &962192693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,7 +2507,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 90
+  near clip plane: 100
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -2716,7 +2756,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1259908951}
   m_FillRect: {fileID: 300722956}
   m_HandleRect: {fileID: 1259908950}
@@ -2908,9 +2948,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1642652493}
   - {fileID: 604903434}
   - {fileID: 2134286323}
+  - {fileID: 1642652493}
   m_Father: {fileID: 77973710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4579,6 +4619,7 @@ GameObject:
   - component: {fileID: 2036460830}
   - component: {fileID: 2036460832}
   - component: {fileID: 2036460831}
+  - component: {fileID: 2036460833}
   m_Layer: 5
   m_Name: Combo
   m_TagString: Untagged
@@ -4704,6 +4745,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036460829}
   m_CullTransparentMesh: 1
+--- !u!114 &2036460833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036460829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65cc6d8def842a79cc9ba180c527042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054681658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4753,7 +4806,6 @@ GameObject:
   - component: {fileID: 2134286325}
   - component: {fileID: 2134286324}
   - component: {fileID: 2134286327}
-  - component: {fileID: 2134286328}
   - component: {fileID: 2134286329}
   m_Layer: 5
   m_Name: Note Container
@@ -4794,7 +4846,7 @@ MonoBehaviour:
   left: {fileID: 2100000, guid: 3cce455cb1c416e4a9d4c0007c55f640, type: 2}
   right: {fileID: 2100000, guid: f658eff183e8aa648938609e00fe1575, type: 2}
   none: {fileID: 2100000, guid: 2afffd32bdbee214dbb839f85bcea655, type: 2}
-  chartSpeedModifier: 4.5
+  chartSpeedModifier: 6.5
   offsetTime: -1820
 --- !u!33 &2134286325
 MeshFilter:
@@ -4886,20 +4938,6 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
---- !u!114 &2134286328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134286322}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c836fef82e74ffba9f146837f4f99ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noteRenderer: {fileID: 2134286324}
-  hitHint: {fileID: 21300000, guid: 52049e9f4420ca04f875f53262bf4858, type: 3}
 --- !u!114 &2134286329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4912,7 +4950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d347e1a17c94216a659b677ab3d30b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chartFile: {fileID: 4900000, guid: 2eacdec64929b95498bb7685b6319fa5, type: 3}
+  chartFile: {fileID: 4900000, guid: 4f86cc376013cbd4999715ff9c96c9dd, type: 3}
   _noteRenderer: {fileID: 2134286324}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
