@@ -54,7 +54,7 @@ namespace TunnelTone.UI
             if (remain == 0) yield break;
 
             DisplayScore += delta;
-            Score.text = $"{(int)DisplayScore:00000000}";
+            Score.text = $"{DisplayScore:00000000}";
 
             remain--;
             StartCoroutine(UpdateDisplay(delta, remain));

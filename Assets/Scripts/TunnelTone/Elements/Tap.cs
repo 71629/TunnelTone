@@ -108,14 +108,15 @@ namespace TunnelTone.Elements
             StartCoroutine(ShowHitHint(image, hitHint));
         }
 
-        public void HitEffect(float offset)
+        public void HitEffect(float hitOffset)
         {
-            var sprite = offset switch
+            if (hitOffset >= 120) return;
+            var sprite = hitOffset switch
             {
                 <= 25 => PerfectCritical,
                 <= 50 => Perfect,
                 <= 100 => Great,
-                _ => Bad
+                <= 120 => Bad,
             };
 
             GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), _hitHint.transform.position, Quaternion.identity, _hitHint.transform.parent);
@@ -134,11 +135,11 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if (transform.position.z <= 0 && !_isHit)
-            {
-                _isHit = true;
-                Hit();
-            }
+            // if (transform.position.z <= 0 && !_isHit)
+            // {
+            //     _isHit = true;
+            //     Hit();
+            // }
         }
         
         public void Hit()
