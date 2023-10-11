@@ -4,8 +4,9 @@ namespace TunnelTone.Events
 {
     public class NoteEventReference : Singleton<NoteEventReference>
     {
-        public NoteEvent OnNormalPosition = new NoteEvent();
+        public readonly NoteEvent OnSongBegin = new NoteEvent();
         
-        public NoteEvent OnTapHit = new NoteEvent();
+        public readonly NoteEvent OnNoteHit = new NoteEvent();
+        public readonly NoteEvent OnNoteMiss = new NoteEvent();
     }
 }

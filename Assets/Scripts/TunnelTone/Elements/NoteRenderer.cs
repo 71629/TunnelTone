@@ -16,8 +16,8 @@ namespace TunnelTone.Elements
     {
         #region Element Container
 
-        public static List<GameObject> TrailList = new();
-        public static List<GameObject> TapList = new();
+        public static readonly List<GameObject> TrailList = new();
+        public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
         public static GameObject TrailReference => TrailList.Last();
         

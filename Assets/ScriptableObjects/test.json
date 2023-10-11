@@ -1,12 +1,12 @@
 {
   "trails": [
     {
-      "startX": 0,
-      "startY": 0.4,
-      "endX": 0.87,
-      "endY": 0.4,
+      "startX": 0.1,
+      "startY": 0.2,
+      "endX": 0.9,
+      "endY": 0.2,
       "startTime": 891,
-      "endTime": 965,
+      "endTime": 5891,
       "color": 0,
       "easing": 0,
       "easingRatio": 0,
@@ -14,6 +14,69 @@
       "taps": [
         {
           "time": 915
+        },
+        {
+          "time": 1151
+        },
+        {
+          "time": 1387
+        },
+        {
+          "time": 1623
+        },
+        {
+          "time": 1859
+        },
+        {
+          "time": 2095
+        },
+        {
+          "time": 2331
+        },
+        {
+          "time": 2567
+        },
+        {
+          "time": 2803
+        },
+        {
+          "time": 3039
+        },
+        {
+          "time": 3275
+        },
+        {
+          "time": 3511
+        },
+        {
+          "time": 3747
+        },
+        {
+          "time": 3983
+        },
+        {
+          "time": 4219
+        },
+        {
+          "time": 4455
+        },
+        {
+          "time": 4691
+        },
+        {
+          "time": 4927
+        },
+        {
+          "time": 5163
+        },
+        {
+          "time": 5399
+        },
+        {
+          "time": 5635
+        },
+        {
+          "time": 5871
         }
       ]
     }

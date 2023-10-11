@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.IO;
 using TMPro;
 using TunnelTone.Events;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UI;
 using Sprite = UnityEngine.Sprite;
 
@@ -17,11 +18,23 @@ namespace TunnelTone.Elements
         public float time;
         private GameObject _hitHint;
         private GameObject _audioSource;
+        private float offset;
+        private bool _isHit;
         private SphereCollider Collider => GetComponent<SphereCollider>();
+
+        #region Load sprites
+
+        private Sprite PerfectCritical => Resources.Load<Sprite>("Sprites/Perfect+");
+        private Sprite Perfect => Resources.Load<Sprite>("Sprites/Perfect");
+        private Sprite Great => Resources.Load<Sprite>("Sprites/Great");
+        private Sprite Bad => Resources.Load<Sprite>("Sprites/Bad");
+        
+        #endregion
+        
         private void Start()
         {
             gameObject.tag = "Note";
-            _hitHint = new GameObject()
+            _hitHint = new GameObject
             {
                 transform =
                 {
@@ -94,30 +107,24 @@ namespace TunnelTone.Elements
             
             StartCoroutine(ShowHitHint(image, hitHint));
         }
-        public void Hit()
+
+        public void HitEffect(float hitOffset)
         {
-            var offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - (time + StandardOffset));
-            
-            switch (offset)
+            if (hitOffset >= 120) return;
+            var sprite = hitOffset switch
             {
-                case <= 50:
-                    StopAllCoroutines();
-                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                        $"Perfect\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-                    Destroy();
-                    break;
-                case <= 100:
-                    StopAllCoroutines();
-                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                        $"Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-                    Destroy();
-                    break;
-                default:
-                    GameObject.Find("RecentNote").GetComponent<TextMeshProUGUI>().text =
-                        $"Way Off\nNT: {time}\nST: {1000 * (AudioSettings.dspTime - NoteRenderer.dspSongStartTime)}\nOFT: {offset}";
-                    Destroy();
-                    break;
-            }
+                <= 25 => PerfectCritical,
+                <= 50 => Perfect,
+                <= 100 => Great,
+                <= 120 => Bad,
+            };
+
+            GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), _hitHint.transform.position, Quaternion.identity, _hitHint.transform.parent);
+            effect.transform.localScale = Vector3.one * 1.25f;
+            var component = effect.GetComponent<Image>();
+            component.sprite = sprite;
+            Destroy(effect, 0.34f);
+            Destroy();
         }
         
         private void Destroy()
@@ -128,7 +135,18 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if (transform.position.z <= 0) Hit();
+            // if (transform.position.z <= 0 && !_isHit)
+            // {
+            //     _isHit = true;
+            //     Hit();
+            // }
         }
+        
+        public void Hit()
+        {
+            offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - (time + StandardOffset));
+            HitEffect(offset);
+            NoteEventReference.Instance.OnNoteHit.Trigger(offset);
+        } 
     }
 }
