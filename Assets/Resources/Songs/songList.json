@@ -1,17 +1,14 @@
-﻿{
-  "songs": 
-  [
-    {
-      "title": "Prismatic",
-      "artist": "Zythian",
-      "bpm": 120,
-      "level": [2, 4, 9, 12]
-    },
-    {
-      "title": "PUPA",
-      "artist": "モリモリあつし",
-      "bpm": 180,
-      "level": [3, 5, 9, 14]
-    }
-  ]
-}
+﻿[
+  {
+    "title": "Prismatic",
+    "artist": "Zythian",
+    "bpm": 120,
+    "difficulty": [2, 4, 9, 12]
+  },
+  {
+    "title": "PUPA",
+    "artist": "モリモリあつし",
+    "bpm": 180,
+    "difficulty": [3, 5, 9, 14]
+  }
+]
