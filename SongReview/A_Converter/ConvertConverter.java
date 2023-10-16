@@ -38,11 +38,16 @@ class ConvertConverter {
 		for(int i=0; i<arcSave.length; i++) {
 			if(arcSave[i]!=null) {
 				for(int j=0; j<= arcSave[i].length(); j++) {
-					if(arcSave[i].substring(j,j+1).equals("[")) {
-						narcSave[i] = arcSave[i].substring(j+1,arcSave[i].length() - 2) + ";";
-						//System.out.println(narcSave[i]);
-						break;
+					try {
+						if(arcSave[i].substring(j,j+1).equals("[")) {
+							narcSave[i] = arcSave[i].substring(j+1,arcSave[i].length() - 2) + ";";
+							//System.out.println(narcSave[i]);
+							break;
+						}
+					} catch (Exception e) {
+						continue;
 					}
+					
 				}
 			}
 		}

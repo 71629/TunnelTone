@@ -12,6 +12,12 @@
       "artist": "モリモリあつし",
       "bpm": 180,
       "level": [3, 5, 9, 14]
+    },
+    {
+      "title": "BlueBird",
+      "artist": "?",
+      "bpm": 152,
+      "level": [3, 5, 9, 14]
     }
   ]
 }
