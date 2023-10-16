@@ -7,7 +7,7 @@ public class NewChange {
 	{
 		Scanner input = new Scanner(System.in);
 		File file = new File(
-		 	"C:\\Users\\jacky\\Desktop\\Sample.osu");
+		 	"..\\A_Converter\\Sample.osu");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		
 		int loop = 87; int checkloop = 0; int count = 0; int counttt = 0; int doublecount = 0; int saveI = 0;
@@ -141,11 +141,11 @@ public class NewChange {
 			}
 		}
 		//File Write in to .aff
-		File files = new File("C:\\Users\\jacky\\Desktop\\2.aff");
+		File files = new File("..\\A_Converter\\2.aff");
 		System.out.println("");
 		System.out.println("0.aff has been create in Desktop!");
 		System.out.println("");
-		FileWriter fw = new FileWriter("C:\\Users\\jacky\\Desktop\\2.aff");
+		FileWriter fw = new FileWriter("..\\A_Converter\\2.aff");
 		System.out.println("Writing 2.aff...");
 		fw.write("AudioOffset:0" + "\r\n");
 		fw.write("-" + "\r\n");
