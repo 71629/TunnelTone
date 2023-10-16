@@ -1,9 +1,7 @@
-Please Chang location in Run.bat and NewChange.java
-(Line 10, Line 144, Line 148 in java)
-(Line 1 in .bat)
+Just Run the .bat file when you need that
 
-Please Chang location in Run.bat and ConvertConverter.java
-(line 9, 70 and 74 in java)
-(Line 1 in .bat)
+Convert .aff file need a Sample.osu file inside the file
+
+Convert.aff to 71629's format need a 2.aff file inside
 
 ConvertEnd.txt -> Copy to 71629's converter
