@@ -9,6 +9,7 @@ class ConvertConverter {
 		 	"..\\A_Converter\\2.aff");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		int count = 0; int counttt = 0;
+		String st;
 		String arcSave[] = new String [9999];
 		String arcTapSave[] = new String [9999];
 		String narcSave[] = new String [9999];
