@@ -81,6 +81,7 @@ class ConvertConverter {
 		}while(arcSave[counttt] != null);
 		fw.close();
 		System.out.println("Writing Success!");
-		System.out.print("Remember change the file location in line 9, 70 and 74 of this program to read and write the file!!!");
+		System.out.println("Please directly copy the word in ConvertEnd.txt File");
+		//System.out.print("Remember change the file location in line 9, 70 and 74 of this program to read and write the file!!!");
 	}
 }
