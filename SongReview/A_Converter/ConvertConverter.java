@@ -169,10 +169,9 @@ class ConvertConverter {
 		fw.write("        public int time { get; set; }" + "\r\n");
 		fw.write("    }" + "\r\n");
 		fw.write("}" + "\r\n");
-
 		fw.close();
 		System.out.println("Writing Success!");
-		System.out.println("Please directly copy the word in Program.cs File");
+		System.out.println("Please open TunnelTone\\SongReview\\A_Converter\\Converter.sin to finish convert.");
 		//System.out.print("Remember change the file location in line 9, 70 and 74 of this program to read and write the file!!!");
 	}
 }
