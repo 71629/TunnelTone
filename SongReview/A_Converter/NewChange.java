@@ -230,14 +230,13 @@ public class NewChange {
 	}
 	public static String Type() { //Return a random string type.
 		float input = new Random().nextFloat(1);
-		if(input < 0.125) { return "b"; }
-		if(input < 0.25) { return "s"; }
-		if(input < 0.375) { return "si"; }
-		if(input < 0.5) { return "so"; }
-		if(input < 0.625) { return "sisi"; }
-		if(input < 0.75) { return "soso"; }
-		if(input < 0.875) { return "sosi"; }
-		if(input > 0.875) { return "s"; }
+		if(input < 0.142) { return "b"; }
+		if(input < 0.285) { return "s"; }
+		if(input < 0.428) { return "si"; }
+		if(input < 0.571) { return "so"; }
+		if(input < 0.714) { return "sisi"; }
+		if(input < 0.857) { return "soso"; }
+		if(input <= 1) { return "sosi"; }
 		return "s";
 	}
 }
