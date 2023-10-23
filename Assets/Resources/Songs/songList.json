@@ -3,12 +3,16 @@
     "title": "Prismatic",
     "artist": "Zythian",
     "bpm": 120,
-    "difficulty": [2, 4, 9, 12]
+    "difficulty": [2, 4, 6, 9],
+    "previewStart": 65000,
+    "previewDuration": 10000
   },
   {
     "title": "PUPA",
     "artist": "モリモリあつし",
     "bpm": 180,
-    "difficulty": [3, 5, 9, 14]
+    "difficulty": [5, 8, 10, 14],
+    "previewStart": 0,
+    "previewDuration": 10000
   }
 ]

@@ -4,12 +4,12 @@ namespace TunnelTone.Events
 {
     public class NoteEventReference : Singleton<NoteEventReference>
     {
-        public readonly NoteEvent OnSongLoaded = new NoteEvent();
+        public readonly GameEvent OnSongLoaded = new GameEvent();
         
-        public readonly NoteEvent OnSongBegin = new NoteEvent();
-        public readonly NoteEvent OnSongAbort = new NoteEvent();
+        public readonly GameEvent OnSongBegin = new GameEvent();
+        public readonly GameEvent OnSongAbort = new GameEvent();
         
-        public readonly NoteEvent OnNoteHit = new NoteEvent();
-        public readonly NoteEvent OnNoteMiss = new NoteEvent();
+        public readonly GameEvent OnNoteHit = new GameEvent();
+        public readonly GameEvent OnNoteMiss = new GameEvent();
     }
 }

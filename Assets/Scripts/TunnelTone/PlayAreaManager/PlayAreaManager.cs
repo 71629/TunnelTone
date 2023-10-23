@@ -12,11 +12,6 @@ namespace TunnelTone.PlayAreaManager
         [SerializeField] private Camera mainCamera;
         [SerializeField] private NoteRenderer noteRenderer;
         
-        private void Awake()
-        {
-            Application.targetFrameRate = 120;
-        }
-        
         private void Update()
         {
             if (Touchscreen.current == null || !Touchscreen.current.wasUpdatedThisFrame) return;

@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
-using UnityEngine;
+﻿using UnityEngine;
 using Newtonsoft.Json;
+using TunnelTone.Events;
+using TunnelTone.Singleton;
 using UnityEditor;
 
 namespace TunnelTone.UI.SongList
 {
-    public class SongListManager : MonoBehaviour
+    public class SongListManager : Singleton<SongListManager>
     {
         [SerializeField] private GameObject container;
         [SerializeField] private TextAsset songList;
-        private Song[] Songs { get; set; }
+
+        public Song CurrentlySelected;
+        
+        public Song[] Songs { get; set; }
         
         private void Start()
         {
@@ -26,21 +29,27 @@ namespace TunnelTone.UI.SongList
             // Instantiate song list items
             foreach (var song in Songs)
             {
-                var songListItem = Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem"), container.transform);
+                var songListItem = Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"), container.transform);
                 var listItem = songListItem.GetComponent<SongListItem>();
                 listItem.title.text = song.title;
                 listItem.artist.text = song.artist;
                 listItem.difficulty.text = $"{song.difficulty[3]}";
                 listItem.songJacket.sprite = Resources.Load<Sprite>($"Songs/{song.title}/Jacket") ?? null;
+                listItem.previewStart = song.previewStart;
+                listItem.previewDuration = song.previewDuration;
+                listItem.source = song;
             }
+            
         }
-        
-        private class Song
+
+        public class Song
         {
             public string title { get; set; }
             public string artist { get; set; }
             public float bpm { get; set; }
             public int[] difficulty { get; set; }
-        }
+            public float previewStart { get; set; }
+            public float previewDuration { get; set; }
+        } 
     }
 }
