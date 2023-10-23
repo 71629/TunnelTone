@@ -120,13 +120,29 @@ public class NewChange {
 		int anotherCount = 0;
 		int arraySaveLengthFirst;
 		int arraySaveLengthLast;
-
+		int checkOneButton;
+		int checkOneButtonTemp;
+		String leftRightStartOne;
+		String upDownStartOne;
 		for(int i=0; i<arcSave.length; i++) {
 			if(RandomTF() == true || counttt == 0) {
 				counttt++;
 			} else {
 				if(arcSave[i] != null) {
-					anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + arcSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";			
+
+					checkOneButton = Integer.valueOf(arcSave[i]);
+					checkOneButtonTemp = Integer.valueOf(arcSave[i-counttt]);
+					leftRightStartOne = Float.toString(leftRightStart());
+					upDownStartOne = Float.toString(upDownStart());
+					if(checkOneButton == checkOneButtonTemp) {
+						checkOneButton++;
+						anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + Type() + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
+					} else {
+						anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + arcSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
+					}
+
+					//anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + arcSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
+
 					for(int j = i - counttt; j<=i; j++) {
 						if(j == i) {
 							anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcSave[j] + ")];";
