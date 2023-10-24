@@ -57,9 +57,8 @@ namespace TunnelTone.UI.SongList
         private void RestartPreview()
         { 
             AudioAnimator.SetTrigger(FadeOut);
-            Invoke(nameof(ResetPreviewTime), 1);
+            Invoke(nameof(ResetPreviewTime), 1.2f);
         }
-            
         
         private void Start()
         {
