@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace TunnelTone
+namespace TunnelTone.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Chart", menuName = "Chart", order = 0)]
     public class Chart : ScriptableObject

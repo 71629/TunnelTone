@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using TunnelTone.Events;
-using UnityEditor.iOS;
-using UnityEngine.Serialization;
+using TunnelTone.GameSystem;
+using TunnelTone.UI.Reference;
 
 namespace TunnelTone.UI.SongList
 {
@@ -21,51 +19,34 @@ namespace TunnelTone.UI.SongList
 
         public Image difficultyBackground;
         public Image songJacket;
+        public AudioClip previewAudio;
 
         public float previewStart;
         public float previewDuration;
 
-        public SongListManager.Song source;
+        public Song source;
+
+        private Color color = new Color();
         
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
-        private static readonly int FadeOut = Animator.StringToHash("FadeOut");
-
         private SongListEventReference SongListEvent => SongListEventReference.Instance;
         private UIElementReference UIElement => UIElementReference.Instance;
-        private AudioSource AudioSource => UIElement.audioSource;
-        private Animator AudioAnimator => UIElement.audioAnimator;
         
         public void ItemSelected()
         {
-            SongListManager.Instance.CurrentlySelected = source;
-            SongListEventReference.Instance.OnSelectItem.Trigger(this);
+            SongListEvent.OnSelectItem.Trigger(this);
             
             animator.SetBool(IsSelected, true);
-            UIElementReference.Instance.songJacket.sprite = Resources.Load<Sprite>($"Songs/{title.text}/Jacket");
-            
-            // Start previewing song at previewStart
-            AudioSource.clip = Resources.Load<AudioClip>($"Songs/{title.text}/{title.text}");
-            ResetPreviewTime();
-            AudioSource.Play();
-        }
-
-        private void ResetPreviewTime()
-        {
-            AudioSource.time = previewStart * 0.001f;
-            Invoke(nameof(RestartPreview), previewDuration * 0.001f);
-        }
-        private void RestartPreview()
-        { 
-            AudioAnimator.SetTrigger(FadeOut);
-            Invoke(nameof(ResetPreviewTime), 1.2f);
+            UIElement.songJacket.sprite = songJacket.sprite;
         }
         
         private void Start()
         {
             SongListEvent.OnSelectItem.AddListener(OnSelectItem);
             SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
+            previewAudio = (AudioClip)Resources.Load($"Songs/{source.title}/{source.title}");
         }
-
+        
         private void OnDifficultyChange(object[] param)
         {
             var index = (int)param[0];

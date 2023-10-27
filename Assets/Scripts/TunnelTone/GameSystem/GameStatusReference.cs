@@ -1,7 +1,7 @@
-﻿using TunnelTone.Singleton;
-using TunnelTone.Enumerators;
+﻿using TunnelTone.Enumerators;
+using TunnelTone.Singleton;
 
-namespace TunnelTone
+namespace TunnelTone.GameSystem
 {
     public class GameStatusReference : Singleton<GameStatusReference>
     {

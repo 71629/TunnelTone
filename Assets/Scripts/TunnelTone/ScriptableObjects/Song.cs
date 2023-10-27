@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace TunnelTone
+namespace TunnelTone.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Song", menuName = "Song", order = 0)]
     public class Song : ScriptableObject

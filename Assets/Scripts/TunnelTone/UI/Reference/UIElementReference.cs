@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using TunnelTone.Singleton;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace TunnelTone.UI
+namespace TunnelTone.UI.Reference
 {
     public class UIElementReference : Singleton<UIElementReference>
     {

@@ -2,8 +2,6 @@
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
-using Unity.Mathematics;
-using UnityEngine.Serialization;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 

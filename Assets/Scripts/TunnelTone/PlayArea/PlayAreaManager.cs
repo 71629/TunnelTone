@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
-namespace TunnelTone.PlayAreaManager
+namespace TunnelTone.PlayArea
 {
     [RequireComponent(typeof(PlayerInput))]
     public class PlayAreaManager : MonoBehaviour

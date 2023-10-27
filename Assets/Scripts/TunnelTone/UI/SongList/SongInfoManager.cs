@@ -1,8 +1,8 @@
-﻿using System.Globalization;
+﻿using System.Collections;
 using TMPro;
 using TunnelTone.Events;
+using TunnelTone.UI.Reference;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace TunnelTone.UI.SongList
 {
@@ -21,6 +21,13 @@ namespace TunnelTone.UI.SongList
         {
             var songListItem = (SongListItem)param[0];
 
+            StartCoroutine(IEUpdateInfo(songListItem));
+        }
+
+        IEnumerator IEUpdateInfo(SongListItem songListItem)
+        {
+            yield return null;
+            
             title.text = songListItem.source.title;
             artist.text = songListItem.source.artist;
             bpm.text = $"{songListItem.source.bpm:BPM: 0}";

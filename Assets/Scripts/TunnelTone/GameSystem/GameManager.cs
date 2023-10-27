@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TunnelTone
+namespace TunnelTone.GameSystem
 {
     public class GameManager : MonoBehaviour
     {
