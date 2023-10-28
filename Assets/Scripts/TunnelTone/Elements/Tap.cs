@@ -30,6 +30,7 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
+            gameObject.layer = 0b1010;
             gameObject.tag = "Note";
             _hitHint = new GameObject
             {
@@ -64,7 +65,7 @@ namespace TunnelTone.Elements
             var hitHintImage = _hitHint.AddComponent<Image>();
             hitHintImage.sprite = Resources.Load<Sprite>("Sprites/HitHint");
             hitHintImage.color = new Color(1, 1, 1, 0);
-            Collider.radius = 150;
+            Collider.radius = 250;
             StartCoroutine(ShowHitHint(hitHintImage, _hitHint));
         }
 
@@ -128,15 +129,6 @@ namespace TunnelTone.Elements
         {
             Destroy(_hitHint);
             Destroy(this.gameObject);
-        }
-
-        private void Update()
-        {
-            // if (transform.position.z <= 0 && !_isHit)
-            // {
-            //     _isHit = true;
-            //     Hit();
-            // }
         }
         
         public void Hit()

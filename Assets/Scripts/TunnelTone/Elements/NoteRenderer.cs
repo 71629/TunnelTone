@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
@@ -40,9 +41,13 @@ namespace TunnelTone.Elements
             _transform.localPosition = Vector3.zero;
         }
 
-        private void Update()
+        IEnumerator PlayChart()
         {
+            yield return null;
+            
             _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - dspSongStartTime) + offsetTime + StartDelay));
+
+            StartCoroutine(PlayChart());
         }
 
         public void StartSong()
@@ -53,6 +58,7 @@ namespace TunnelTone.Elements
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
             
             audioSource.PlayDelayed(StartDelay / 1000f);
+            StartCoroutine(PlayChart());
         }
 
         public void BuildTrail(out GameObject gb, float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
@@ -66,6 +72,7 @@ namespace TunnelTone.Elements
             #endregion
             
             #region GameObject setup
+
             gb = new GameObject("Trail")
             {
                 transform =
@@ -74,12 +81,16 @@ namespace TunnelTone.Elements
                     position = Vector3.zero,
                     rotation = Quaternion.identity,
                     localScale = Vector3.one
-                }
+                },
+                layer = 11
             };
+            gb.AddComponent<Trail>();
             #endregion
             
             #region Path setup
             var spline = gb.AddComponent<SplineContainer>().Spline;
+            
+            // Create curve with respect to easing and easing ratio
             switch (easing)
             {
                 case EasingMode.Straight:

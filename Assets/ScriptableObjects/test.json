@@ -2,6 +2,19 @@
   "trails": [
     {
       "startX": 0.1,
+      "startY": 0.7,
+      "endX": 0.9,
+      "endY": 0.7,
+      "startTime": 891,
+      "endTime": 5891,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0,
+      "virtualTrail": false,
+      "taps": []
+    },
+    {
+      "startX": 0.1,
       "startY": 0.2,
       "endX": 0.9,
       "endY": 0.2,
