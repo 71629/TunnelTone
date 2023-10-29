@@ -50,7 +50,7 @@ namespace TunnelTone.UI.SongList
         private void OnDifficultyChange(object[] param)
         {
             var index = (int)param[0];
-            difficulty.text = $"{DifficultyManager.Instance.difficultyDictionary[source.difficulty[index]]}";
+            difficulty.text = $"{Dictionaries.Instance.difficultyDictionary[source.difficulty[index]]}";
             difficultyBackground.color = index switch
             {
                 0 => UIElement.easy,

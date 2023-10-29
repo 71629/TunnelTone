@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using TunnelTone.Events;
+using TunnelTone.GameSystem;
 using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,12 +57,12 @@ namespace TunnelTone.UI.SongList
             }
 
             slider.value = Mathf.Lerp(i, f, t);
-            ind.text = difficultyDictionary[Mathf.RoundToInt(slider.value)];
+            ind.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(slider.value)];
 
             if (_currentSelected && slider != main)
             {
                 main.value = _currentSelected.value;
-                mainText.text = difficultyDictionary[Mathf.RoundToInt(main.value)];
+                mainText.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(main.value)];
             }
             
             StartCoroutine(UpdateDifficultySlider(slider, ind, i, f, t + 0.15f * Mathf.Pow(0.85f, iterations), iterations + 1));
@@ -98,24 +99,5 @@ namespace TunnelTone.UI.SongList
         {
             SongListEventReference.Instance.OnDifficultyChange.Trigger(difficulty);
         }
-        
-        public readonly Dictionary<int, string> difficultyDictionary = new()
-        {
-            {0, "0"},
-            {1, "1"},
-            {2, "2"},
-            {3, "3"},
-            {4, "4"},
-            {5, "5"},
-            {6, "6"},
-            {7, "7"},
-            {8, "7+"},
-            {9, "8"},
-            {10, "8+"},
-            {11, "9"},
-            {12, "9+"},
-            {13, "10"},
-            {14, "10+"}
-        };
     }
 }

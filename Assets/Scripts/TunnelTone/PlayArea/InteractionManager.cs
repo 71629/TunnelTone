@@ -23,6 +23,7 @@ namespace TunnelTone.PlayArea
         {
             if (Touchscreen is not { wasUpdatedThisFrame: true }) return;
             
+            // Tap note interaction
             foreach (var touch in touches.Where(touch => touch.phase.value == TouchPhase.Began))
             {
                 var touchPosition =
@@ -38,6 +39,7 @@ namespace TunnelTone.PlayArea
                 Debug.DrawRay(ray.origin, ray.direction * 600, Color.red);
             }
             
+            // Trail note detection
             foreach (var touch in touches.Where(touch => touch.phase.value is TouchPhase.Moved or TouchPhase.Stationary))
             {
                 var touchPosition =
