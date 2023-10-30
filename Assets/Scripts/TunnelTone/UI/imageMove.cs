@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using UnityEngine.Audio;
 
 public class imageMove : MonoBehaviour
 {
     public float speed = 1.5f;
  
-    Vector2 newPosition;
- 
+    Vector2 newPosition, tempPosition;
+    public Boolean returnfunction = false;
     void Start ()
     {
         PositionChange();
@@ -15,20 +18,21 @@ public class imageMove : MonoBehaviour
  
     void PositionChange()
     {
-        newPosition = new Vector2(Random.Range(-70f, 70f), Random.Range(-30f, 30f));
+          newPosition = new Vector2(Random.Range(-70f, 70f), Random.Range(-30f, 30f));
     }
    
     void Update ()
     {
-        if(Vector2.Distance(transform.position, newPosition) < 1)
+        Debug.Log(Vector2.Distance(transform.position, newPosition));
+        if(Vector2.Distance(transform.position, newPosition) < 10)
             PositionChange();
  
-        transform.position=Vector2.Lerp(transform.position,newPosition,Time.deltaTime*speed);
+        transform.position=Vector2.Lerp(transform.position,newPosition, Time.deltaTime * speed);
  
         LookAt2D(newPosition);
     }
  
-    void LookAt2D(Vector3 lookAtPosition)
+    void LookAt2D(Vector2 lookAtPosition)
     {
         float distanceX = lookAtPosition.x - transform.position.x;
         float distanceY = lookAtPosition.y - transform.position.y;
