@@ -94,7 +94,7 @@ namespace TunnelTone.Elements
             if (newTrail)
                 BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, direction, virtualTrail);
             
-            for(var i = 0f; i < 1; i += (100 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
+            for(var i = 0f; i < 1; i += (200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
             {
                 BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
             }
@@ -213,11 +213,6 @@ namespace TunnelTone.Elements
             };
             gameObject.GetComponent<MeshFilter>().mesh.uv = gameObject.GetComponent<MeshFilter>().mesh.uv.Concat(uv).ToArray();
             #endregion
-        }
-
-        private void Start()
-        {
-            
         }
     }
 }
