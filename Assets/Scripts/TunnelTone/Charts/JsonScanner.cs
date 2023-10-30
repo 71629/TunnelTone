@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
+using TunnelTone.Events;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 
@@ -10,23 +12,29 @@ namespace TunnelTone.Charts
 {
     public class JsonScanner : MonoBehaviour
     {
-        [SerializeField] private TextAsset chartFile;
-        [SerializeField] private NoteRenderer _noteRenderer;
+        private static NoteRenderer NoteRenderer => NoteRenderer.Instance;
 
         private void Start()
         {
-            // Deserialize chartFile to Chart object
-            var chart = new Chart();
-            
-            chart = JsonConvert.DeserializeObject<Chart>(chartFile.text);
-            
+            SystemEventReference.Instance.OnChartLoad.AddListener(Scan);
+        }
+
+        private void Scan(params object[] param)
+        {
+            var chartFile = (TextAsset)param[0];
+            StartCoroutine(CreateElement(JsonConvert.DeserializeObject<Chart>(chartFile.text)));
+        }
+
+        IEnumerator CreateElement(Chart chart)
+        {
             foreach(var trail in chart.trails)
             {
+                yield return new WaitForSeconds(0);
                 var gb = new GameObject("Trail")
                 {
                     transform =
                     {
-                        parent = this.transform,
+                        parent = transform,
                         position = Vector3.zero,
                         rotation = Quaternion.identity,
                         localScale = Vector3.one
@@ -48,7 +56,7 @@ namespace TunnelTone.Charts
                         transform =
                         {
                             parent = NoteRenderer.TrailReference.transform,
-                            localPosition = spline.EvaluatePosition((tap.time * _noteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
+                            localPosition = spline.EvaluatePosition((tap.time * NoteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
                             rotation = Quaternion.Euler(0, 0, 45),
                             localScale = scale
                         }
@@ -62,8 +70,13 @@ namespace TunnelTone.Charts
                 }
             }
             
-            // Start gameplay after finishes rendering
-            _noteRenderer.StartSong();
+            SystemEventReference.Instance.OnChartLoadFinish.Trigger();
+            Invoke(nameof(StartSong), 1f);
+        }
+
+        private void StartSong()
+        {
+            NoteRenderer.StartSong();
         }
 
         private Dictionary<int, EasingMode> easingDictionary = new()

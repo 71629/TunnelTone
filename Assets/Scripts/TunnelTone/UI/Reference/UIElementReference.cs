@@ -10,6 +10,8 @@ namespace TunnelTone.UI.Reference
         [Header("System")]
         public AudioSource audioSource;
         public Animator audioAnimator;
+        public Animator shutterAnimator;
+        public Animator shutterInfoAnimator;
 
         [Header("ColorReference")] 
         public Color easy;
@@ -22,5 +24,12 @@ namespace TunnelTone.UI.Reference
         public TextMeshProUGUI title;
         public TextMeshProUGUI artist;
         public TextMeshProUGUI bpm;
+        public Slider startSlider;
+
+        [Header("Canvas")] 
+        public Canvas songList;
+        public Canvas musicPlay;
+        public Canvas shutter;
+        public Canvas shutterInfo;
     }
 }

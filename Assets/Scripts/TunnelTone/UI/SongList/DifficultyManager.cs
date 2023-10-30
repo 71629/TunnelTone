@@ -29,7 +29,22 @@ namespace TunnelTone.UI.SongList
         [SerializeField] private Image mainImage;
 
         private Slider _currentSelected;
-        
+
+        public int currentlySelected
+        {
+            get
+            {
+                return _currentSelected.gameObject.name switch
+                {
+                    "Easy" => 0,
+                    "Hard" => 1,
+                    "Intensive" => 2,
+                    "Insane" => 3,
+                    _ => throw new ArgumentException()
+                };
+            }
+        }
+
         private void Start()
         {
             SongListEventReference.Instance.OnSelectItem.AddListener(UpdateDifficulty);
@@ -46,7 +61,7 @@ namespace TunnelTone.UI.SongList
             StartCoroutine(UpdateDifficultySlider(insane, insaneText, insane.value, song.source.difficulty[3]));
         }
 
-        private IEnumerator UpdateDifficultySlider(Slider slider, TMP_Text ind, float i, float f, float t = 0.21f, int iterations = 1)
+        private IEnumerator UpdateDifficultySlider(Slider slider, TextMeshProUGUI ind, float i, float f, float t = 0.21f, int iterations = 1)
         {
             yield return new WaitForEndOfFrame();
             

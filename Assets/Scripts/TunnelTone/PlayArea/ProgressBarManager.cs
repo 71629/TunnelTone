@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TunnelTone.Enumerators;
+using TunnelTone.GameSystem;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TunnelTone.UI
@@ -11,7 +13,8 @@ namespace TunnelTone.UI
 
         private void Update()
         {
-            Slider.value = audioSource.timeSamples / (float)TotalSample;
+            if(GameStatusReference.Instance.GameStatus is GameStatus.MusicPlay)
+                Slider.value = audioSource.timeSamples / (float)TotalSample;
         }
     }
 }

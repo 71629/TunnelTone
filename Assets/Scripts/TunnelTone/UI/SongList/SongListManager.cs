@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Net;
+using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.Singleton;
+using TunnelTone.UI.Reference;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace TunnelTone.UI.SongList
 {
@@ -14,6 +19,9 @@ namespace TunnelTone.UI.SongList
         public Song CurrentlySelected;
         
         public Song[] Songs { get; set; }
+
+        private UIElementReference UIElement => UIElementReference.Instance;
+        private float oldSliderValue = 0.15f;
         
         private void Start()
         {
@@ -43,6 +51,44 @@ namespace TunnelTone.UI.SongList
                     listItem.source = song;
                 }
             }
+        }
+
+        private void Update()
+        {
+            if (UIElement.startSlider.value >= 0.9f)
+            {
+                SongListEventReference.Instance.OnSongStart.Trigger();
+                UIElement.startSlider.interactable = false;
+                UIElement.startSlider.value = 0.15f;
+                StartCoroutine(EnableCanvasDelayed());
+                return;
+            }
+            
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (UIElement.startSlider.value == oldSliderValue && UIElement.startSlider.value is not 0.15f)
+            {
+                UIElement.startSlider.value = 0.15f;
+                StartCoroutine(TurnOffAndOn());
+            }
+            else
+            {
+                oldSliderValue = UIElement.startSlider.value;
+            }
+        }
+
+        IEnumerator EnableCanvasDelayed()
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            UIElement.musicPlay.enabled = true;
+            UIElement.songList.enabled = false;
+            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}"));
+        }
+        
+        IEnumerator TurnOffAndOn()
+        {
+            UIElement.startSlider.interactable = false;
+            yield return new WaitForSeconds(0);
+            UIElement.startSlider.interactable = true;
         }
 
         private void OnSelectItem(params object[] param)

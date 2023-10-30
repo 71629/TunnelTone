@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;
+using TouchPhase = UnityEngine.TouchPhase;
 
 namespace TunnelTone.Elements
 {
@@ -14,6 +16,8 @@ namespace TunnelTone.Elements
         private bool _isHit;
         private TouchControl _trackingTouch;
         private Spline _path;
+
+        private List<GameObject> comboPoint;
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
@@ -109,11 +113,11 @@ namespace TunnelTone.Elements
             var vertices = !virtualTrail
                 ? new List<Vector3>
                 {
-                    (Vector3)coordinate + new Vector3(0, 0, -15 + time),
-                    (Vector3)coordinate + new Vector3(0, 25, 0 + time),
-                    (Vector3)coordinate + new Vector3(25, 0, 0 + time),
-                    (Vector3)coordinate + new Vector3(0, -25, 0 + time),
-                    (Vector3)coordinate + new Vector3(-25, 0, 0 + time)
+                    (Vector3)coordinate + new Vector3(0, 0, -25 + time),
+                    (Vector3)coordinate + new Vector3(0, 40, 0 + time),
+                    (Vector3)coordinate + new Vector3(40, 0, 0 + time),
+                    (Vector3)coordinate + new Vector3(0, -40, 0 + time),
+                    (Vector3)coordinate + new Vector3(-40, 0, 0 + time)
                 }
                 : new List<Vector3>()
                 {
@@ -168,10 +172,10 @@ namespace TunnelTone.Elements
             var vertices = !virtualTrail
                 ? new[]
                 {
-                    position + new Vector3(0, 25, 0),
-                    position + new Vector3(25, 0, 0),
-                    position + new Vector3(0, -25, 0),
-                    position + new Vector3(-25, 0, 0)
+                    position + new Vector3(0, 40, 0),
+                    position + new Vector3(40, 0, 0),
+                    position + new Vector3(0, -40, 0),
+                    position + new Vector3(-40, 0, 0)
                 }
                 : new[]
                 {
@@ -202,13 +206,18 @@ namespace TunnelTone.Elements
             #region Concatinate new UVs
             var uv = new List<Vector2>
             {
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f)
+                new(1f, 1f),
+                new(1f, -1f),
+                new(-1f, -1f),
+                new(-1f, 1f)
             };
             gameObject.GetComponent<MeshFilter>().mesh.uv = gameObject.GetComponent<MeshFilter>().mesh.uv.Concat(uv).ToArray();
             #endregion
+        }
+
+        private void Start()
+        {
+            
         }
     }
 }
