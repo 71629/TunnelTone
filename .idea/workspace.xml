@@ -5,7 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14014523-faa6-46a2-bfd7-27b59090afd2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/qodana_code_quality.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/Dialog.controller" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/Dialog.controller.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DismissDialog.anim" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DismissDialog.anim.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayDialog.anim" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayDialog.anim.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Dialog Option.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Dialog Option.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Bold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,16 +47,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "chart-generation",
-    "last_opened_file_path": "C:/Users/0052s/OneDrive/Desktop/grepo/TunnelTone",
+    "git-widget-placeholder": "dialog",
+    "last_opened_file_path": "D:/grepo/TunnelTone",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "tidb"
+    ]
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
