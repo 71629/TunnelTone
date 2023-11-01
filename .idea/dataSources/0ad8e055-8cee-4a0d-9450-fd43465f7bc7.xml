@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="TunnelTone@gateway01.us-west-2.prod.aws.tidbcloud.com">
+  <database-model serializer="dbm" dbms="TIDB" family-id="TIDB" format-version="4.49">
+    <root id="1">
+      <Dbms>TIDB</Dbms>
+      <DefaultCasing>mixed/mixed</DefaultCasing>
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
+      <Grants>|root||role_admin||ALTER|G
+|root||wozpNvgH7LbMJYw.cloud_admin||ALTER|G
+|root||wozpNvgH7LbMJYw.root||ALTER|G
+|root||role_admin||ALTER ROUTINE|G
+|root||wozpNvgH7LbMJYw.root||ALTER ROUTINE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||BACKUP_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CONFIG|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CONNECTION_ADMIN|G
+|root||role_admin||CREATE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CREATE|G
+|root||wozpNvgH7LbMJYw.root||CREATE|G
+|root||role_admin||CREATE ROLE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CREATE ROLE|G
+|root||wozpNvgH7LbMJYw.root||CREATE ROLE|G
+|root||role_admin||CREATE ROUTINE|G
+|root||wozpNvgH7LbMJYw.root||CREATE ROUTINE|G
+|root||role_admin||CREATE TABLESPACE|G
+|root||wozpNvgH7LbMJYw.root||CREATE TABLESPACE|G
+|root||role_admin||CREATE TEMPORARY TABLES|G
+|root||wozpNvgH7LbMJYw.root||CREATE TEMPORARY TABLES|G
+|root||role_admin||CREATE USER|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CREATE USER|G
+|root||wozpNvgH7LbMJYw.root||CREATE USER|G
+|root||role_admin||CREATE VIEW|G
+|root||wozpNvgH7LbMJYw.cloud_admin||CREATE VIEW|G
+|root||wozpNvgH7LbMJYw.root||CREATE VIEW|G
+|root||wozpNvgH7LbMJYw.cloud_admin||DASHBOARD_CLIENT|G
+|root||role_admin||DELETE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||DELETE|G
+|root||wozpNvgH7LbMJYw.root||DELETE|G
+|root||role_admin||DROP|G
+|root||wozpNvgH7LbMJYw.cloud_admin||DROP|G
+|root||wozpNvgH7LbMJYw.root||DROP|G
+|root||role_admin||DROP ROLE|G
+|root||wozpNvgH7LbMJYw.root||DROP ROLE|G
+|root||role_admin||EVENT|G
+|root||wozpNvgH7LbMJYw.root||EVENT|G
+|root||role_admin||EXECUTE|G
+|root||wozpNvgH7LbMJYw.root||EXECUTE|G
+|root||role_admin||FILE|G
+|root||wozpNvgH7LbMJYw.root||FILE|G
+|root||role_admin||INDEX|G
+|root||wozpNvgH7LbMJYw.cloud_admin||INDEX|G
+|root||wozpNvgH7LbMJYw.root||INDEX|G
+|root||role_admin||INSERT|G
+|root||wozpNvgH7LbMJYw.cloud_admin||INSERT|G
+|root||wozpNvgH7LbMJYw.root||INSERT|G
+|root||role_admin||LOCK TABLES|G
+|root||wozpNvgH7LbMJYw.root||LOCK TABLES|G
+|root||role_admin||PROCESS|G
+|root||wozpNvgH7LbMJYw.cloud_admin||PROCESS|G
+|root||wozpNvgH7LbMJYw.root||PROCESS|G
+|root||role_admin||REFERENCES|G
+|root||wozpNvgH7LbMJYw.cloud_admin||REFERENCES|G
+|root||wozpNvgH7LbMJYw.root||REFERENCES|G
+|root||role_admin||RELOAD|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RELOAD|G
+|root||wozpNvgH7LbMJYw.root||RELOAD|G
+|root||role_admin||REPLICATION CLIENT|G
+|root||wozpNvgH7LbMJYw.root||REPLICATION CLIENT|G
+|root||role_admin||REPLICATION SLAVE|G
+|root||wozpNvgH7LbMJYw.root||REPLICATION SLAVE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTORE_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_CONNECTION_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_REPLICA_WRITER_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_STATUS_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_TABLES_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_USER_ADMIN|G
+|root||wozpNvgH7LbMJYw.cloud_admin||RESTRICTED_VARIABLES_ADMIN|G
+|root||role_admin||ROLE_ADMIN|G
+|root||role_admin||SELECT|G
+|root||wozpNvgH7LbMJYw.cloud_admin||SELECT|G
+|root||wozpNvgH7LbMJYw.root||SELECT|G
+|root||role_admin||SHOW DATABASES|G
+|root||wozpNvgH7LbMJYw.cloud_admin||SHOW DATABASES|G
+|root||wozpNvgH7LbMJYw.root||SHOW DATABASES|G
+|root||role_admin||SHOW VIEW|G
+|root||wozpNvgH7LbMJYw.root||SHOW VIEW|G
+|root||wozpNvgH7LbMJYw.cloud_admin||SHUTDOWN|G
+|root||role_admin||SUPER|G
+|root||wozpNvgH7LbMJYw.root||SUPER|G
+|root||wozpNvgH7LbMJYw.cloud_admin||SYSTEM_USER|G
+|root||wozpNvgH7LbMJYw.cloud_admin||SYSTEM_VARIABLES_ADMIN|G
+|root||role_admin||TRIGGER|G
+|root||wozpNvgH7LbMJYw.root||TRIGGER|G
+|root||role_admin||UPDATE|G
+|root||wozpNvgH7LbMJYw.cloud_admin||UPDATE|G
+|root||wozpNvgH7LbMJYw.root||UPDATE|G
+|root||role_admin||grant option|G
+|root||wozpNvgH7LbMJYw.cloud_admin||grant option|G
+|root||wozpNvgH7LbMJYw.root||grant option|G</Grants>
+      <ServerVersion>6.6.0</ServerVersion>
+    </root>
+    <collation id="2" parent="1" name="ascii_bin">
+      <Charset>ascii</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="3" parent="1" name="binary">
+      <Charset>binary</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="4" parent="1" name="gbk_bin">
+      <Charset>gbk</Charset>
+    </collation>
+    <collation id="5" parent="1" name="gbk_chinese_ci">
+      <Charset>gbk</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="6" parent="1" name="latin1_bin">
+      <Charset>latin1</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="7" parent="1" name="utf8_bin">
+      <Charset>utf8</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="8" parent="1" name="utf8_general_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="9" parent="1" name="utf8_unicode_ci">
+      <Charset>utf8</Charset>
+    </collation>
+    <collation id="10" parent="1" name="utf8mb4_bin">
+      <Charset>utf8mb4</Charset>
+      <DefaultForCharset>1</DefaultForCharset>
+    </collation>
+    <collation id="11" parent="1" name="utf8mb4_general_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <collation id="12" parent="1" name="utf8mb4_unicode_ci">
+      <Charset>utf8mb4</Charset>
+    </collation>
+    <schema id="13" parent="1" name="INFORMATION_SCHEMA">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="14" parent="1" name="PERFORMANCE_SCHEMA">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="15" parent="1" name="TunnelTone">
+      <Current>1</Current>
+      <IntrospectionTimestamp>2023-11-01.10:46:17</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-11-01.02:46:15</LocalIntrospectionTimestamp>
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="16" parent="1" name="fortune500">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="17" parent="1" name="mysql">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <schema id="18" parent="1" name="test">
+      <CollationName>utf8mb4_bin</CollationName>
+    </schema>
+    <user id="19" parent="1" name="role_admin"/>
+    <user id="20" parent="1" name="wozpNvgH7LbMJYw.0052st_3wUTTU23">
+      <Plugin>tidb_auth_token</Plugin>
+    </user>
+    <user id="21" parent="1" name="wozpNvgH7LbMJYw.cloud_admin"/>
+    <user id="22" parent="1" name="wozpNvgH7LbMJYw.root"/>
+    <user id="23" parent="1" name="wozpNvgH7LbMJYw.vu-gH32qSZX"/>
+    <table id="24" parent="15" name="score_record">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <table id="25" parent="15" name="users">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <column id="26" parent="24" name="time">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="27" parent="24" name="uid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="28" parent="24" name="song">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="29" parent="24" name="difficulty">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="30" parent="24" name="score">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="31" parent="24" name="score_record_users_uid_fk">
+      <ColNames>uid</ColNames>
+      <RefColNames>uid</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="32" parent="24" name="PRIMARY">
+      <ColNames>time
+uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="33" parent="24" name="score_record_users_uid_fk">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="34" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="35" parent="25" name="uid">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="36" parent="25" name="username">
+      <DasType>varchar(24)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="37" parent="25" name="password">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="38" parent="25" name="email">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <index id="39" parent="25" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="40" parent="25" name="users_pk3">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="41" parent="25" name="users_pk2">
+      <ColNames>username</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="42" parent="25" name="users_pk4">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="43" parent="25" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="44" parent="25" name="users_pk3">
+      <UnderlyingIndexName>users_pk3</UnderlyingIndexName>
+    </key>
+    <key id="45" parent="25" name="users_pk2">
+      <UnderlyingIndexName>users_pk2</UnderlyingIndexName>
+    </key>
+    <key id="46" parent="25" name="users_pk4">
+      <UnderlyingIndexName>users_pk4</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
