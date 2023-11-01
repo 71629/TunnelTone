@@ -8,5 +8,6 @@ namespace TunnelTone.Events
         public readonly GameEvent OnChartLoadFinish = new GameEvent();
 
         public readonly GameEvent OnDisplayDialog = new GameEvent();
+        public readonly GameEvent OnAbortDialog = new GameEvent();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Net;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -57,22 +58,21 @@ namespace TunnelTone.UI.SongList
         {
             if (UIElement.startSlider.value >= 0.9f)
             {
-                SongListEventReference.Instance.OnSongStart.Trigger();
+                UIElement.startSlider.value = 0.15f;
                 UIElement.startSlider.interactable = false;
-                UIElement.startSlider.value = 0.15f;
+                if (Resources.Load<TextAsset>($"Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}") is null)
+                {
+                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}.json",
+                        new[] {"OK"}, new Action[] {
+                            () =>
+                            {
+                                SystemEventReference.Instance.OnAbortDialog.Trigger();
+                                UIElement.startSlider.interactable = true;
+                            }});
+                    return;
+                }
+                SongListEventReference.Instance.OnSongStart.Trigger();
                 StartCoroutine(EnableCanvasDelayed());
-                return;
-            }
-            
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (UIElement.startSlider.value == oldSliderValue && UIElement.startSlider.value is not 0.15f)
-            {
-                UIElement.startSlider.value = 0.15f;
-                StartCoroutine(TurnOffAndOn());
-            }
-            else
-            {
-                oldSliderValue = UIElement.startSlider.value;
             }
         }
 

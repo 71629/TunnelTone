@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3260673744205165227}
   - component: {fileID: 726567212402998253}
+  - component: {fileID: 1325557367577798143}
   m_Layer: 5
   m_Name: Dialog Option
   m_TagString: Untagged
@@ -267,3 +268,47 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1325557367577798143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8700178718896063749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
+    m_HighlightedColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
+    m_PressedColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+    m_SelectedColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
+    m_DisabledColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2648856394213086203}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
