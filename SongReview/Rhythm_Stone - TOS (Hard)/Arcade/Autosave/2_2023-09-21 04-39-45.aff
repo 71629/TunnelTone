@@ -1,4 +1,0 @@
-AudioOffset:0
--
-timing(0,146.00,4.00);
-arc(6678,6780,0.00,0.50,s,0.60,0.00,0,none,true)[arctap(6678)];
