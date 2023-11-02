@@ -103,7 +103,7 @@ public class NewChange {
 		}
 		File files = new File("..\\A_Converter\\2.aff"); //File Write in to .aff
 		System.out.println("");
-		System.out.println("0.aff has been create in Desktop!");
+		System.out.println("2.aff has been create in TunnelTone\\SongReview\\A_Converter !");
 		System.out.println("");
 		FileWriter fw = new FileWriter("..\\A_Converter\\2.aff");
 		System.out.println("Writing 2.aff...");
