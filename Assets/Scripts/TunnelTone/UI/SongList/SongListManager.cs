@@ -68,7 +68,7 @@ namespace TunnelTone.UI.SongList
                             {
                                 SystemEventReference.Instance.OnAbortDialog.Trigger();
                                 UIElement.startSlider.interactable = true;
-                            }});
+                            }}, Dialog.Dialog.Severity.Error);
                     return;
                 }
                 SongListEventReference.Instance.OnSongStart.Trigger();

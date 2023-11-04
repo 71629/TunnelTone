@@ -31,5 +31,22 @@ namespace TunnelTone.UI.Reference
         public Canvas musicPlay;
         public Canvas shutter;
         public Canvas shutterInfo;
+        public Canvas dialog;
+        public Canvas mainMenu;
+
+        public void ToSongSelect()
+        {
+            
+        }
+        
+        public void ToMusicPlay()
+        {
+            
+        }
+
+        public void ToMainMenu()
+        {
+            
+        }
     }
 }
