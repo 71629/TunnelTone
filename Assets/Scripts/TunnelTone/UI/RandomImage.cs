@@ -35,6 +35,26 @@ public class RandomImage : MonoBehaviour
     {
             int num = UnityEngine.Random.Range(0, Sprites.Length);
                     sprite = Sprites[num];
+                    fadeInFadeOut();
                     image.sprite = sprite;
+    }
+
+    IEnumerator fadeInFadeOut()
+    {
+        for (float i = 0; i <= 1; i += Time.deltaTime)
+        {
+            image.color = new Color(1, 1, 1, i);
+            yield return null;
+        }
+ 
+        //Temp to Fade Out
+        yield return new WaitForSeconds(1);
+ 
+        // loop over 1 second backwards
+        for (float i = 1; i >= 0; i -= Time.deltaTime)
+        {
+            image.color = new Color(1, 1, 1, i);
+            yield return null;
+        }
     }
 }
