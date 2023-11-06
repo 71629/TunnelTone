@@ -30,7 +30,7 @@ public class NewChange {
 			count++;
 			//System.out.println(arcSave[count]); //It should be cut it into the array
 		}
-		
+
 		counttt = 1;
 		count = 0;
 		do {
@@ -90,7 +90,7 @@ public class NewChange {
 
 		counttt = 0;
 		for(int i=0; i<arcSave.length; i++) {
-			if(RandomTF() == true || counttt == 0) {
+			if(IsArcEndByRandom() == true || counttt == 0) {
 				counttt++;
 			} else {
 				if(arcSave[i] != null) {
@@ -156,11 +156,10 @@ public class NewChange {
 		input = Float.parseFloat(temp.substring(0, 4));
 		return input; //return -0.45 to 1.45 random number
 	}
-	public static boolean RandomTF() {
-		boolean tf = false;
+	public static boolean IsArcEndByRandom() {
+		boolean bool = false;
 		byte random = (byte)new Random().nextInt(2);
-		if(random == 1) { return true; } 
-		return false;
+		return (random==1);
 	}
 	public static short CheckLooping(BufferedReader bbr ) throws Exception {
 		short countss = 1;
