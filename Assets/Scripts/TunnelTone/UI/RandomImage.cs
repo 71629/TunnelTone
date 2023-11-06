@@ -45,12 +45,12 @@ public class RandomImage : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSecondsRealtime(10);
+            yield return new WaitForSecondsRealtime(25);
             
            //FadeIn loop
             for (float i = 1; i >= 0; i -= Time.deltaTime)
             {
-                yield return image.color = new Color(56, 56, 56, i);
+                yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
                 Debug.Log("image.a = "+image.color.a);
             }
             
@@ -62,7 +62,7 @@ public class RandomImage : MonoBehaviour
             //FadeOut loop
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
-                yield return image.color = new Color(56,56,56,i);
+                yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
                 Debug.Log("image.a = " + image.color.a);
             } 
         }
