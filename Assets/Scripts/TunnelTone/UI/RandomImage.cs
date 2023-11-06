@@ -26,7 +26,7 @@ public class RandomImage : MonoBehaviour
         time += Time.deltaTime;
         if (time >= timerate)
         {
-            changeSprite();
+            StartCoroutine(fadeInFadeOut());
             time = 0;
         }
     }
@@ -34,28 +34,31 @@ public class RandomImage : MonoBehaviour
     void changeSprite()
     {
             int num = UnityEngine.Random.Range(0, Sprites.Length);
-                    sprite = Sprites[num];
-                    fadeInFadeOut();
-                    image.sprite = sprite;
+            sprite = Sprites[num];
+            image.sprite = sprite;
     }
 
     IEnumerator fadeInFadeOut()
     {
+        Debug.Log("Function is called");
+        
         //FadeIn loop
-        for (float i = 0; i <= 1; i += Time.deltaTime)
-        {
-            image.color = new Color(1, 1, 1, i);
-            yield return null;
-        }
- 
-        //hold 1 sec
-        yield return new WaitForSeconds(1);
- 
-        //FadeOut loop
         for (float i = 1; i >= 0; i -= Time.deltaTime)
         {
-            image.color = new Color(1, 1, 1, i);
-            yield return null;
+            yield return image.color = new Color(1, 1, 1, i);
+            Debug.Log("image.a = "+image.color.a);
+        }
+ 
+        //change Sprite
+        yield return new WaitForSeconds(3);
+        changeSprite();
+        yield return new WaitForSeconds(3);
+ 
+        //FadeOut loop
+        for (float i = 0; i <= 1; i += Time.deltaTime)
+        {
+            yield return image.color = new Color(1,1,1,i);
+            Debug.Log("image.a = " + image.color.a);
         }
     }
 }

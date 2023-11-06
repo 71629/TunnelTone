@@ -23,7 +23,7 @@ public class imageMove : MonoBehaviour
    
     void Update ()
     {
-        Debug.Log(Vector2.Distance(transform.position, newPosition));
+        //Debug.Log(Vector2.Distance(transform.position, newPosition));
         if(Vector2.Distance(transform.position, newPosition) < 10)
             PositionChange();
  
