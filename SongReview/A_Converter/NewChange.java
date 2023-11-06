@@ -9,7 +9,7 @@ public class NewChange {
 		File file = new File(
 		 	"..\\A_Converter\\Sample.osu");
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		int count = 0; int counttt = 15; int anotherCount = 0; int checkOneButton; int checkOneButtonTemp; int loop = CheckLooping(br);
+		short count = 0; short counttt = 15; int anotherCount = 0; int checkOneButton; int checkOneButtonTemp; int loop = CheckLooping(br);
 		String leftRightStartOne; String upDownStartOne; String st;
 		String arcSave[] = new String [9999]; String anotherArcSave[] = new String[9999];
 		boolean trigger = true; boolean exceptionNull = false;
@@ -30,6 +30,24 @@ public class NewChange {
 			count++;
 			//System.out.println(arcSave[count]); //It should be cut it into the array
 		}
+		
+		counttt = 1;
+		count = 0;
+		do {
+			try{
+				if(arcSave[count].substring((counttt-1),counttt).equals(",")) {
+					arcSave[count] = arcSave[count].substring(counttt,arcSave[count].length());
+					System.out.println(arcSave[count]); //Remove first,
+					count++;
+					counttt = 1;
+				} else { counttt++; }
+			}catch (Exception b) {
+				count++;
+				counttt = 1;
+			}
+		}while(arcSave[count] != null);
+
+
 		for(int f=0; f<2; f++) {
 			for(int i=0; i<arcSave.length; i++) {
 				if(arcSave[i] !=null){
@@ -49,32 +67,27 @@ public class NewChange {
 								}
 							}
 						}
-					} //System.out.println(arcSave[i]); (Remove first,)
+					} //System.out.print(i+": "); System.out.println(arcSave[i]); //(Remove first,)
 				}
 			}
 		}
-		for(int i=0; i<arcSave.length; i++) {
-			if(arcSave[i] != null){
-				try{
-					if(arcSave[i].substring(3,4).equals(",")){
-						arcSave[i] = arcSave[i].substring(0,3);
-					} else {
-						if(arcSave[i].substring(4,5).equals(",")) {
-							arcSave[i] = arcSave[i].substring(0,4);
-						} else {
-							if(arcSave[i].substring(5,6).equals(",")) {
-								arcSave[i] = arcSave[i].substring(0,5);
-							} else {
-								if(arcSave[i].substring(6,7).equals(",")) {
-								arcSave[i] = arcSave[i].substring(0,6);
-								}
-							}
-						}
-					}
-				}
-				catch (Exception e) { continue; } //System.out.println(arcSave[i]); //(It should be number only)
+
+		counttt = 0;
+		count = 0;
+		do {
+			try{
+				if(arcSave[count].substring(counttt,(counttt+1)).equals(",")) {
+					arcSave[count] = arcSave[count].substring(0,counttt);
+					count++;
+					counttt = 0;
+					//System.out.println(arcSave[count]); //It should be number only
+				} else { counttt++; }
+			}catch (Exception e) {
+				count++;
+				counttt = 0;
 			}
-		}
+		}while(arcSave[count] != null);
+
 		counttt = 0;
 		for(int i=0; i<arcSave.length; i++) {
 			if(RandomTF() == true || counttt == 0) {
@@ -101,7 +114,7 @@ public class NewChange {
 				}	
 			}
 		}
-		File files = new File("..\\A_Converter\\2.aff"); //File Write in to .aff
+		File files = new File("..\\A_Converter\\2.aff"); //File Write in to 2.aff under this java program folder.
 		System.out.println("");
 		System.out.println("2.aff has been create in TunnelTone\\SongReview\\A_Converter !");
 		System.out.println("");
@@ -129,7 +142,7 @@ public class NewChange {
 		}while (input <= -0.15 || input >= 0.95 );
 		String temp = Float.toString(input);
 		input = Float.parseFloat(temp.substring(0, 4));
-		return input;
+		return input; //return -0.15 to 0.95 random number
 	}
 	public static float leftRightAxis() {
 		float input = 0;
@@ -141,16 +154,16 @@ public class NewChange {
 		}while (input <= -0.45 || input >= 1.45 || ((input < 0.400) && (input > 0.600)));
 		String temp = Float.toString(input);
 		input = Float.parseFloat(temp.substring(0, 4));
-		return input;
+		return input; //return -0.45 to 1.45 random number
 	}
 	public static boolean RandomTF() {
 		boolean tf = false;
-		int random = new Random().nextInt(2);
+		byte random = (byte)new Random().nextInt(2);
 		if(random == 1) { return true; } 
 		return false;
 	}
-	public static int CheckLooping(BufferedReader bbr ) throws Exception {
-		int countss = 1;
+	public static short CheckLooping(BufferedReader bbr ) throws Exception {
+		short countss = 1;
 		String sst;
 		while ((sst = bbr.readLine()) != null)
 			if(sst.equals("[HitObjects]")) {
@@ -160,7 +173,7 @@ public class NewChange {
 		return countss;
 	}
 	public static String Type() { //Return a random string type.
-		int random = new Random().nextInt(7);
+		byte random = (byte)new Random().nextInt(7);
 		String[] type = new String[7];
 		type[0] = "b";
 		type[1] = "s";
