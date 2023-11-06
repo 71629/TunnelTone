@@ -36,6 +36,14 @@ namespace TunnelTone.Elements
         public const float StartDelay = 2500f;
         public static float dspSongStartTime, dspSongEndTime;
 
+        public float currentBpm;
+        public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
+
+        private bool isPlaying = true;
+        
+        // ! Debug only
+        private float zPos = 0;
+
         private void Start()
         {
             _transform = GetComponent<Transform>();
@@ -44,9 +52,12 @@ namespace TunnelTone.Elements
 
         IEnumerator PlayChart()
         {
-            yield return null;
+            yield return new WaitUntil(() => isPlaying);
             
-            _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * ((float)AudioSettings.dspTime - dspSongStartTime) + offsetTime + StartDelay));
+            while (isPlaying)
+            {
+                yield return _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * currentTime + offsetTime + StartDelay));
+            }
 
             StartCoroutine(PlayChart());
         }
@@ -57,7 +68,9 @@ namespace TunnelTone.Elements
             dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
-            
+
+            audioSource.time = 0;
+            audioSource.volume = 1;
             audioSource.PlayDelayed(StartDelay / 1000f);
             StartCoroutine(PlayChart());
         }

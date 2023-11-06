@@ -15,10 +15,13 @@ namespace TunnelTone.GameSystem
         [SerializeField] private Animator animator;
         
         private static readonly int FadeOut = Animator.StringToHash("FadeOut");
+        private static readonly int IsPreviewing = Animator.StringToHash("isPreviewing");
+        private static readonly int EnterSong = Animator.StringToHash("EnterSong");
         private SongListEventReference songListEvent => SongListEventReference.Instance;
         private void Start()
         {
             songListEvent.OnSelectItem.AddListener(Preview);
+            songListEvent.OnSongStart.AddListener(StopPreview);
         }
 
         private void Preview(params object[] param)
@@ -40,6 +43,20 @@ namespace TunnelTone.GameSystem
                 animator.SetTrigger(FadeOut);
                 yield return new WaitForSecondsRealtime(1.2f);
             }
+        }
+        
+        private void StopPreview(params object[] param)
+        {
+            StopAllCoroutines();
+            animator.SetBool(IsPreviewing, false);
+            animator.SetTrigger(EnterSong);
+            Invoke(nameof(DisableAnimator), 1.1f);
+        }
+
+        private void DisableAnimator()
+        {
+            animator.enabled = false;
+            audioSource.Stop();
         }
     }
 }

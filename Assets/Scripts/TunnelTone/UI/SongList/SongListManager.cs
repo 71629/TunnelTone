@@ -3,6 +3,7 @@ using System.Collections;
 using System.Net;
 using UnityEngine;
 using Newtonsoft.Json;
+using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.Singleton;
@@ -72,6 +73,7 @@ namespace TunnelTone.UI.SongList
                     return;
                 }
                 SongListEventReference.Instance.OnSongStart.Trigger();
+                NoteRenderer.Instance.currentBpm = CurrentlySelected.bpm;
                 StartCoroutine(EnableCanvasDelayed());
             }
         }

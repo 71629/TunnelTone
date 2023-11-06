@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -10,20 +13,53 @@ using TouchPhase = UnityEngine.TouchPhase;
 
 namespace TunnelTone.Elements
 {
+    [RequireComponent(typeof(SphereCollider))]
     public class Trail : MonoBehaviour
     {
+        private float _startTime, _endTime;
+        private bool _virtualTrail;
+        
         private Trail _next;
         private bool _isHit;
         private TouchControl _trackingTouch;
-        private Spline _path;
+        private Spline spline;
 
         private List<GameObject> comboPoint;
+
+        public bool isTracking;
+
+        private SphereCollider _col;
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
+
+        private void Start()
+        {
+            _col = gameObject.GetComponent<SphereCollider>();
+            _col.radius = 160;
+            StartCoroutine(UpdateCollider());
+        }
+
+        private IEnumerator UpdateCollider()
+        {
+            if (_virtualTrail)
+            {
+                _col.enabled = false;
+                yield break;
+            }
+            while (spline is not null)
+            {
+                var t = Mathf.InverseLerp(_startTime, _endTime, NoteRenderer.currentTime * 1000);
+                yield return _col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
+            }
+        }
         
         public void Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
+            _startTime = startTime;
+            _endTime = endTime;
+            _virtualTrail = virtualTrail;
+            
             #region Convert coordinates
             startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             endCoordinate = new Vector2(endCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
@@ -39,7 +75,7 @@ namespace TunnelTone.Elements
             #endregion
             
             #region Path setup
-            var spline = gameObject.AddComponent<SplineContainer>().Spline;
+            spline = gameObject.AddComponent<SplineContainer>().Spline;
             
             // Create curve with respect to easing and easing ratio
             switch (easing)
@@ -94,12 +130,44 @@ namespace TunnelTone.Elements
             if (newTrail)
                 BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, direction, virtualTrail);
             
+            // Build subsegments
             for(var i = 0f; i < 1; i += (200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
             {
                 BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
             }
             BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction, virtualTrail);
+            
+            // Build critical combo points based on bpm
+            if (!virtualTrail)
+            {
+                var bpm = NoteRenderer.Instance.currentBpm;
+                for (var i = 0f; i < 1; i += bpm / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+                {
+                    BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z);
+                }
+            }
+            
             #endregion
+        }
+
+        private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
+        {
+            gb = new GameObject("Combo")
+            {
+                transform =
+                {
+                    parent = transform,
+                    localPosition = new Vector3
+                    {
+                        x = coordinate.x,
+                        y = coordinate.y,
+                        z = time
+                    },
+                    rotation = Quaternion.identity,
+                    localScale = Vector3.one
+                }
+            };
+            gb.AddComponent<SphereCollider>().radius = 0;
         }
         
         private void BuildHead(Vector2 coordinate, float time, Direction direction, bool virtualTrail)
