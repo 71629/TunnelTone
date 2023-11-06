@@ -19,16 +19,17 @@ public class RandomImage : MonoBehaviour
     void Start()
     {
         image = GetComponent<Image>();
+        StartCoroutine(FadeInFadeOut());
     }
 
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time >= timerate)
-        {
-            StartCoroutine(fadeInFadeOut());
-            time = 0;
-        }
+       
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     void changeSprite()
@@ -38,27 +39,33 @@ public class RandomImage : MonoBehaviour
             image.sprite = sprite;
     }
 
-    IEnumerator fadeInFadeOut()
+    IEnumerator FadeInFadeOut()
     {
         Debug.Log("Function is called");
+
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(10);
+            
+           //FadeIn loop
+            for (float i = 1; i >= 0; i -= Time.deltaTime)
+            {
+                yield return image.color = new Color(56, 56, 56, i);
+                Debug.Log("image.a = "+image.color.a);
+            }
+            
+            //change Sprite
+            yield return new WaitForSeconds(0.5f);
+            changeSprite();
+            yield return new WaitForSeconds(0.5f);
+            
+            //FadeOut loop
+            for (float i = 0; i <= 1; i += Time.deltaTime)
+            {
+                yield return image.color = new Color(56,56,56,i);
+                Debug.Log("image.a = " + image.color.a);
+            } 
+        }
         
-        //FadeIn loop
-        for (float i = 1; i >= 0; i -= Time.deltaTime)
-        {
-            yield return image.color = new Color(1, 1, 1, i);
-            Debug.Log("image.a = "+image.color.a);
-        }
- 
-        //change Sprite
-        yield return new WaitForSeconds(3);
-        changeSprite();
-        yield return new WaitForSeconds(3);
- 
-        //FadeOut loop
-        for (float i = 0; i <= 1; i += Time.deltaTime)
-        {
-            yield return image.color = new Color(1,1,1,i);
-            Debug.Log("image.a = " + image.color.a);
-        }
     }
 }
