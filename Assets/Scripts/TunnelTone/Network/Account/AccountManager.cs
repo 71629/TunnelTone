@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Dialog;
+using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -14,6 +16,8 @@ namespace TunnelTone.Network.Account
 {
     public class AccountManager : Singleton<AccountManager>
     {
+        [SerializeField] private Animator accountInfo;
+        
         [Header("Input fields for account registration")]
         [SerializeField] private TMP_InputField registerUsername;
         [SerializeField] private TMP_InputField registerPassword;
@@ -33,10 +37,37 @@ namespace TunnelTone.Network.Account
         [Header("Display elements")] 
         [SerializeField] private TextMeshProUGUI user;
         [SerializeField] private Image statusIndicator;
-        
-        private const string RegisterUserURL = "https://hashtag071629.com/register";
-        private const string LoginUserURL = "https://hashtag071629.com/login";
+        private static readonly int Dismiss = Animator.StringToHash("Dismiss");
 
+        [Header("Panels")] 
+        [SerializeField] private GameObject accountInfoPanel;
+        [SerializeField] private GameObject offlinePanel;
+        
+        [Header("Text File")]
+        [SerializeField] private TextAsset accountInfoText;
+
+        private const string APIURL = "https://hashtag071629.com/";
+        
+        private Credential _credential;
+
+        private void Start()
+        {
+            _credential = JsonConvert.DeserializeObject<Credential>(accountInfoText.text);
+            StartCoroutine(LoginUser(SystemInfo.deviceUniqueIdentifier));
+        }
+        
+        public void ShowAccountInfo()
+        {
+            if (_credential.uid == -1)
+            {
+                accountInfoPanel.SetActive(false);
+                offlinePanel.SetActive(true);
+                return;
+            }
+            accountInfoPanel.SetActive(true);
+            offlinePanel.SetActive(false);
+        }
+        
         private void ResetErrors()
         {
             registerUsernameError.enabled = false;
@@ -47,6 +78,20 @@ namespace TunnelTone.Network.Account
             registerConfirmPassword.GetComponent<Image>().color = new Color(.65f, .65f, .65f);
             registerEmailError.enabled = false;
             registerEmail.GetComponent<Image>().color = new Color(.65f, .65f, .65f);
+        }
+
+        private void ResetRegisterText()
+        {
+            registerUsername.text = "";
+            registerPassword.text = "";
+            registerConfirmPassword.text = "";
+            registerEmail.text = "";
+        }
+        
+        private void ResetLoginText()
+        {
+            loginUsername.text = "";
+            loginPassword.text = "";
         }
 
         public void Register()
@@ -103,6 +148,37 @@ namespace TunnelTone.Network.Account
         {
             StartCoroutine(LoginUser(loginUsername.text, loginPassword.text));
         }
+
+        public void Logout()
+        {
+            StartCoroutine(UserLogout());
+        }
+        
+        public IEnumerator UserLogout()
+        {
+            WWWForm form = new();
+            form.AddField("uidPost", _credential.uid);
+            form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
+
+            using var req = UnityWebRequest.Post($"{APIURL}logout", form);
+            
+            SystemEventReference.Instance.OnDisplayDialog.Trigger("Logout", "Logging out...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
+            
+            yield return req.SendWebRequest();
+            SystemEventReference.Instance.OnAbortDialog.Trigger();
+            
+            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
+            
+            if (req.downloadHandler.text == "LOGOUT_SUCCESS")
+            {
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", "Logged out successfully", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                user.text = "GUEST";
+                statusIndicator.color = new Color(.7f, .7f, .7f);
+                _credential = null;
+                accountInfoText = new TextAsset(JsonConvert.SerializeObject(_credential));
+                accountInfo.SetTrigger(Dismiss);
+            }
+        }
         
         private IEnumerator RegisterUser(string username, string password, string email)
         {
@@ -110,16 +186,52 @@ namespace TunnelTone.Network.Account
             form.AddField("usernamePost", username);
             form.AddField("passwordPost", password);
             form.AddField("eMailPost", email);
+            form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
 
-            using var req = UnityWebRequest.Post(RegisterUserURL, form);
+            using var req = UnityWebRequest.Post($"{APIURL}register", form);
             
             SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Connecting to server...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
 
-            req.timeout = 12;
+            req.timeout = 10;
             yield return req.SendWebRequest();
             SystemEventReference.Instance.OnAbortDialog.Trigger();
 
-            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : "Form post complete!");
+            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
+
+            if (req.downloadHandler.text == "DUPLICATE_EMAIL")
+            {
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", $"{email} is already registered", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Error);
+            }
+            else if (req.downloadHandler.text == "DUPLICATE_USERNAME")
+            {
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", $"{username} is already registered", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Error);
+            }
+            else if (req.downloadHandler.text == "SUCCESS")
+            {
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Account created successfully", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                accountInfo.SetTrigger(Dismiss);
+            }
+        }
+
+        private IEnumerator LoginUser(string deviceID)
+        {
+            WWWForm form = new();
+            form.AddField("deviceIDPost", deviceID);
+            
+            using var req = UnityWebRequest.Post($"{APIURL}autologin", form);
+
+            yield return req.SendWebRequest();
+            
+            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
+            
+            if (req.downloadHandler.text.Contains("LOGIN_SUCCESS"))
+            {
+                // output format LOGIN_SUCCESS_{uid:int}_{username:string}
+                var data = req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length);
+                user.text = data.Split('_')[1];
+                _credential.uid = int.Parse(data.Split('_')[0]);
+                statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
+            }
         }
         
         private IEnumerator LoginUser(string username, string password)
@@ -127,12 +239,40 @@ namespace TunnelTone.Network.Account
             WWWForm form = new();
             form.AddField("usernamePost", username);
             form.AddField("passwordPost", password);
+            form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
 
-            using var req = UnityWebRequest.Post(LoginUserURL, form);
+            using var req = UnityWebRequest.Post($"{APIURL}login", form);
             
+            SystemEventReference.Instance.OnDisplayDialog.Trigger("Login", "Logging in...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
             yield return req.SendWebRequest();
+            SystemEventReference.Instance.OnAbortDialog.Trigger();
 
-            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : "Form post complete!");
+            Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
+
+            if (req.downloadHandler.text.Contains("LOGIN_SUCCESS"))
+            {
+                _credential.uid = int.Parse(req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length));
+                accountInfoText = new TextAsset(JsonConvert.SerializeObject(_credential));
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", $"Logged in as {username}", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                user.text = username;
+                statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
+                accountInfo.SetTrigger(Dismiss);
+            }
+        }
+        
+        public void UploadScore(string song, int score, int difficulty)
+        {
+            WWWForm form = new();
+            form.AddField("uidPost", _credential.uid);
+            form.AddField("songPost", song);
+            form.AddField("scorePost", score);
+            form.AddField("difficultyPost", difficulty);
+            form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
+        }
+        
+        internal class Credential
+        {
+            public int uid { get; set; }
         }
     }
 }

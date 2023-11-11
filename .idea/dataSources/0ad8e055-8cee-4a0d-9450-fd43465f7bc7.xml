@@ -155,8 +155,8 @@
     </schema>
     <schema id="18" parent="1" name="TunnelTone">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-11-02.11:39:21</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-11-02.03:39:20</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2023-11-11.22:07:57</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-11-11.14:07:56</LocalIntrospectionTimestamp>
       <CollationName>utf8mb4_bin</CollationName>
     </schema>
     <user id="19" parent="1" name="wozpNvgH7LbMJYw.root"/>
@@ -166,113 +166,204 @@
       <Plugin>tidb_auth_token</Plugin>
     </user>
     <user id="23" parent="1" name="wozpNvgH7LbMJYw.vu-gH32qSZX"/>
-    <table id="24" parent="18" name="score_record">
+    <table id="24" parent="18" name="account_log">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_bin</CollationName>
     </table>
-    <table id="25" parent="18" name="users">
+    <table id="25" parent="18" name="score_record">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_bin</CollationName>
     </table>
-    <column id="26" parent="24" name="time">
+    <table id="26" parent="18" name="songs">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <table id="27" parent="18" name="users">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_bin</CollationName>
+    </table>
+    <column id="28" parent="24" name="time">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="27" parent="24" name="uid">
+    <column id="29" parent="24" name="uid">
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="28" parent="24" name="song">
-      <DasType>varchar(32)|0s</DasType>
+    <column id="30" parent="24" name="device_id">
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="29" parent="24" name="difficulty">
-      <DasType>int(11)|0s</DasType>
+    <column id="31" parent="24" name="action">
+      <DasType>enum(&apos;login&apos;, &apos;logout&apos;, &apos;register&apos;, &apos;drop&apos;, &apos;sync&apos;)|0e</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="30" parent="24" name="score">
-      <DasType>int(11)|0s</DasType>
+    <column id="32" parent="24" name="target_application">
+      <DasType>enum(&apos;TunnelTone&apos;, &apos;RainbowGame&apos;, &apos;account&apos;)|0e</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="31" parent="24" name="score_record_users_uid_fk">
+    <foreign-key id="33" parent="24" name="account_log_users_uid_fk">
       <ColNames>uid</ColNames>
       <RefColNames>uid</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="32" parent="24" name="PRIMARY">
+    <index id="34" parent="24" name="PRIMARY">
+      <ColNames>uid
+time</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="35" parent="24" name="account_log_users_uid_fk">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="36" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="37" parent="25" name="time">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="38" parent="25" name="uid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="39" parent="25" name="song">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="40" parent="25" name="difficulty">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="41" parent="25" name="score">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="42" parent="25" name="score_record_users_uid_fk">
+      <ColNames>uid</ColNames>
+      <RefColNames>uid</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="43" parent="25" name="PRIMARY">
       <ColNames>time
 uid</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="33" parent="24" name="score_record_users_uid_fk">
+    <index id="44" parent="25" name="score_record_users_uid_fk">
       <ColNames>uid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="34" parent="24" name="PRIMARY">
+    <key id="45" parent="25" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="35" parent="25" name="uid">
+    <column id="46" parent="26" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="36" parent="25" name="username">
-      <DasType>varchar(24)|0s</DasType>
+    <column id="47" parent="26" name="title">
+      <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="37" parent="25" name="passwordHash">
-      <DasType>char(60)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="48" parent="26" name="easy">
+      <DasType>float|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="38" parent="25" name="email">
-      <DasType>varchar(32)|0s</DasType>
-      <NotNull>1</NotNull>
+    <column id="49" parent="26" name="hard">
+      <DasType>float|0s</DasType>
       <Position>4</Position>
     </column>
-    <index id="39" parent="25" name="PRIMARY">
-      <ColNames>uid</ColNames>
+    <column id="50" parent="26" name="intensive">
+      <DasType>float|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="51" parent="26" name="insane">
+      <DasType>float|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <index id="52" parent="26" name="PRIMARY">
+      <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="40" parent="25" name="users_pk3">
-      <ColNames>uid</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="41" parent="25" name="users_pk2">
-      <ColNames>username</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="42" parent="25" name="users_pk4">
-      <ColNames>email</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="43" parent="25" name="PRIMARY">
+    <key id="53" parent="26" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="44" parent="25" name="users_pk3">
+    <column id="54" parent="27" name="uid">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="55" parent="27" name="username">
+      <DasType>varchar(24)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="56" parent="27" name="passwordHash">
+      <DasType>char(60)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="57" parent="27" name="email">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <index id="58" parent="27" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="59" parent="27" name="users_pk3">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="60" parent="27" name="users_pk2">
+      <ColNames>username</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="61" parent="27" name="users_pk4">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="62" parent="27" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="63" parent="27" name="users_pk3">
       <UnderlyingIndexName>users_pk3</UnderlyingIndexName>
     </key>
-    <key id="45" parent="25" name="users_pk2">
+    <key id="64" parent="27" name="users_pk2">
       <UnderlyingIndexName>users_pk2</UnderlyingIndexName>
     </key>
-    <key id="46" parent="25" name="users_pk4">
+    <key id="65" parent="27" name="users_pk4">
       <UnderlyingIndexName>users_pk4</UnderlyingIndexName>
     </key>
   </database-model>

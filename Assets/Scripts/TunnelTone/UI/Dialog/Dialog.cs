@@ -33,6 +33,7 @@ namespace TunnelTone.UI.Dialog
 
         private void DisplayDialog(params object[] param)
         {
+            CancelInvoke();
             title.text = (string)param[0];
             message.text = (string)param[1];
             var optionText = (string[])param[2];
