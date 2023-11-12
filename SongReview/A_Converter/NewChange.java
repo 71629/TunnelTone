@@ -6,17 +6,17 @@ public class NewChange {
 	public static void main(String[] args) throws Exception
 	{
 		Scanner input = new Scanner(System.in);
-		File file = new File(
-		 	"..\\A_Converter\\Sample.osu");
+		File file = new File("..\\A_Converter\\Sample.osu");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		short count = 0; short counttt = 15; int anotherCount = 0; int checkOneButton; int checkOneButtonTemp; int loop = CheckLooping(br);
 		String leftRightStartOne; String upDownStartOne; String st;
-		String arcSave[] = new String [9999]; String anotherArcSave[] = new String[9999];
+		String arcTapSave[] = new String [9999]; String anotherArcSave[] = new String[9999];
 		boolean trigger = true; boolean exceptionNull = false;
+
 		while ((st = br.readLine()) != null) { //Read per line until end
 			do {
 				try{
-					arcSave[count] = st.substring(0, counttt); //If 
+					arcTapSave[count] = st.substring(0, counttt); //If 
 					//System.out.println("Substring" + counttt); //Normal
 					exceptionNull = false;
 					counttt = 15;
@@ -28,16 +28,16 @@ public class NewChange {
 				}
 			}while(exceptionNull != false);
 			count++;
-			//System.out.println(arcSave[count]); //It should be cut it into the array
+			//System.out.println(arcTapSave[count]); //It should be cut it into the array
 		}
 
 		counttt = 1;
 		count = 0;
 		do {
 			try{
-				if(arcSave[count].substring((counttt-1),counttt).equals(",")) {
-					arcSave[count] = arcSave[count].substring(counttt,arcSave[count].length());
-					System.out.println(arcSave[count]); //Remove first,
+				if(arcTapSave[count].substring((counttt-1),counttt).equals(",")) {
+					arcTapSave[count] = arcTapSave[count].substring(counttt,arcTapSave[count].length());
+					//System.out.println(arcTapSave[count]); //Remove first,
 					count++;
 					counttt = 1;
 				} else { counttt++; }
@@ -45,68 +45,58 @@ public class NewChange {
 				count++;
 				counttt = 1;
 			}
-		}while(arcSave[count] != null);
+		}while(arcTapSave[count] != null);
 
-
-		for(int f=0; f<2; f++) {
-			for(int i=0; i<arcSave.length; i++) {
-				if(arcSave[i] !=null){
-					if(arcSave[i].substring(0,1).equals(",")){
-						arcSave[i] = arcSave[i].substring(1,arcSave[i].length());
-					} else {
-						if(arcSave[i].substring(1,2).equals(",")) {
-							arcSave[i] = arcSave[i].substring(2,arcSave[i].length());
-						} else {
-							if(arcSave[i].substring(2,3).equals(",")) {
-							arcSave[i] = arcSave[i].substring(3,arcSave[i].length());
-							} else {
-								if(arcSave[i].substring(3,4).equals(",")) {
-									arcSave[i] = arcSave[i].substring(4,arcSave[i].length());
-								} else {
-									break;
-								}
-							}
-						}
-					} //System.out.print(i+": "); System.out.println(arcSave[i]); //(Remove first,)
-				}
+		counttt = 1;
+		count = 0;
+		do {
+			try{
+				if(arcTapSave[count].substring((counttt-1),counttt).equals(",")) {
+					arcTapSave[count] = arcTapSave[count].substring(counttt,arcTapSave[count].length());
+					//System.out.println(arcTapSave[count]); //Remove Second,
+					count++;
+					counttt = 1;
+				} else { counttt++; }
+			}catch (Exception b) {
+				count++;
+				counttt = 1;
 			}
-		}
+		}while(arcTapSave[count] != null);
 
 		counttt = 0;
 		count = 0;
 		do {
 			try{
-				if(arcSave[count].substring(counttt,(counttt+1)).equals(",")) {
-					arcSave[count] = arcSave[count].substring(0,counttt);
+				if(arcTapSave[count].substring(counttt,(counttt+1)).equals(",")) {
+					arcTapSave[count] = arcTapSave[count].substring(0,counttt);
 					count++;
 					counttt = 0;
-					//System.out.println(arcSave[count]); //It should be number only
+					//System.out.println(arcTapSave[count]); //It should be number only
 				} else { counttt++; }
 			}catch (Exception e) {
 				count++;
 				counttt = 0;
 			}
-		}while(arcSave[count] != null);
+		}while(arcTapSave[count] != null);
 
 		counttt = 0;
-		for(int i=0; i<arcSave.length; i++) {
+		for(int i=0; i<arcTapSave.length; i++) {
 			if(IsArcEndByRandom() == true || counttt == 0) {
 				counttt++;
 			} else {
-				if(arcSave[i] != null) {
-
-					checkOneButton = Integer.valueOf(arcSave[i]);
-					checkOneButtonTemp = Integer.valueOf(arcSave[i-counttt]);
+				if(arcTapSave[i] != null) {
+					checkOneButton = Integer.valueOf(arcTapSave[i]);
+					checkOneButtonTemp = Integer.valueOf(arcTapSave[i-counttt]);
 					leftRightStartOne = Float.toString(leftRightAxis());
 					upDownStartOne = Float.toString(upDownAxis());
 					if(checkOneButton == checkOneButtonTemp) {
 						checkOneButton++;
-						anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + Type() + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
-					} else { anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + arcSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + Type() + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
-					//anotherArcSave[anotherCount] = "arc("+ arcSave[i-counttt] + "," + arcSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
+						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + Type() + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
+					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + Type() + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
+					//anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
 					for(int j = i - counttt; j<=i; j++) {
-						if(j == i) { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcSave[j] + ")];";}
-						else { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] +"arctap(" + arcSave[j] + "),"; }			
+						if(j == i) { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcTapSave[j] + ")];";}
+						else { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] +"arctap(" + arcTapSave[j] + "),"; }			
 					}
 					//System.out.println(anotherArcSave[anotherCount]); //Print a full type of arc
 					counttt = 0;
@@ -115,9 +105,7 @@ public class NewChange {
 			}
 		}
 		File files = new File("..\\A_Converter\\2.aff"); //File Write in to 2.aff under this java program folder.
-		System.out.println("");
 		System.out.println("2.aff has been create in TunnelTone\\SongReview\\A_Converter !");
-		System.out.println("");
 		FileWriter fw = new FileWriter("..\\A_Converter\\2.aff");
 		System.out.println("Writing 2.aff...");
 		fw.write("AudioOffset:0" + "\r\n");
