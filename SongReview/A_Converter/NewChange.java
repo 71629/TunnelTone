@@ -81,7 +81,7 @@ public class NewChange {
 		}while(arcTapSave[count] != null);
 
 		counttt = 0;
-		for(int i=0; i<arcTapSave.length; i++) {
+		for(int i=0; i<arcTapSave.length; i++) { //It will progress one arc then progress another arc. So it will not generate a lot of arc in one time
 			if(IsArcEndByRandom() == true || counttt == 0) {
 				counttt++;
 			} else {
@@ -92,8 +92,8 @@ public class NewChange {
 					upDownStartOne = Float.toString(upDownAxis());
 					if(checkOneButton == checkOneButtonTemp) {
 						checkOneButton++;
-						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + type[(byte)new Random().nextInt(7)] + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
-					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + type[(byte)new Random().nextInt(7)] + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
+						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + type[new Random().nextInt(7)] + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
+					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + type[new Random().nextInt(7)] + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
 					//anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
 					for(int j = i - counttt; j<=i; j++) {
 						if(j == i) { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcTapSave[j] + ")];";}
