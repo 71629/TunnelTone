@@ -12,7 +12,8 @@ public class NewChange {
 		String leftRightStartOne; String upDownStartOne; String st;
 		String arcTapSave[] = new String [9999]; String anotherArcSave[] = new String[9999];
 		boolean trigger = true; boolean exceptionNull = false;
-
+		String[] type = new String[7];
+		type[0] = "b"; type[1] = "s"; type[2] = "si"; type[3] = "so"; type[4] = "sisi"; type[5] = "soso"; type[6] = "sosi";
 		while ((st = br.readLine()) != null) { //Read per line until end
 			do {
 				try{
@@ -91,8 +92,8 @@ public class NewChange {
 					upDownStartOne = Float.toString(upDownAxis());
 					if(checkOneButton == checkOneButtonTemp) {
 						checkOneButton++;
-						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + Type() + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
-					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + Type() + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
+						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + type[(byte)new Random().nextInt(7)] + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
+					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + type[(byte)new Random().nextInt(7)] + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
 					//anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
 					for(int j = i - counttt; j<=i; j++) {
 						if(j == i) { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcTapSave[j] + ")];";}
@@ -158,17 +159,5 @@ public class NewChange {
 				return countss;
 			} else { countss++; }
 		return countss;
-	}
-	public static String Type() { //Return a random string type.
-		byte random = (byte)new Random().nextInt(7);
-		String[] type = new String[7];
-		type[0] = "b";
-		type[1] = "s";
-		type[2] = "si";
-		type[3] = "so";
-		type[4] = "sisi";
-		type[5] = "soso";
-		type[6] = "sosi";
-		return type[random];
 	}
 }
