@@ -5,26 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14014523-faa6-46a2-bfd7-27b59090afd2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/qodana_code_quality.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/Dialog.controller" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/Dialog.controller.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DismissDialog.anim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DismissDialog.anim.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayDialog.anim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayDialog.anim.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Dialog Option.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Dialog Option.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Bold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,17 +34,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "dialog",
+    "git-widget-placeholder": "network",
+    "import_schema_mapping": "<schema-mapping>\n  <databases>\n    <list>\n      <schema-mapping-item>\n        <source-data-source-id>0ad8e055-8cee-4a0d-9450-fd43465f7bc7</source-data-source-id>\n        <source-path>schema/&quot;TunnelTone&quot;</source-path>\n        <target-data-source-id>6a781df5-67e2-479e-ba4b-7c7097077a05</target-data-source-id>\n        <target-path>database/&quot;verceldb&quot;/schema/&quot;public&quot;</target-path>\n      </schema-mapping-item>\n    </list>\n  </databases>\n</schema-mapping>",
     "last_opened_file_path": "D:/grepo/TunnelTone",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "duplicates.index",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "tidb"
+      "tidb",
+      "postgresql"
     ]
   }
 }]]></component>
@@ -83,5 +69,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

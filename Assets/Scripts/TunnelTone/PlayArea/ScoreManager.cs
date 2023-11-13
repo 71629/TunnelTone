@@ -4,7 +4,7 @@ using TunnelTone.Elements;
 using TunnelTone.Events;
 using UnityEngine;
 
-namespace TunnelTone.UI
+namespace TunnelTone.PlayArea
 {
     public class ScoreManager : MonoBehaviour
     {

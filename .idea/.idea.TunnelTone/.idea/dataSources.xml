@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="@gateway01.us-west-2.prod.aws.tidbcloud.com" uuid="c075de6c-92f8-4cbd-8069-b91f65bf3bb8">
+      <driver-ref>tidb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://gateway01.us-west-2.prod.aws.tidbcloud.com:4000</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="enabledTLSProtocols" value="TLSv1, TLSv1.1, TLSv1.2, TLSv1.3" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

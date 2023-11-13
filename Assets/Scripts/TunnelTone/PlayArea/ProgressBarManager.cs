@@ -3,7 +3,7 @@ using TunnelTone.GameSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TunnelTone.UI
+namespace TunnelTone.PlayArea
 {
     public class ProgressBarManager : MonoBehaviour
     {
