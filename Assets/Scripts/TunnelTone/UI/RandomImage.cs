@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class RandomImage : MonoBehaviour
 {
-    public Image image;
+    public Image image, image2;
     public Sprite sprite;
     public Sprite[] Sprites;
     public SpriteRenderer spriteRenderer;
@@ -37,35 +37,49 @@ public class RandomImage : MonoBehaviour
             int num = UnityEngine.Random.Range(0, Sprites.Length);
             sprite = Sprites[num];
             image.sprite = sprite;
+            image2.sprite = sprite;
     }
 
     IEnumerator FadeInFadeOut()
     {
-        Debug.Log("Function is called");
-
         while (true)
         {
-            yield return new WaitForSecondsRealtime(25);
-            
-           //FadeIn loop
-            for (float i = 1; i >= 0; i -= Time.deltaTime)
+            yield return new WaitForSecondsRealtime(timerate);
+
+            int loop = 0;
+
+            if (loop == 0)
             {
-                yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
-                Debug.Log("image.a = "+image.color.a);
+                for (float i = 1; i >= 0; i -= Time.deltaTime)
+                {
+                    yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
+                    Debug.Log("image.a = " + image.color.a);
+                }
+                changeSprite();
+                for (float i = 0; i <= 1; i += Time.deltaTime)
+                {
+                    yield return image2.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
+                    Debug.Log("image.a = " + image.color.a);
+                }
+                changeSprite();
+                loop += 1;
             }
-            
-            //change Sprite
-            yield return new WaitForSeconds(0.5f);
-            changeSprite();
-            yield return new WaitForSeconds(0.5f);
-            
-            //FadeOut loop
-            for (float i = 0; i <= 1; i += Time.deltaTime)
+            else
             {
-                yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
-                Debug.Log("image.a = " + image.color.a);
-            } 
+                for (float i = 1; i >= 0; i -= Time.deltaTime)
+                {
+                    yield return image2.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
+                    Debug.Log("image.a = " + image.color.a);
+                }
+                changeSprite();
+                for (float i = 0; i <= 1; i += Time.deltaTime)
+                {
+                    yield return image.color = new Color((float)0.2196079, (float)0.2196079, (float)0.2196079, i);
+                    Debug.Log("image.a = " + image.color.a);
+                }
+                changeSprite();
+                loop -= 1;
+            }
         }
-        
     }
-}
+    }
