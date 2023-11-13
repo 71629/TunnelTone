@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14014523-faa6-46a2-bfd7-27b59090afd2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/Credential.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/Credential.json.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Tests.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Tests/Tests.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Tests/Tests.asmdef.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Regular SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Animations/AccountInfo.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Animations/AccountInfo.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayAccountInfo.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Animations/DisplayAccountInfo.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,28 +28,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenDatabaseViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;network&quot;,
-    &quot;import_schema_mapping&quot;: &quot;&lt;schema-mapping&gt;\n  &lt;databases&gt;\n    &lt;list&gt;\n      &lt;schema-mapping-item&gt;\n        &lt;source-data-source-id&gt;0ad8e055-8cee-4a0d-9450-fd43465f7bc7&lt;/source-data-source-id&gt;\n        &lt;source-path&gt;schema/&amp;quot;TunnelTone&amp;quot;&lt;/source-path&gt;\n        &lt;target-data-source-id&gt;6a781df5-67e2-479e-ba4b-7c7097077a05&lt;/target-data-source-id&gt;\n        &lt;target-path&gt;database/&amp;quot;verceldb&amp;quot;/schema/&amp;quot;public&amp;quot;&lt;/target-path&gt;\n      &lt;/schema-mapping-item&gt;\n    &lt;/list&gt;\n  &lt;/databases&gt;\n&lt;/schema-mapping&gt;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/grepo/TunnelTone&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "network",
+    "import_schema_mapping": "<schema-mapping>\n  <databases>\n    <list>\n      <schema-mapping-item>\n        <source-data-source-id>0ad8e055-8cee-4a0d-9450-fd43465f7bc7</source-data-source-id>\n        <source-path>schema/&quot;TunnelTone&quot;</source-path>\n        <target-data-source-id>6a781df5-67e2-479e-ba4b-7c7097077a05</target-data-source-id>\n        <target-path>database/&quot;verceldb&quot;/schema/&quot;public&quot;</target-path>\n      </schema-mapping-item>\n    </list>\n  </databases>\n</schema-mapping>",
+    "last_opened_file_path": "D:/grepo/TunnelTone",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "duplicates.index",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;tidb&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "tidb",
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
