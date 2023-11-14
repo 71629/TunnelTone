@@ -34,6 +34,7 @@ namespace TunnelTone.UI.Dialog
         private void DisplayDialog(params object[] param)
         {
             CancelInvoke();
+            PurgeOptions();
             title.text = (string)param[0];
             message.text = (string)param[1];
             var optionText = (string[])param[2];
@@ -63,7 +64,12 @@ namespace TunnelTone.UI.Dialog
         {
             animator.enabled = false;
             GetComponent<Canvas>().enabled = false;
-            for(var i = 0; i < foot.childCount; i++)
+            PurgeOptions();
+        }
+
+        private void PurgeOptions()
+        {
+            for (var i = 0; i < foot.childCount; i++)
                 Destroy(foot.GetChild(i).gameObject);
         }
 

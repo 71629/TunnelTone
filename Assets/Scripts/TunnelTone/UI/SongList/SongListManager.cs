@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Net;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
@@ -8,8 +7,6 @@ using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace TunnelTone.UI.SongList
 {

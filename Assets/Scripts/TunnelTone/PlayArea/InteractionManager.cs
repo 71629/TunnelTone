@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using TunnelTone.Charts;
+﻿using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.Singleton;
 using UnityEngine;
@@ -31,17 +29,17 @@ namespace TunnelTone.PlayArea
                     transform = { parent = transform }
                 };
                 gb.AddComponent<Touch>().Initialize(in touch);
-                // var touchPosition =
-                //     MainCamera.ScreenToWorldPoint((Vector3)touch.startPosition.value + Vector3.forward * 100);
-                // var ray = new Ray(touchPosition + Vector3.back * 120, Vector3.forward);
-                //
-                // if (Physics.Raycast(ray, out var hit, 600, 1 << 10)) // evil bit hack
-                // {
-                //     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
-                //     hit.collider.GetComponent<Tap>().Hit();
-                //     continue;
-                // }
-                // Debug.DrawRay(ray.origin, ray.direction * 600, Color.red);
+                var touchPosition =
+                    MainCamera.ScreenToWorldPoint((Vector3)touch.startPosition.value + Vector3.forward * 100);
+                var ray = new Ray(touchPosition + Vector3.back * 120, Vector3.forward);
+                
+                if (Physics.Raycast(ray, out var hit, 600, 1 << 10)) // evil bit hack
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
+                    hit.collider.GetComponent<Tap>().Hit();
+                    continue;
+                }
+                Debug.DrawRay(ray.origin, ray.direction * 600, Color.red);
             }
             
             // Trail note detection

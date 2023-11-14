@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TunnelTone.Singleton;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Splines;
 
 // TODO: Refactor
 
@@ -40,9 +37,6 @@ namespace TunnelTone.Elements
         public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
 
         private bool isPlaying = true;
-        
-        // ! Debug only
-        private float zPos = 0;
 
         private void Start()
         {
@@ -64,6 +58,8 @@ namespace TunnelTone.Elements
 
         public void StartSong()
         {
+            Debug.Log(AudioSettings.dspTime);
+            
             // Set up song start and end times
             dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;

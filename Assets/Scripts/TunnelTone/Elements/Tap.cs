@@ -9,7 +9,7 @@ namespace TunnelTone.Elements
     [RequireComponent(typeof(SphereCollider))]
     public class Tap : MonoBehaviour
     {
-        public const float StandardOffset = 700;
+        public const float StandardOffset = 0;
         
         public Vector2 position;
         public float time;
@@ -30,7 +30,7 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            gameObject.layer = 0b1010;
+            gameObject.layer = 10;
             gameObject.tag = "Note";
             _hitHint = new GameObject
             {

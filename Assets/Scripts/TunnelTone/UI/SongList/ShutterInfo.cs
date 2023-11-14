@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;

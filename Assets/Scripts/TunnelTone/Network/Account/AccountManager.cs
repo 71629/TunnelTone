@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
@@ -48,17 +47,17 @@ namespace TunnelTone.Network.Account
 
         private const string APIURL = "https://hashtag071629.com/";
         
-        private Credential _credential;
+        private bool _isLoggedIn = false;
+        private int _uid;
 
         private void Start()
         {
-            _credential = JsonConvert.DeserializeObject<Credential>(accountInfoText.text);
             StartCoroutine(LoginUser(SystemInfo.deviceUniqueIdentifier));
         }
         
         public void ShowAccountInfo()
         {
-            if (_credential.uid == -1)
+            if (!_isLoggedIn)
             {
                 accountInfoPanel.SetActive(false);
                 offlinePanel.SetActive(true);
@@ -149,6 +148,11 @@ namespace TunnelTone.Network.Account
             StartCoroutine(LoginUser(loginUsername.text, loginPassword.text));
         }
 
+        public void Login(string username, string password)
+        {
+            StartCoroutine(LoginUser(username, password));
+        }
+
         public void Logout()
         {
             StartCoroutine(UserLogout());
@@ -157,7 +161,7 @@ namespace TunnelTone.Network.Account
         public IEnumerator UserLogout()
         {
             WWWForm form = new();
-            form.AddField("uidPost", _credential.uid);
+            form.AddField("uidPost", _uid);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
 
             using var req = UnityWebRequest.Post($"{APIURL}logout", form);
@@ -174,9 +178,8 @@ namespace TunnelTone.Network.Account
                 SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", "Logged out successfully", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
                 user.text = "GUEST";
                 statusIndicator.color = new Color(.7f, .7f, .7f);
-                _credential = null;
-                accountInfoText = new TextAsset(JsonConvert.SerializeObject(_credential));
                 accountInfo.SetTrigger(Dismiss);
+                _isLoggedIn = false;
             }
         }
         
@@ -208,7 +211,7 @@ namespace TunnelTone.Network.Account
             }
             else if (req.downloadHandler.text == "SUCCESS")
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Account created successfully", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Account created successfully", new[]{"OK", "Login"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }, () => Login(username, password)}, Dialog.Severity.Info);
                 accountInfo.SetTrigger(Dismiss);
             }
         }
@@ -229,8 +232,9 @@ namespace TunnelTone.Network.Account
                 // output format LOGIN_SUCCESS_{uid:int}_{username:string}
                 var data = req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length);
                 user.text = data.Split('_')[1];
-                _credential.uid = int.Parse(data.Split('_')[0]);
                 statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
+                _isLoggedIn = true;
+                _uid = int.Parse(data.Split('_')[0]);
             }
         }
         
@@ -251,19 +255,19 @@ namespace TunnelTone.Network.Account
 
             if (req.downloadHandler.text.Contains("LOGIN_SUCCESS"))
             {
-                _credential.uid = int.Parse(req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length));
-                accountInfoText = new TextAsset(JsonConvert.SerializeObject(_credential));
                 SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", $"Logged in as {username}", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
                 user.text = username;
                 statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
                 accountInfo.SetTrigger(Dismiss);
+                _isLoggedIn = true;
+                _uid = int.Parse(req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length).Split('_')[0]);
             }
         }
         
         public void UploadScore(string song, int score, int difficulty)
         {
             WWWForm form = new();
-            form.AddField("uidPost", _credential.uid);
+            form.AddField("uidPost", _uid);
             form.AddField("songPost", song);
             form.AddField("scorePost", score);
             form.AddField("difficultyPost", difficulty);
