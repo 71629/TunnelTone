@@ -22,6 +22,10 @@ namespace TunnelTone.UI.SongList
             {
                 OpenShutter();
             });
+            ChartEventReference.Instance.OnRetry.AddListener(delegate
+            {
+                CloseShutter();
+            });
         }
         
         private void CloseShutter() => shutterAnimator.SetTrigger(Close);

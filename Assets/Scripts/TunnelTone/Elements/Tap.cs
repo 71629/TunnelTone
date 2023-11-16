@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TunnelTone.Events;
 using UnityEngine;
 using UnityEngine.UI;
@@ -134,6 +135,11 @@ namespace TunnelTone.Elements
             offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time);
             HitEffect(offset);
             ChartEventReference.Instance.OnNoteHit.Trigger(offset);
-        } 
+        }
+
+        private void OnDestroy()
+        {
+            Destroy();
+        }
     }
 }

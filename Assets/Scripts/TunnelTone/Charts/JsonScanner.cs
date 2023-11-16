@@ -40,7 +40,7 @@ namespace TunnelTone.Charts
                     transform =
                     {
                         parent = transform,
-                        position = Vector3.zero,
+                        localPosition = Vector3.zero,
                         rotation = Quaternion.identity,
                         localScale = Vector3.one
                     },

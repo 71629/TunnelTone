@@ -66,10 +66,24 @@ namespace TunnelTone.Elements
             UIElementReference.Instance.pause.SetActive(false);
             AudioListener.pause = false;
         }
+
+        private void ResumeForListener(object param)
+        {
+            Resume();
+            SystemEventReference.Instance.OnChartLoadFinish.RemoveListener(ResumeForListener);
+        }
         
         public void Retry()
         {
+            StopAllCoroutines();
+            transform.position = Vector3.zero;
+            foreach (var gb in GetComponentsInChildren<Transform>())
+            {
+                if (gb.gameObject == gameObject) continue;
+                Destroy(gb.gameObject);
+            }
             ChartEventReference.Instance.OnRetry.Trigger();
+            SystemEventReference.Instance.OnChartLoadFinish.AddListener(ResumeForListener);
         }
         
         public void Quit()
