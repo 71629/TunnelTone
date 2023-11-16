@@ -13,16 +13,21 @@ namespace TunnelTone.Charts
     public class JsonScanner : MonoBehaviour
     {
         private static NoteRenderer NoteRenderer => NoteRenderer.Instance;
+        private Chart chartCache;
 
         private void Start()
         {
             SystemEventReference.Instance.OnChartLoad.AddListener(Scan);
+            ChartEventReference.Instance.OnRetry.AddListener(delegate { StartCoroutine(CreateElement(chartCache)); });
+            ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
         }
 
         private void Scan(params object[] param)
         {
             var chartFile = (TextAsset)param[0];
-            StartCoroutine(CreateElement(JsonConvert.DeserializeObject<Chart>(chartFile.text)));
+            var chart = JsonConvert.DeserializeObject<Chart>(chartFile.text);
+            chartCache = chart;
+            StartCoroutine(CreateElement(chart));
         }
 
         IEnumerator CreateElement(Chart chart)

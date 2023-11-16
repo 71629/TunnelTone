@@ -12,7 +12,7 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            NoteEventReference.Instance.OnNoteHit.AddListener(UpdateCombo);
+            ChartEventReference.Instance.OnNoteHit.AddListener(UpdateCombo);
         }
         
         public void UpdateCombo(params object[] param)

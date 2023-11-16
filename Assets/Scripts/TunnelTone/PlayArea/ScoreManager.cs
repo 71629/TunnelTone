@@ -16,7 +16,7 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            NoteEventReference.Instance.OnNoteHit.AddListener(UpdateScore);
+            ChartEventReference.Instance.OnNoteHit.AddListener(UpdateScore);
         }
 
         public void UpdateScore(params object[] param)

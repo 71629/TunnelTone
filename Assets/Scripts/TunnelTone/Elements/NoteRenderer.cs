@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.Events;
 using TunnelTone.Singleton;
+using TunnelTone.UI.Reference;
 using UnityEngine;
 
 // TODO: Refactor
@@ -35,25 +37,44 @@ namespace TunnelTone.Elements
 
         public float currentBpm;
         public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
-
-        private bool isPlaying = true;
-
+        
         private void Start()
         {
             _transform = GetComponent<Transform>();
             _transform.localPosition = Vector3.zero;
+            ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
         }
 
         IEnumerator PlayChart()
         {
-            yield return new WaitUntil(() => isPlaying);
-            
-            while (isPlaying)
+            while (true)
             {
                 yield return _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * currentTime + offsetTime + StartDelay));
             }
+        }
 
-            StartCoroutine(PlayChart());
+        public void Pause()
+        {
+            ChartEventReference.Instance.OnPause.Trigger();
+            UIElementReference.Instance.pause.SetActive(true);
+            AudioListener.pause = true;
+        }
+        
+        public void Resume()
+        {
+            ChartEventReference.Instance.OnResume.Trigger();
+            UIElementReference.Instance.pause.SetActive(false);
+            AudioListener.pause = false;
+        }
+        
+        public void Retry()
+        {
+            ChartEventReference.Instance.OnRetry.Trigger();
+        }
+        
+        public void Quit()
+        {
+            ChartEventReference.Instance.OnQuit.Trigger();
         }
 
         public void StartSong()

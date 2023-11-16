@@ -9,8 +9,6 @@ namespace TunnelTone.Elements
     [RequireComponent(typeof(SphereCollider))]
     public class Tap : MonoBehaviour
     {
-        public const float StandardOffset = 0;
-        
         public Vector2 position;
         public float time;
         private GameObject _hitHint;
@@ -128,14 +126,14 @@ namespace TunnelTone.Elements
         private void Destroy()
         {
             Destroy(_hitHint);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         
         public void Hit()
         {
-            offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - (time + StandardOffset));
+            offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time);
             HitEffect(offset);
-            NoteEventReference.Instance.OnNoteHit.Trigger(offset);
+            ChartEventReference.Instance.OnNoteHit.Trigger(offset);
         } 
     }
 }

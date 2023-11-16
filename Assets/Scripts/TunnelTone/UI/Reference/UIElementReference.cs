@@ -34,6 +34,9 @@ namespace TunnelTone.UI.Reference
         public Canvas dialog;
         public Canvas mainMenu;
 
+        [Header("UI Elements")] 
+        public GameObject pause;
+
         public void ToSongSelect()
         {
             
