@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define USE_LINE_RENDERER
+// #define USE_MESH
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +28,7 @@ namespace TunnelTone.Elements
         public bool isTracking;
 
         private SphereCollider _col;
+        private LineRenderer _lineRenderer => GetComponent<LineRenderer>();
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
@@ -34,6 +38,7 @@ namespace TunnelTone.Elements
             _col = gameObject.GetComponent<SphereCollider>();
             _col.radius = 160;
             StartCoroutine(UpdateCollider());
+            _lineRenderer.useWorldSpace = false;
         }
 
         private IEnumerator UpdateCollider()
@@ -123,25 +128,48 @@ namespace TunnelTone.Elements
             
             gameObject.GetComponent<MeshFilter>().mesh = new Mesh();
             
+#if USE_MESH // Keeping the code in case if needed
             if (newTrail)
                 BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, direction, virtualTrail);
             
             // Build subsegments
-            for(var i = 0f; i < 1; i += (200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z)))
+            for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
             {
                 BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
             }
             BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction, virtualTrail);
+#endif
+
+#if USE_LINE_RENDERER
+            var j = 0;
+            _lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .3f));
+            for (var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+            {
+                _lineRenderer.SetPosition(j, spline.EvaluatePosition(i));
+                _lineRenderer.positionCount++;
+                j++;
+            }
+            _lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
+            _lineRenderer.positionCount--;
             
             // Build critical combo points based on bpm
             if (!virtualTrail)
             {
                 var bpm = NoteRenderer.Instance.currentBpm;
+                if (newTrail)
+                    BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, direction, false);
                 for (var i = 0f; i < 1; i += bpm / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
                     BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z);
                 }
+                // Build subsegments
+                for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+                {
+                    BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, false);
+                }
+                BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction, false);
             }
+#endif
             
             #endregion
         }
@@ -231,8 +259,10 @@ namespace TunnelTone.Elements
         {
             Vector3 position = new Vector3(coordinate.x, coordinate.y, time);
             
-            #region Concatinate new vertices
+            // Get the mesh
+            var mesh = gameObject.GetComponent<MeshFilter>().mesh;
 
+            // Concatinate new vertices
             var vertices = !virtualTrail
                 ? new[]
                 {
@@ -248,10 +278,9 @@ namespace TunnelTone.Elements
                     position + new Vector3(0, -8, 0),
                     position + new Vector3(-8, 0, 0)
                 };
-            gameObject.GetComponent<MeshFilter>().mesh.vertices = gameObject.GetComponent<MeshFilter>().mesh.vertices.Concat(vertices).ToArray();
-            #endregion
+            mesh.vertices = mesh.vertices.Concat(vertices).ToArray();
 
-            #region Concatinate new triangles
+            // Concatinate new triangles
             var i = gameObject.GetComponent<MeshFilter>().mesh.vertices.Length;
             var triangles = new[]
             {
@@ -264,19 +293,35 @@ namespace TunnelTone.Elements
                 i - 5, i - 1, i - 4,
                 i - 5, i - 4, i - 8
             };
-            gameObject.GetComponent<MeshFilter>().mesh.triangles = gameObject.GetComponent<MeshFilter>().mesh.triangles.Concat(triangles).ToArray();
-            #endregion
-            
-            #region Concatinate new UVs
+
+            // Concatinate new UVs
             var uv = new List<Vector2>
             {
-                new(1f, 1f),
-                new(1f, -1f),
-                new(-1f, -1f),
-                new(-1f, 1f)
+                new Vector2(1f, 1f),
+                new Vector2(1f, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 1f)
             };
-            gameObject.GetComponent<MeshFilter>().mesh.uv = gameObject.GetComponent<MeshFilter>().mesh.uv.Concat(uv).ToArray();
-            #endregion
+
+            // Repeat the UVs for each vertex in the mesh
+            var totalVertices = gameObject.GetComponent<MeshFilter>().mesh.vertexCount + vertices.Length;
+            uv = Enumerable.Repeat(uv, totalVertices / uv.Count).SelectMany(x => x).ToList();
+
+            // Set the vertices, triangles, and UVs in the correct order
+            mesh.triangles = mesh.triangles.Concat(triangles).ToArray();
+            mesh.uv = uv.ToArray();
+            
+            // Recalculate bounds and normals
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+
+            StartCoroutine(DebugArray());
+        }
+
+        IEnumerator DebugArray()
+        {
+            yield return new WaitForEndOfFrame();
+            Debug.Log($"vertices: {GetComponent<MeshFilter>().mesh.vertices.Length}, uv: {GetComponent<MeshFilter>().mesh.uv.Length}");
         }
     }
 }
