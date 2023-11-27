@@ -146,9 +146,7 @@ public class NewChange {
 		return input; //return -0.45 to 1.45 random number
 	}
 	public static boolean IsArcEndByRandom() {
-		boolean bool = false;
-		byte random = (byte)new Random().nextInt(2);
-		return (random==1);
+		return (new Random().nextInt(2) == 1);
 	}
 	public static short CheckLooping(BufferedReader bbr ) throws Exception {
 		short countss = 1;
