@@ -5,10 +5,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.PlayArea;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;
+using Touch = UnityEngine.Touch;
 
 namespace TunnelTone.Elements
 {
@@ -20,12 +22,13 @@ namespace TunnelTone.Elements
         
         private Trail _next;
         private bool _isHit;
-        private TouchControl _trackingTouch;
+        public GameObject trackingTouch;
         private Spline _spline;
 
         private List<GameObject> _comboPoint;
 
         public bool isTracking;
+        public Direction Direction { get; private set; }
 
         private SphereCollider _col;
         private SplineContainer _splineContainer;
@@ -38,13 +41,29 @@ namespace TunnelTone.Elements
 
         private void Start()
         {
-            _meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            _meshFilter = gameObject.AddComponent<MeshFilter>();
-            _splineContainer = gameObject.AddComponent<SplineContainer>();
+            // TODO: Make this a prefab
             _col = gameObject.GetComponent<SphereCollider>();
             _col.radius = 160;
+            _col.isTrigger = true;
             StartCoroutine(UpdateCollider());
             LineRenderer.useWorldSpace = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Touch") && other.gameObject.GetComponent<TunnelTone.PlayArea.Touch>().direction == Direction.Any || other.gameObject.GetComponent<TunnelTone.PlayArea.Touch>().direction == Direction)
+            {
+                isTracking = true;
+            }
+            trackingTouch = other.gameObject;
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Touch"))
+            {
+                isTracking = false;
+            }
         }
 
         private IEnumerator UpdateCollider()
@@ -63,6 +82,12 @@ namespace TunnelTone.Elements
         
         public void Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
+            Direction = direction;
+            
+            _meshRenderer = gameObject.AddComponent<MeshRenderer>();
+            _meshFilter = gameObject.AddComponent<MeshFilter>();
+            _splineContainer = gameObject.AddComponent<SplineContainer>();
+            
             _startTime = startTime;
             _endTime = endTime;
             _virtualTrail = virtualTrail;
@@ -141,9 +166,9 @@ namespace TunnelTone.Elements
                 var bpm = NoteRenderer.Instance.currentBpm;
                 if (newTrail)
                     BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, false);
-                for (var i = 0f; i < 1; i += bpm / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
+                for (var i = 0f; i < 1; i += bpm * 8 / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
                 {
-                    BuildCombo(out var gb, (Vector3)_spline.EvaluatePosition(i), _spline.EvaluatePosition(i).z);
+                    BuildCombo(out var gb, (Vector3)_spline.EvaluatePosition(i), _spline.EvaluatePosition(i).z / NoteRenderer.Instance.chartSpeedModifier);
                 }
                 // Build subsegments
                 for(var i = 0f; i < 1; i += 200 / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
@@ -185,7 +210,8 @@ namespace TunnelTone.Elements
                     localScale = Vector3.one
                 }
             };
-            gb.AddComponent<SphereCollider>().radius = 0;
+            gb.AddComponent<ComboPoint>().time = time;
+            ScoreManager.Instance.totalCombo++;
         }
         
         private void BuildHead(Vector2 coordinate, float time, bool virtualTrail)
@@ -276,10 +302,10 @@ namespace TunnelTone.Elements
             // Concatenate new UVs
             var uv = new List<Vector2>
             {
-                new Vector2(1f, 1f),
-                new Vector2(1f, 0),
-                new Vector2(0, 0),
-                new Vector2(0, 1f)
+                new(1f, 1f),
+                new(1f, 0),
+                new(0, 0),
+                new(0, 1f)
             };
 
             // Repeat the UVs for each vertex in the mesh

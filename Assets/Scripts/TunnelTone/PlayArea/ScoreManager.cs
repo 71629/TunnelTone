@@ -2,13 +2,14 @@
 using TMPro;
 using TunnelTone.Elements;
 using TunnelTone.Events;
+using TunnelTone.Singleton;
 using UnityEngine;
 
 namespace TunnelTone.PlayArea
 {
-    public class ScoreManager : MonoBehaviour
+    public class ScoreManager : Singleton<ScoreManager>
     {
-        private float TotalCombo => NoteRenderer.TapList.Count;
+        public int totalCombo;
         private const int MaxScore = 10000000;
         private TextMeshProUGUI Score => GetComponent<TextMeshProUGUI>();
         private static float CurrentScore { get; set; }
@@ -30,16 +31,16 @@ namespace TunnelTone.PlayArea
             switch (offset)
             {
                 case <= 25:
-                    CurrentScore += MaxScore + 10000 / TotalCombo;
-                    StartCoroutine(UpdateDisplay((MaxScore + 10000) / TotalCombo / 30, 30));
+                    CurrentScore += MaxScore + 10000 / totalCombo;
+                    StartCoroutine(UpdateDisplay((MaxScore + 10000) / totalCombo / 30, 30));
                     break;
                 case <= 50:
-                    CurrentScore += MaxScore / TotalCombo;
-                    StartCoroutine(UpdateDisplay(MaxScore / TotalCombo / 30, 30));
+                    CurrentScore += MaxScore / totalCombo;
+                    StartCoroutine(UpdateDisplay(MaxScore / totalCombo / 30, 30));
                     break;
                 case <= 100:
-                    CurrentScore += 0.6f * (MaxScore / TotalCombo);
-                    StartCoroutine(UpdateDisplay(0.6f * (MaxScore / TotalCombo / 30), 30));
+                    CurrentScore += 0.6f * (MaxScore / totalCombo);
+                    StartCoroutine(UpdateDisplay(0.6f * (MaxScore / totalCombo / 30), 30));
                     break;
                 default:
                     CurrentScore += 0;

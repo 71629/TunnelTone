@@ -37,6 +37,7 @@ namespace TunnelTone.Elements
 
         public float currentBpm;
         public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
+        public static bool IsPlaying = false;
         
         private void Start()
         {
@@ -44,9 +45,10 @@ namespace TunnelTone.Elements
             _transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
         }
-
+        
         IEnumerator PlayChart()
         {
+            IsPlaying = true;
             while (true)
             {
                 yield return _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * currentTime + offsetTime + StartDelay));

@@ -13,6 +13,11 @@ namespace TunnelTone.PlayArea
         private void Start()
         {
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateCombo);
+            ChartEventReference.Instance.OnNoteMiss.AddListener(delegate
+            {
+                CurrentCombo = 0;
+                Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            });
         }
         
         public void UpdateCombo(params object[] param)

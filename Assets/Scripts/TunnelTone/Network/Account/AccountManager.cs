@@ -220,6 +220,7 @@ namespace TunnelTone.Network.Account
         {
             WWWForm form = new();
             form.AddField("deviceIDPost", deviceID);
+            form.AddField("applicationNamePost", "TunnelTone");
             
             using var req = UnityWebRequest.Post($"{APIURL}autologin", form);
 

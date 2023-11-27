@@ -20,6 +20,7 @@ namespace TunnelTone.PlayArea
         private void Update()
         {
             if (Touchscreen is not { wasUpdatedThisFrame: true }) return;
+            if(!NoteRenderer.IsPlaying) return;
             
             // Tap note interaction
             foreach (var touch in touches.Where(touch => touch.phase.value == TouchPhase.Began))
@@ -49,7 +50,7 @@ namespace TunnelTone.PlayArea
                     MainCamera.ScreenToWorldPoint((Vector3)touch.position.value + Vector3.forward * 100);
                 var ray = new Ray(touchPosition + Vector3.back * 120, Vector3.forward);
 
-                if (Physics.Raycast(ray, out var hit, 1000, 1 << 11))
+                if (Physics.Raycast(ray, out var hit, 1, 1 << 11))
                 {
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, new Color(0.63f, 0.46f, 0.85f));
                     continue;

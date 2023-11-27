@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
+using TunnelTone.PlayArea;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 
@@ -73,6 +74,7 @@ namespace TunnelTone.Charts
                     noteConfig.time = tap.time;
             
                     NoteRenderer.TapList.Add(tgb);
+                    ScoreManager.Instance.totalCombo++;
                 }
             }
             

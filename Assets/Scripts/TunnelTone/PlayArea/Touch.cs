@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TunnelTone.Elements;
+using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
@@ -6,43 +8,51 @@ namespace TunnelTone.PlayArea
 {
     public class Touch : MonoBehaviour
     {
+        // TODO: Make this a prefab too
+        
         private RaycastHit _hit;
-        private Collider _trackingTrail;
+        private GameObject _trackingTrail;
+        private SphereCollider _collider;
+        private Rigidbody _rigidbody;
         private Vector3 position => transform.position;
-        private TouchControl _trackingTouch;
+        public TouchControl TrackingTouch;
+
+        public Direction direction;
+
+        private void Awake()
+        {
+            gameObject.layer = 12;
+        }
 
         public void Initialize(in TouchControl touch)
         {
-            _trackingTouch = touch;
+            TrackingTouch = touch;
+            _collider = gameObject.AddComponent<SphereCollider>();
+            _collider.radius = 1;
+            _rigidbody = gameObject.AddComponent<Rigidbody>();
+            _rigidbody.useGravity = false;
+            _rigidbody.isKinematic = true;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
-        
+
         private void Update()
         {
-            #if DEBUG
-            Debug.Log(_trackingTrail);
-            #endif
-            
-            if(_trackingTouch.phase.value is TouchPhase.Ended) Destroy(gameObject);
-            transform.position = _trackingTouch.position.ReadValue();
-
-            Ray ray;
-            
-            if (_trackingTrail is not null)
+            if (TrackingTouch.phase.value == TouchPhase.Ended)
             {
-                var trackingColliderPosition = _trackingTrail.transform.position;
-                ray = new Ray(position, Vector3.Normalize(trackingColliderPosition - position));
-                Debug.DrawRay(position, trackingColliderPosition - position);
+                _trackingTrail.GetComponent<Trail>().isTracking = false;
+                _trackingTrail.GetComponent<Trail>().trackingTouch = null;
+                Destroy(gameObject);
             }
-            
-            if (_trackingTrail is null)
+            transform.position = Camera.main.ScreenToWorldPoint((Vector3)TrackingTouch.position.value + Vector3.forward * 100);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Long Note"))
             {
-                ray = new Ray(position + Vector3.back * 650, Vector3.forward);
-                
-                if (Physics.Raycast(ray, out _hit, float.MaxValue, 1 << 11))
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * _hit.distance, new Color(0.63f, 0.46f, 0.85f));
-                    _trackingTrail = _hit.collider;
-                }
+                GameObject o;
+                direction = (o = other.gameObject).GetComponent<Trail>().Direction;
+                _trackingTrail = o;
             }
         }
     }
