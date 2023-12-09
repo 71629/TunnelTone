@@ -8,6 +8,7 @@ namespace TunnelTone.UI.Reference
     public class UIElementReference : Singleton<UIElementReference>
     {
         [Header("System")]
+        public Camera mainCamera;
         public AudioSource audioSource;
         public Animator audioAnimator;
         public Animator shutterAnimator;
@@ -18,6 +19,8 @@ namespace TunnelTone.UI.Reference
         public Color hard;
         public Color intensive;
         public Color insane;
+        public Color left;
+        public Color right;
         
         [Header("Song Select")]
         public Image songJacket;
@@ -36,6 +39,10 @@ namespace TunnelTone.UI.Reference
 
         [Header("UI Elements")] 
         public GameObject pause;
+
+        [Header("Material")] 
+        public Material leftTrail;
+        public Material rightTrail;
 
         public void ToSongSelect()
         {

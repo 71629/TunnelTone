@@ -6,11 +6,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TunnelTone.PlayArea;
+using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;
-using Touch = UnityEngine.Touch;
+using UnityEngine.UIElements;
 
 namespace TunnelTone.Elements
 {
@@ -51,17 +51,21 @@ namespace TunnelTone.Elements
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Touch") && other.gameObject.GetComponent<TunnelTone.PlayArea.Touch>().direction == Direction.Any || other.gameObject.GetComponent<TunnelTone.PlayArea.Touch>().direction == Direction)
+            if (other.gameObject.layer == LayerMask.NameToLayer("Touch") && other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction.Any || other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction)
             {
+                Debug.Log($"{Direction} trail is now tracking");
                 isTracking = true;
+                trackingTouch = other.gameObject;
+                return;
             }
-            trackingTouch = other.gameObject;
+            Debug.Log("Wrong finger");
         }
         
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Touch"))
             {
+                Debug.Log($"{Direction} trail is no longer tracking");
                 isTracking = false;
             }
         }

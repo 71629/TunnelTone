@@ -391,7 +391,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1519967912}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.999942
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11405,7 +11405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -363.07693}
+  m_AnchoredPosition: {x: 340, y: -363.07675}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -13226,6 +13226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2026c5b3398545109b160e1572b0dc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 963194227}
   audioSource: {fileID: 1852588494}
   audioAnimator: {fileID: 1852588495}
   shutterAnimator: {fileID: 1577786856}
@@ -13234,6 +13235,8 @@ MonoBehaviour:
   hard: {r: 0.22761661, g: 0.8773585, b: 0.31217206, a: 1}
   intensive: {r: 0.8584906, g: 0.57791835, b: 0.22272164, a: 1}
   insane: {r: 0.84987867, g: 0.21462265, b: 0.8584906, a: 1}
+  left: {r: 0, g: 0, b: 0, a: 0}
+  right: {r: 0, g: 0, b: 0, a: 0}
   songJacket: {fileID: 171582612}
   title: {fileID: 648781415}
   artist: {fileID: 1141877973}
@@ -15653,7 +15656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -71535}
+  m_AnchoredPosition: {x: 0, y: -72637.5}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214

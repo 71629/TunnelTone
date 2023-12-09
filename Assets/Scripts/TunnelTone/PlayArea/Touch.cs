@@ -1,5 +1,6 @@
 ﻿using System;
 using TunnelTone.Elements;
+using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
@@ -22,6 +23,7 @@ namespace TunnelTone.PlayArea
         private void Awake()
         {
             gameObject.layer = 12;
+            direction = Direction.Any;
         }
 
         public void Initialize(in TouchControl touch)
@@ -39,21 +41,29 @@ namespace TunnelTone.PlayArea
         {
             if (TrackingTouch.phase.value == TouchPhase.Ended)
             {
-                _trackingTrail.GetComponent<Trail>().isTracking = false;
-                _trackingTrail.GetComponent<Trail>().trackingTouch = null;
+                if(_trackingTrail is not null) {
+                    _trackingTrail.GetComponent<Trail>().isTracking = false;
+                    _trackingTrail.GetComponent<Trail>().trackingTouch = null;
+                }
                 Destroy(gameObject);
             }
-            transform.position = Camera.main.ScreenToWorldPoint((Vector3)TrackingTouch.position.value + Vector3.forward * 100);
+            transform.position = UIElementReference.Instance.mainCamera.ScreenToWorldPoint((Vector3)TrackingTouch.position.value + Vector3.forward * 100);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Long Note"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("Long Note") && direction == Direction.Any)
             {
                 GameObject o;
                 direction = (o = other.gameObject).GetComponent<Trail>().Direction;
+                Debug.Log($"touch direction registered: {direction}");
                 _trackingTrail = o;
             }
+        }
+
+        private void OnDestroy()
+        {
+            Debug.Log("Touch released");
         }
     }
 }
