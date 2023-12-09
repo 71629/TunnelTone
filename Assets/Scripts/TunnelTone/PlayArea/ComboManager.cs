@@ -29,12 +29,15 @@ namespace TunnelTone.PlayArea
             #endregion
 
             // Update ComboCount
-            CurrentCombo += offset switch
+            switch (offset)
             {
-                <= 100 => 1,
-                _ => -CurrentCombo
-            };
-            
+                case <120:
+                    CurrentCombo += 1;
+                    break;
+                default:
+                    CurrentCombo = 0;
+                    break;
+            }
             // Update Combo text
             Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
         }
