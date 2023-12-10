@@ -15,14 +15,14 @@ namespace TunnelTone.UI.SongList
         [SerializeField] private GameObject container;
         [SerializeField] private TextAsset songList;
 
-        public Song CurrentlySelected;
+        public Song currentlySelected;
         
         public Song[] Songs { get; set; }
 
         private UIElementReference UIElement => UIElementReference.Instance;
         private float oldSliderValue = 0.15f;
         
-        private void Start()
+        private IEnumerator Start()
         {
             SongListEventReference.Instance.OnSelectItem.AddListener(OnSelectItem);
             
@@ -49,6 +49,10 @@ namespace TunnelTone.UI.SongList
                     listItem.previewDuration = song.previewDuration;
                     listItem.source = song;
                 }
+                
+                currentlySelected = Songs[0];
+                yield return null;
+                SongListEventReference.Instance.OnEnterSongList.Trigger();
             }
         }
 
@@ -58,9 +62,9 @@ namespace TunnelTone.UI.SongList
             {
                 UIElement.startSlider.value = 0.15f;
                 UIElement.startSlider.interactable = false;
-                if (Resources.Load<TextAsset>($"Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}") is null)
+                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}") is null)
                 {
-                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}.json",
+                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}.json",
                         new[] {"OK"}, new Action[] {
                             () =>
                             {
@@ -70,7 +74,7 @@ namespace TunnelTone.UI.SongList
                     return;
                 }
                 SongListEventReference.Instance.OnSongStart.Trigger();
-                NoteRenderer.Instance.currentBpm = CurrentlySelected.bpm;
+                NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
                 StartCoroutine(EnableCanvasDelayed());
             }
         }
@@ -80,7 +84,7 @@ namespace TunnelTone.UI.SongList
             yield return new WaitForSecondsRealtime(0.5f);
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;
-            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{CurrentlySelected.title}/{DifficultyManager.Instance.currentlySelected}"));
+            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}"));
         }
         
         IEnumerator TurnOffAndOn()
@@ -93,7 +97,7 @@ namespace TunnelTone.UI.SongList
         private void OnSelectItem(params object[] param)
         {
             var item = (SongListItem)param[0];
-            CurrentlySelected = item.source;
+            currentlySelected = item.source;
         }
     }
 }

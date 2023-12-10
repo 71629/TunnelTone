@@ -47,6 +47,11 @@ namespace TunnelTone.UI.SongList
         private void Start()
         {
             SongListEventReference.Instance.OnSelectItem.AddListener(UpdateDifficulty);
+            SongListEventReference.Instance.OnEnterSongList.AddListener(delegate
+            {
+                ChangeDifficulty(easy);
+                mainImage.color = easy.fillRect.GetComponent<Image>().color;
+            });
         }
 
         private void UpdateDifficulty(params object[] param)

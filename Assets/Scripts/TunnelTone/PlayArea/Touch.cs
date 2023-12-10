@@ -56,14 +56,8 @@ namespace TunnelTone.PlayArea
             {
                 GameObject o;
                 direction = (o = other.gameObject).GetComponent<Trail>().Direction;
-                Debug.Log($"touch direction registered: {direction}");
                 _trackingTrail = o;
             }
-        }
-
-        private void OnDestroy()
-        {
-            Debug.Log("Touch released");
         }
     }
 }

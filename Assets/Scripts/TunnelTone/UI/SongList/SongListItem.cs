@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -42,6 +43,10 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
+            SongListEvent.OnEnterSongList.AddListener(delegate
+            {
+                ItemSelected();
+            });
             SongListEvent.OnSelectItem.AddListener(OnSelectItem);
             SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
             previewAudio = (AudioClip)Resources.Load($"Songs/{source.title}/{source.title}");
@@ -65,7 +70,7 @@ namespace TunnelTone.UI.SongList
         {
             CancelInvoke();
             animator.SetBool(IsSelected, false);
-            button.interactable = SongListManager.Instance.CurrentlySelected != source;
+            button.interactable = SongListManager.Instance.currentlySelected != source;
         }
     }
 }
