@@ -10,7 +10,7 @@ namespace TunnelTone.PlayArea
     public class ScoreManager : Singleton<ScoreManager>
     {
         public int totalCombo;
-        private const int MaxScore = 10000000;
+        private const float MaxScore = 10000000;
         private TextMeshProUGUI Score => GetComponent<TextMeshProUGUI>();
         private static float CurrentScore { get; set; }
         private static float DisplayScore { get; set; }
@@ -31,16 +31,16 @@ namespace TunnelTone.PlayArea
             switch (offset)
             {
                 case <= 25:
-                    CurrentScore += MaxScore + 10000 / totalCombo;
-                    StartCoroutine(UpdateDisplay((MaxScore + 10000) / totalCombo / 30, 30));
+                    CurrentScore += MaxScore + 10000f / totalCombo;
+                    StartCoroutine(UpdateDisplay((MaxScore + 10000) / totalCombo / 30f, 30));
                     break;
                 case <= 50:
                     CurrentScore += MaxScore / totalCombo;
-                    StartCoroutine(UpdateDisplay(MaxScore / totalCombo / 30, 30));
+                    StartCoroutine(UpdateDisplay(MaxScore / totalCombo / 30f, 30));
                     break;
                 case <= 100:
                     CurrentScore += 0.6f * (MaxScore / totalCombo);
-                    StartCoroutine(UpdateDisplay(0.6f * (MaxScore / totalCombo / 30), 30));
+                    StartCoroutine(UpdateDisplay(0.6f * (MaxScore / totalCombo / 30f), 30));
                     break;
                 default:
                     CurrentScore += 0;
