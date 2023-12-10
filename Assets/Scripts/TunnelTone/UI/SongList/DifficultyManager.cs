@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
@@ -29,7 +28,7 @@ namespace TunnelTone.UI.SongList
 
         private Slider _currentSelected;
 
-        public int currentlySelected
+        public int currentlySelected 
         {
             get
             {
@@ -58,13 +57,26 @@ namespace TunnelTone.UI.SongList
         {
             var song = (SongListItem)param[0];
 
-            StopAllCoroutines();
-            StartCoroutine(UpdateDifficultySlider(easy, easyText, easy.value, song.source.difficulty[0]));
-            StartCoroutine(UpdateDifficultySlider(hard, hardText, hard.value, song.source.difficulty[1]));
-            StartCoroutine(UpdateDifficultySlider(intensive, intensiveText, intensive.value, song.source.difficulty[2]));
-            StartCoroutine(UpdateDifficultySlider(insane, insaneText, insane.value, song.source.difficulty[3]));
+            LeanTween.cancel(easy.gameObject);
+            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, song.source.difficulty[0], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.cancel(hard.gameObject);
+            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, song.source.difficulty[1], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.cancel(intensive.gameObject);
+            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, song.source.difficulty[2], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.cancel(insane.gameObject);
+            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, song.source.difficulty[3], .35f).setEase(LeanTweenType.easeOutCubic);
         }
 
+        private void UpdateSliderValue(Slider slider, TMP_Text ind, float f)
+        {
+            slider.value = f;
+            ind.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(slider.value)];
+            if (!_currentSelected || slider == main) return;
+            main.value = _currentSelected.value;
+            mainText.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(main.value)];
+        }
+
+/*
         private IEnumerator UpdateDifficultySlider(Slider slider, TextMeshProUGUI ind, float i, float f, float t = 0.21f, int iterations = 1)
         {
             yield return new WaitForEndOfFrame();
@@ -86,7 +98,9 @@ namespace TunnelTone.UI.SongList
             
             StartCoroutine(UpdateDifficultySlider(slider, ind, i, f, t + 0.15f * Mathf.Pow(0.85f, iterations), iterations + 1));
         }
+*/
 
+/*
         private IEnumerator FadeSliderColor(Graphic image, Color i, Color f, float t = 0.21f, int iterations = 1)
         {
             yield return new WaitForEndOfFrame();
@@ -101,17 +115,22 @@ namespace TunnelTone.UI.SongList
             
             StartCoroutine(FadeSliderColor(image, i, f, t + 0.15f * Mathf.Pow(0.85f, iterations), iterations + 1));
         }
+*/
 
         public void ChangeDifficulty(Slider target)
         {
-            StopCoroutine(nameof(FadeSliderColor));
-            StartCoroutine(UpdateDifficultySlider(main, mainText, main.value, target.value));
+            LeanTween.value(mainImage.gameObject, f => { UpdateSliderValue(main, mainText, f); }, main.value, target.value, .35f).setEase(LeanTweenType.easeOutCubic);
             _currentSelected = target;
         }
 
         public void FadeSliderColor(Image targetImage)
         {
-            StartCoroutine(FadeSliderColor(mainImage, mainImage.color, targetImage.color));
+            LeanTween.value(main.gameObject, color => { UpdateSliderColor(mainImage, color); }, mainImage.color, targetImage.color, .35f).setEase(LeanTweenType.easeOutCubic);
+        }
+
+        private static void UpdateSliderColor(Graphic target, Color color)
+        {
+            target.color = color;
         }
         
         public void OnDifficultyChange(int difficulty)

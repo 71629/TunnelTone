@@ -84,6 +84,7 @@ namespace TunnelTone.UI.SongList
             yield return new WaitForSecondsRealtime(0.5f);
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;
+            UIElement.topView.enabled = false;
             SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}"));
         }
         
