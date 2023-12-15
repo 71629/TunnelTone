@@ -15,6 +15,7 @@ namespace TunnelTone.Charts
     {
         private static NoteRenderer NoteRenderer => NoteRenderer.Instance;
         private Chart chartCache;
+        [SerializeField] private GameObject trailPrefab;
 
         private void Start()
         {
@@ -36,19 +37,14 @@ namespace TunnelTone.Charts
             foreach(var trail in chart.trails)
             {
                 yield return new WaitForSeconds(0);
-                var gb = new GameObject("Trail")
-                {
-                    transform =
-                    {
-                        parent = transform,
-                        localPosition = Vector3.zero,
-                        rotation = Quaternion.identity,
-                        localScale = Vector3.one
-                    },
-                    layer = 11
-                };
-                gb.AddComponent<LineRenderer>();
-                gb.AddComponent<Trail>().Initialize(trail.startTime, trail.endTime,
+                var gb = Instantiate(trailPrefab, transform);
+                gb.layer = 11;
+                gb.transform.parent = transform;
+                gb.transform.localPosition = Vector3.zero;
+                gb.transform.rotation = Quaternion.identity;
+                gb.transform.localScale = Vector3.one;
+                
+                gb.GetComponent<Trail>().Initialize(trail.startTime, trail.endTime,
                     new Vector2((float)trail.startX - 0.5f, (float)trail.startY - 0.4f),
                     new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), directionDictionary[trail.color],
                     easingDictionary[trail.easing], trail.easingRatio, true, trail.virtualTrail);

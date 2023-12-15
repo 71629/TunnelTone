@@ -1,7 +1,4 @@
-﻿#define USE_LINE_RENDERER
-// #define USE_MESH
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,42 +6,45 @@ using TunnelTone.PlayArea;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using Object = UnityEngine.Object;
 
 namespace TunnelTone.Elements
 {
     [RequireComponent(typeof(SphereCollider))]
     public class Trail : MonoBehaviour
     {
-        private float _startTime, _endTime;
-        private bool _virtualTrail;
-        
-        private Trail _next;
-        private bool _isHit;
-        public GameObject trackingTouch;
-        private Spline _spline;
-
-        private List<GameObject> _comboPoint;
-
-        public bool isTracking;
+        // Basic trail properties
+        private float startTime, endTime;
+        private bool virtualTrail;
         public Direction Direction { get; private set; }
-
-        private SphereCollider _col;
-        private SplineContainer _splineContainer;
-        private MeshFilter _meshFilter;
-        private MeshRenderer _meshRenderer;
-        private LineRenderer LineRenderer => GetComponent<LineRenderer>();
+        
+        // Trail References
+        private Trail next;
+        
+        // Status Reference
+        private bool isHit;
+        public bool isTracking;
+        
+        // Coupled Components
+        [SerializeField] private SplineContainer splineContainer;
+        [SerializeField] private SphereCollider col;
+        [SerializeField] private LineRenderer lineRenderer;
+        [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] private MeshFilter meshFilter;
+        private Spline spline;
+        private List<GameObject> comboPoint;
+        public GameObject trackingTouch;
+        private List<TrailSubsegment> subsegments;
+        
+        // Objects
+        [SerializeField] private GameObject trailSubsegmentPrefab;
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
 
         private void Start()
         {
-            // TODO: Make this a prefab
-            _col = gameObject.GetComponent<SphereCollider>();
-            _col.radius = 160;
-            _col.isTrigger = true;
             StartCoroutine(UpdateCollider());
-            LineRenderer.useWorldSpace = false;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -66,15 +66,15 @@ namespace TunnelTone.Elements
 
         private IEnumerator UpdateCollider()
         {
-            if (_virtualTrail)
+            if (virtualTrail)
             {
-                _col.enabled = false;
+                col.enabled = false;
                 yield break;
             }
-            while (_spline is not null)
+            while (spline is not null)
             {
-                var t = Mathf.InverseLerp(_startTime, _endTime, NoteRenderer.currentTime * 1000);
-                yield return _col.center = _spline.EvaluatePosition(Mathf.Clamp01(t));
+                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.currentTime * 1000);
+                yield return col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
             }
         }
         
@@ -82,48 +82,44 @@ namespace TunnelTone.Elements
         {
             Direction = direction;
             
-            _meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            _meshFilter = gameObject.AddComponent<MeshFilter>();
-            _splineContainer = gameObject.AddComponent<SplineContainer>();
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.virtualTrail = virtualTrail;
             
-            _startTime = startTime;
-            _endTime = endTime;
-            _virtualTrail = virtualTrail;
-
             startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             endCoordinate = new Vector2(endCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             
             var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * NoteRenderer.Instance.chartSpeedModifier);
             var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * NoteRenderer.Instance.chartSpeedModifier);
 
-            _spline = _splineContainer.Spline;
+            spline = splineContainer.Spline;
             
             // Create curve with respect to easing and easing ratio
             switch (easing)
             {
                 case EasingMode.Straight:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
                     break;
                 case EasingMode.EaseIn:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.EaseOut:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
                     break;
                 case EasingMode.Bezier:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.HorizontalInVerticalOut:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.VerticalInHorizontalOut:
-                    _spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    _spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);
@@ -131,7 +127,7 @@ namespace TunnelTone.Elements
 
             if (!virtualTrail)
             {
-                _meshRenderer.material = direction switch
+                meshRenderer.material = direction switch
                 {
                     Direction.Left => NoteRenderer.Instance.left,
                     Direction.Right => NoteRenderer.Instance.right,
@@ -140,10 +136,10 @@ namespace TunnelTone.Elements
             }
             else
             {
-                _meshRenderer.material = NoteRenderer.Instance.none;
+                meshRenderer.material = NoteRenderer.Instance.none;
             }
             
-            _meshFilter.mesh = new Mesh();
+            meshFilter.mesh = new Mesh();
             
 #if USE_MESH // Keeping the code in case if needed
             if (newTrail)
@@ -164,29 +160,44 @@ namespace TunnelTone.Elements
                 var bpm = NoteRenderer.Instance.currentBpm;
                 if (newTrail)
                     BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, false);
-                for (var i = 0f; i < 1; i += bpm * 8 / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
+                for (var i = 0f; i < 1; i += bpm * 8 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
-                    BuildCombo(out var gb, (Vector3)_spline.EvaluatePosition(i), _spline.EvaluatePosition(i).z / NoteRenderer.Instance.chartSpeedModifier);
+                    BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z / NoteRenderer.Instance.chartSpeedModifier);
                 }
                 // Build subsegments
-                for(var i = 0f; i < 1; i += 200 / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
+                float tail = 0;
+                for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
-                    BuildSubsegment((Vector3)_spline.EvaluatePosition(i), _spline.EvaluatePosition(i).z, false);
+                    var subSegment = Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>();
+                    subSegment.Initialize(this, spline, 
+                        (Vector3)spline.EvaluatePosition(i - 1), 
+                        (Vector3)spline.EvaluatePosition(i), 
+                        spline.EvaluatePosition(i - 1).z, 
+                        spline.EvaluatePosition(i).z
+                    );
+                    tail = i;
+                    // BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, false);
                 }
-                BuildSubsegment((Vector3)_spline.EvaluatePosition(1), _spline.ElementAt(1).Position.z, false);
+                Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline,
+                    (Vector3)spline.EvaluatePosition(tail), 
+                    (Vector3)spline.EvaluatePosition(1), 
+                    spline.EvaluatePosition(tail).z, 
+                    spline.EvaluatePosition(1).z
+                );
+                // BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, false);
             }
             else
             {
                 var j = 0;
-                LineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
-                for (var i = 0f; i < 1; i += 200 / (_spline.ElementAt(1).Position.z - _spline.ElementAt(0).Position.z))
+                lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
+                for (var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
-                    LineRenderer.SetPosition(j, _spline.EvaluatePosition(i));
-                    LineRenderer.positionCount++;
+                    lineRenderer.SetPosition(j, spline.EvaluatePosition(i));
+                    lineRenderer.positionCount++;
                     j++;
                 }
-                LineRenderer.SetPosition(j, _spline.EvaluatePosition(1));
-                LineRenderer.positionCount--;
+                lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
+                lineRenderer.positionCount--;
             }
 #endif
         }
@@ -224,7 +235,7 @@ namespace TunnelTone.Elements
                     (Vector3)coordinate + new Vector3(0, -40, 0 + time),
                     (Vector3)coordinate + new Vector3(-40, 0, 0 + time)
                 }
-                : new List<Vector3>()
+                : new List<Vector3>
                 {
                     (Vector3)coordinate + new Vector3(0, 0, -8 + time),
                     (Vector3)coordinate + new Vector3(0, 8, 0 + time),
@@ -257,16 +268,17 @@ namespace TunnelTone.Elements
                 uv = uv.ToArray()
             };
 
-            _meshFilter.mesh = mesh1;
+            meshFilter.mesh = mesh1;
         }
 
         private void BuildSubsegment(Vector2 coordinate, float time, bool virtualTrail)
         {
             var position = new Vector3(coordinate.x, coordinate.y, time);
-            var mesh = _meshFilter.mesh;
+            var mesh = meshFilter.mesh;
 
             // Concatenate new vertices
             var vertices = !virtualTrail
+            
                 ? new[]
                 {
                     position + new Vector3(0, 40, 0),
@@ -281,7 +293,7 @@ namespace TunnelTone.Elements
                     position + new Vector3(0, -8, 0),
                     position + new Vector3(-8, 0, 0)
                 };
-            mesh.vertices = _meshFilter.mesh.vertices.Concat(vertices).ToArray();
+            mesh.vertices = meshFilter.mesh.vertices.Concat(vertices).ToArray();
 
             // Concatenate new triangles
             var i = mesh.vertices.Length;
@@ -311,12 +323,18 @@ namespace TunnelTone.Elements
             uv = Enumerable.Repeat(uv, totalVertices / uv.Count).SelectMany(x => x).ToList();
 
             // Set the vertices, triangles, and UVs in the correct order
-            mesh.triangles = _meshFilter.mesh.triangles.Concat(triangles).ToArray();
+            mesh.triangles = meshFilter.mesh.triangles.Concat(triangles).ToArray();
             mesh.uv = uv.ToArray();
 
             // Recalculate bounds and normals
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
+        }
+
+        private void Update()
+        {
+            if(NoteRenderer.currentTime * 1000 > endTime + 120 && NoteRenderer.IsPlaying)
+                Destroy(gameObject);
         }
     }
 }

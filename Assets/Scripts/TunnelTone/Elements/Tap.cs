@@ -136,10 +136,5 @@ namespace TunnelTone.Elements
             HitEffect(offset);
             ChartEventReference.Instance.OnNoteHit.Trigger(offset);
         }
-
-        private void OnDestroy()
-        {
-            Destroy();
-        }
     }
 }

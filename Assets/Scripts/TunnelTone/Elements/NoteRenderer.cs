@@ -12,6 +12,8 @@ namespace TunnelTone.Elements
 {
     public class NoteRenderer : Singleton<NoteRenderer>
     {
+        [SerializeField] private Transform noteContainer;
+        private int _noteCount => noteContainer.childCount;
         #region Element Container
 
         public static readonly List<GameObject> TrailList = new();
