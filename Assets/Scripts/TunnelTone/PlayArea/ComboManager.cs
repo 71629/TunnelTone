@@ -8,7 +8,7 @@ namespace TunnelTone.PlayArea
     {
         private TextMeshProUGUI Combo => GetComponent<TextMeshProUGUI>();
 
-        private static int CurrentCombo { get; set; }
+        private static short CurrentCombo { get; set; }
 
         private void Start()
         {

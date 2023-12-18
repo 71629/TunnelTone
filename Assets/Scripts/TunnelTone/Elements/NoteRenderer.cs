@@ -13,7 +13,6 @@ namespace TunnelTone.Elements
     public class NoteRenderer : Singleton<NoteRenderer>
     {
         [SerializeField] private Transform noteContainer;
-        private int _noteCount => noteContainer.childCount;
         #region Element Container
 
         public static readonly List<GameObject> TrailList = new();
@@ -48,11 +47,16 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
         }
         
-        IEnumerator PlayChart()
+        private IEnumerator PlayChart()
         {
             IsPlaying = true;
             while (true)
             {
+                if (transform.childCount == 0)
+                {
+                    ChartEventReference.Instance.OnSongEnd.Trigger();
+                    yield break;
+                }
                 yield return _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * currentTime + offsetTime + StartDelay));
             }
         }
@@ -79,6 +83,7 @@ namespace TunnelTone.Elements
         
         public void Retry()
         {
+            IsPlaying = false;
             StopAllCoroutines();
             transform.position = Vector3.zero;
             foreach (var gb in GetComponentsInChildren<Transform>())

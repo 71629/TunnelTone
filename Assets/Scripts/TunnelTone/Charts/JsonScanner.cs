@@ -32,7 +32,7 @@ namespace TunnelTone.Charts
             StartCoroutine(CreateElement(chart));
         }
 
-        IEnumerator CreateElement(Chart chart)
+        private IEnumerator CreateElement(Chart chart)
         {
             foreach(var trail in chart.trails)
             {
@@ -46,8 +46,12 @@ namespace TunnelTone.Charts
                 
                 gb.GetComponent<Trail>().Initialize(trail.startTime, trail.endTime,
                     new Vector2((float)trail.startX - 0.5f, (float)trail.startY - 0.4f),
-                    new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), directionDictionary[trail.color],
-                    easingDictionary[trail.easing], trail.easingRatio, true, trail.virtualTrail);
+                    new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), 
+                    directionDictionary[trail.color],
+                    easingDictionary[trail.easing], 
+                    trail.easingRatio, 
+                    true, 
+                    trail.virtualTrail);
                 
                 NoteRenderer.TrailList.Add(gb);
                 foreach(var tap in trail.taps)
@@ -83,7 +87,7 @@ namespace TunnelTone.Charts
             NoteRenderer.StartSong();
         }
 
-        private Dictionary<int, EasingMode> easingDictionary = new()
+        private readonly Dictionary<int, EasingMode> easingDictionary = new()
         {
             {0, EasingMode.Straight},
             {1, EasingMode.EaseIn},
@@ -93,7 +97,7 @@ namespace TunnelTone.Charts
             {5, EasingMode.Bezier}
         };
 
-        private Dictionary<int, Direction> directionDictionary = new()
+        private readonly Dictionary<int, Direction> directionDictionary = new()
         {
             { 0, Direction.Left },
             { 1, Direction.Right }

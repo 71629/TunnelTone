@@ -13,50 +13,50 @@ namespace TunnelTone.Elements
         [Header("Components")]
         [SerializeField] private MeshFilter meshFilter;
         [SerializeField] private SplineContainer splineContainer;
-        private Spline spline
+        private Spline Spline
         {
             set => splineContainer.Spline = value;
         }
-        private Mesh mesh => meshFilter.mesh;
+        private Mesh Mesh => meshFilter.mesh;
         [SerializeField] private MeshRenderer meshRenderer;
-        private Material material
+        private Material Material
         {
             set => meshRenderer.material = value;
         }
 
         [Header("Values")]
-        private Trail _parent;
-        private Vector2 _startCoordinate;
-        private Vector2 _endCoordinate;
-        private float _startTime;
-        private float _endTime;
-        private Direction _direction;
+        private Trail parent;
+        private Vector2 startCoordinate;
+        private Vector2 endCoordinate;
+        private float startTime;
+        private float endTime;
+        private Direction direction;
 
         internal void Initialize(Trail segmentParent, Spline segmentSpline, Vector2 startCoordinate, Vector2 endCoordinate, float startTime, float endTime)
         {
-            _parent = segmentParent;
-            _startCoordinate = startCoordinate;
-            _endCoordinate = endCoordinate;
-            _startTime = startTime;
-            _endTime = endTime;
-            _direction = segmentParent.Direction;
-            spline = segmentSpline;
+            parent = segmentParent;
+            this.startCoordinate = startCoordinate;
+            this.endCoordinate = endCoordinate;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            direction = segmentParent.Direction;
+            Spline = segmentSpline;
             
             SetMesh();
         }
 
         private void SetMesh()
         {
-            var startPosition = new Vector3(_startCoordinate.x, _startCoordinate.y, _startTime);
-            var endPosition = new Vector3(_endCoordinate.x, _endCoordinate.y, _endTime);
+            var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime);
+            var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime);
             
-            material = _direction switch
+            Material = direction switch
             {
                 Direction.Left => UIElementReference.Instance.leftTrail,
                 Direction.Right => UIElementReference.Instance.rightTrail,
                 _ => throw new ArgumentException()
             };
-            mesh.vertices = new[]
+            Mesh.vertices = new[]
             {
                 startPosition + new Vector3(0, 40, 0),
                 startPosition + new Vector3(40, 0, 0),
@@ -68,7 +68,7 @@ namespace TunnelTone.Elements
                 endPosition + new Vector3(0, -40, 0),
                 endPosition + new Vector3(-40, 0, 0)
             };
-            mesh.triangles = new[]
+            Mesh.triangles = new[]
             {
                 0, 4, 5,
                 0, 5, 1,
@@ -79,7 +79,7 @@ namespace TunnelTone.Elements
                 3, 7, 4,
                 3, 4, 0
             };
-            mesh.uv = new[]
+            Mesh.uv = new[]
             {
                 new Vector2(0, 0),
                 new Vector2(1, 0),
@@ -97,20 +97,20 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if (NoteRenderer.currentTime * 1000 > _endTime + 120 && NoteRenderer.IsPlaying) Destroy(gameObject);
-            if (_startTime < NoteRenderer.currentTime || !NoteRenderer.IsPlaying || !_parent.isTracking) return;
+            if (NoteRenderer.currentTime * 1000 > endTime + 120 && NoteRenderer.IsPlaying) Destroy(gameObject);
+            if (startTime > NoteRenderer.currentTime * 1000 || !NoteRenderer.IsPlaying || !parent.isTracking) return;
             for (var i = 0; i <= 3; i++)
             {
-                mesh.vertices[i] = new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, 0);
+                Mesh.vertices[i] = new Vector3(Mesh.vertices[i].x, Mesh.vertices[i].y, 0);
             }
             UpdateMesh();
         }
 
         private void UpdateMesh()
         {
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
-            mesh.RecalculateTangents();
+            Mesh.RecalculateBounds();
+            Mesh.RecalculateNormals();
+            Mesh.RecalculateTangents();
         }
     }
 }

@@ -2613,7 +2613,8 @@ public class LeanTween : MonoBehaviour {
                 d.easeInternal = () => {
                     var col = LeanSmooth.spring(d.trans.LeanColor(), d.toTrans.LeanColor(), ref d.optional.color, smoothTime, maxSpeed, Time.deltaTime, friction, accelRate);
                     d.trans.GetComponent<Renderer>().material.color = col;
-                }; break;
+                };
+                break;
         }
 
         return d;

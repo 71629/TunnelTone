@@ -390,8 +390,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1519967913}
   m_HandleRect: {fileID: 1519967912}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999679
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11506,7 +11506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -372.5014}
+  m_AnchoredPosition: {x: 340, y: -372.50198}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -15071,6 +15071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83ccb98af7f4d30a2d3bb8b21d2886e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchPrefab: {fileID: 520278134335018691, guid: f3831e64d2b26b54c95aa4dea8cd4e12, type: 3}
   leftTrailHit: {fileID: 2100000, guid: 937b502d189bc7a4fb7d10af8187b50b, type: 2}
   rightTrailHit: {fileID: 2100000, guid: 5cf496747f7151948893162968f9a4d8, type: 2}
 --- !u!1 &1071985966
@@ -15805,7 +15806,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -101347.5}
+  m_AnchoredPosition: {x: 0, y: -274785}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214

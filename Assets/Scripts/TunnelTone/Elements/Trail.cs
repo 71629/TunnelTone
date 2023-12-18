@@ -6,7 +6,6 @@ using TunnelTone.PlayArea;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Object = UnityEngine.Object;
 
 namespace TunnelTone.Elements
 {
@@ -131,7 +130,7 @@ namespace TunnelTone.Elements
                 {
                     Direction.Left => NoteRenderer.Instance.left,
                     Direction.Right => NoteRenderer.Instance.right,
-                    _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+                    _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, $"Given direction is not valid for Trail type: {direction}")
                 };
             }
             else
@@ -170,9 +169,9 @@ namespace TunnelTone.Elements
                 {
                     var subSegment = Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>();
                     subSegment.Initialize(this, spline, 
-                        (Vector3)spline.EvaluatePosition(i - 1), 
+                        (Vector3)spline.EvaluatePosition(tail), 
                         (Vector3)spline.EvaluatePosition(i), 
-                        spline.EvaluatePosition(i - 1).z, 
+                        spline.EvaluatePosition(tail).z, 
                         spline.EvaluatePosition(i).z
                     );
                     tail = i;

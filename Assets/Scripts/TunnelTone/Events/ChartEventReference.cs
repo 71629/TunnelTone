@@ -8,6 +8,7 @@ namespace TunnelTone.Events
         
         public readonly GameEvent OnSongBegin = new GameEvent();
         public readonly GameEvent OnSongAbort = new GameEvent();
+        public readonly GameEvent OnSongEnd = new GameEvent();
 
         public readonly GameEvent OnPause = new GameEvent();
         public readonly GameEvent OnResume = new GameEvent();

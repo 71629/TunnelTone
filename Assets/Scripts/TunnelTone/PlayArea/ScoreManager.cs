@@ -14,12 +14,17 @@ namespace TunnelTone.PlayArea
         private TextMeshProUGUI Score => GetComponent<TextMeshProUGUI>();
         private static decimal CurrentScore { get; set; }
         private static decimal DisplayScore { get; set; }
-        
-        private const int LerpIteration = 30;
+        private const byte LerpIteration = 30;
 
         private void Start()
         {
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateScore);
+            ChartEventReference.Instance.OnRetry.AddListener(delegate
+            {
+                CurrentScore = 0;
+                DisplayScore = 0;
+                Score.text = $"{DisplayScore:00000000}";
+            });
         }
 
         public void UpdateScore(params object[] param)
@@ -33,7 +38,7 @@ namespace TunnelTone.PlayArea
             switch (offset)
             {
                 case <= 25:
-                    CurrentScore += MaxScore + 10000 / (decimal)totalCombo;
+                    CurrentScore += MaxScore + 10000m / totalCombo;
                     StartCoroutine(UpdateDisplay((MaxScore + 10000) / totalCombo / LerpIteration, LerpIteration));
                     break;
                 case <= 50:
@@ -50,7 +55,7 @@ namespace TunnelTone.PlayArea
             }
         }
 
-        private IEnumerator UpdateDisplay(decimal delta, int remain)
+        private IEnumerator UpdateDisplay(decimal delta, byte remain)
         {
             yield return null;
             if (remain == 0) yield break;

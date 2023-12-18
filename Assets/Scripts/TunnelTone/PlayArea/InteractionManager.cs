@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.Singleton;
+using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -11,9 +12,10 @@ namespace TunnelTone.PlayArea
 {
     public class InteractionManager : Singleton<InteractionManager>
     {
-        private Touchscreen Touchscreen => Touchscreen.current;
-        private ReadOnlyArray<TouchControl> touches => Touchscreen.touches;
-        private Camera MainCamera => Camera.main;
+        private static Touchscreen Touchscreen => Touchscreen.current;
+        private static ReadOnlyArray<TouchControl> touches => Touchscreen.touches;
+        private static Camera MainCamera => UIElementReference.Instance.mainCamera;
+        [SerializeField] private GameObject touchPrefab;
 
         [SerializeField] private Material leftTrailHit, rightTrailHit;
 
@@ -25,11 +27,12 @@ namespace TunnelTone.PlayArea
             // Tap note interaction
             foreach (var touch in touches.Where(touch => touch.phase.value == TouchPhase.Began))
             {
-                GameObject gb = new("Touch")
-                {
-                    transform = { parent = transform }
-                };
-                gb.AddComponent<Touch>().Initialize(in touch);
+                var gb = Instantiate(touchPrefab, transform).GetComponent<Touch>().Initialize(touch);
+                // GameObject gb = new("Touch")
+                // {
+                //     transform = { parent = transform }
+                // };
+                // gb.AddComponent<Touch>().Initialize(in touch);
                 var touchPosition =
                     MainCamera.ScreenToWorldPoint((Vector3)touch.startPosition.value + Vector3.forward * 100);
                 var ray = new Ray(touchPosition + Vector3.back * 120, Vector3.forward);

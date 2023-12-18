@@ -28,7 +28,7 @@ namespace TunnelTone.UI.SongList
 
         private Slider _currentSelected;
 
-        public int currentlySelected 
+        public byte currentlySelected 
         {
             get
             {

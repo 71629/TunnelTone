@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.UI.Reference;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Splines;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace TunnelTone.PlayArea
 {
     public class Touch : MonoBehaviour
     {
-        // TODO: Make this a prefab too
-        
-        private RaycastHit _hit;
-        private GameObject _trackingTrail;
-        private SphereCollider _collider;
-        private Rigidbody _rigidbody;
-        private Vector3 position => transform.position;
-        public TouchControl TrackingTouch;
+        private RaycastHit hit;
+        private GameObject trackingTrail;
+        [SerializeField] private SphereCollider trackingRange;
+        [SerializeField] private Rigidbody rigidBody;
+        [SerializeField] private SplineContainer splineContainer;
+        [SerializeField] private SplineExtrude splineExtrude;
+        private Spline Spline => splineContainer.Spline;
+        private Vector3 Position => transform.position;
+        private TouchControl trackingTouch;
 
         public Direction direction;
 
@@ -26,28 +30,32 @@ namespace TunnelTone.PlayArea
             direction = Direction.Any;
         }
 
-        public void Initialize(in TouchControl touch)
+        public GameObject Initialize(in TouchControl touch)
         {
-            TrackingTouch = touch;
-            _collider = gameObject.AddComponent<SphereCollider>();
-            _collider.radius = 1;
-            _rigidbody = gameObject.AddComponent<Rigidbody>();
-            _rigidbody.useGravity = false;
-            _rigidbody.isKinematic = true;
-            _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            trackingTouch = touch;
+
+            LeanTween.value(gameObject, f =>
+                    {
+                        
+                        splineExtrude.Rebuild();
+                    },
+                    0, 15f, .5f)
+                .setEase(LeanTweenType.easeOutSine);
+
+            return gameObject;
         }
 
         private void Update()
         {
-            if (TrackingTouch.phase.value == TouchPhase.Ended)
+            if (trackingTouch.phase.value == TouchPhase.Ended)
             {
-                if(_trackingTrail is not null) {
-                    _trackingTrail.GetComponent<Trail>().isTracking = false;
-                    _trackingTrail.GetComponent<Trail>().trackingTouch = null;
+                if(trackingTrail is not null) {
+                    trackingTrail.GetComponent<Trail>().isTracking = false;
+                    trackingTrail.GetComponent<Trail>().trackingTouch = null;
                 }
                 Destroy(gameObject);
             }
-            transform.position = UIElementReference.Instance.mainCamera.ScreenToWorldPoint((Vector3)TrackingTouch.position.value + Vector3.forward * 100);
+            transform.position = UIElementReference.Instance.mainCamera.ScreenToWorldPoint((Vector3)trackingTouch.position.value + Vector3.forward * 100);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -56,7 +64,7 @@ namespace TunnelTone.PlayArea
             {
                 GameObject o;
                 direction = (o = other.gameObject).GetComponent<Trail>().Direction;
-                _trackingTrail = o;
+                trackingTrail = o;
             }
         }
     }

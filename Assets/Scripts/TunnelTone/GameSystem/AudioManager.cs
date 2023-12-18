@@ -8,7 +8,7 @@ namespace TunnelTone.GameSystem
 {
     public class AudioManager : Singleton<AudioManager>
     {
-        private SongListItem _current;
+        private SongListItem current;
         
         [Header("This GameObject")]
         [SerializeField] private AudioSource audioSource;
@@ -17,29 +17,37 @@ namespace TunnelTone.GameSystem
         private static readonly int FadeOut = Animator.StringToHash("FadeOut");
         private static readonly int IsPreviewing = Animator.StringToHash("isPreviewing");
         private static readonly int EnterSong = Animator.StringToHash("EnterSong");
-        private SongListEventReference songListEvent => SongListEventReference.Instance;
+        private static SongListEventReference SongListEvent => SongListEventReference.Instance;
+        private static ChartEventReference ChartEvent => ChartEventReference.Instance;
         private void Start()
         {
-            songListEvent.OnSelectItem.AddListener(Preview);
-            songListEvent.OnSongStart.AddListener(StopPreview);
+            SongListEvent.OnSelectItem.AddListener(Preview);
+            SongListEvent.OnSongStart.AddListener(StopPreview);
+            
+            // Fade out the audio when the the chart ends
+            ChartEvent.OnSongEnd.AddListener(delegate
+            {
+                LeanTween.value(audioSource.gameObject,
+                    f => { audioSource.volume = f; }, audioSource.volume, 0, 1.5f);
+            });
         }
 
         private void Preview(params object[] param)
         {
-            _current = (SongListItem)param[0];
+            current = (SongListItem)param[0];
             StopAllCoroutines();
             StartCoroutine(PlayPreview());
         }
 
         private IEnumerator PlayPreview()
         {
-            audioSource.clip = _current.previewAudio;
+            audioSource.clip = current.previewAudio;
             audioSource.Play();
 
             while(true)
             {
-                audioSource.time = _current.previewStart * 0.001f;
-                yield return new WaitForSecondsRealtime(_current.previewDuration * 0.001f);
+                audioSource.time = current.previewStart * 0.001f;
+                yield return new WaitForSecondsRealtime(current.previewDuration * 0.001f);
                 animator.SetTrigger(FadeOut);
                 yield return new WaitForSecondsRealtime(1.2f);
             }
