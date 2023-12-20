@@ -91,13 +91,26 @@ public class NewChange {
 					leftRightStartOne = Float.toString(leftRightAxis());
 					upDownStartOne = Float.toString(upDownAxis());
 					if(checkOneButton == checkOneButtonTemp) {
-						checkOneButton++;
+						checkOneButton++; //if two same start and end arc will let them like this: before: arc(1000,1000 -> afrer: arc(1000,1001
 						anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + checkOneButton + "," + leftRightStartOne + "," + leftRightStartOne + "," + type[new Random().nextInt(7)] + "," + upDownStartOne + "," + upDownStartOne + ",0,none,true)[";
 					} else { anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightAxis() + "," + leftRightAxis() + "," + type[new Random().nextInt(7)] + "," + upDownAxis() + "," + upDownAxis() + ",0,none,true)["; }
-					//anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)[";
+					//anotherArcSave[anotherCount] = "arc("+ arcTapSave[i-counttt] + "," + arcTapSave[i] + "," + leftRightStart() + "," + leftRightEnd() + "," + Type() + "," + upDownStart() + "," + upDownEnd() + ",0,none,true)["; //Old
 					for(int j = i - counttt; j<=i; j++) {
-						if(j == i) { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcTapSave[j] + ")];";}
-						else { anotherArcSave[anotherCount] = anotherArcSave[anotherCount] +"arctap(" + arcTapSave[j] + "),"; }			
+						if(j == i) {
+							//System.out.println("Same arc tap at the end at note" + j + ":" + arcTapSave[j] + "and" + (j-1) + ":" +  arcTapSave[j-1]);
+							if(arcTapSave[j].equals(arcTapSave[j-1])){
+								anotherArcSave[anotherCount] = anotherArcSave[anotherCount].substring(0,anotherArcSave[anotherCount].length()-2) + ")];";
+								//System.out.println("Same arc tap at the end at note" + j + ":" + arcTapSave[j] + "and" + (j-1) + ":" +  arcTapSave[j-1]);//Debug show
+							}
+							else{
+								anotherArcSave[anotherCount] = anotherArcSave[anotherCount] + "arctap(" + arcTapSave[j] + ")];";	
+							}
+						}
+						else {
+							anotherArcSave[anotherCount] = anotherArcSave[anotherCount] +"arctap(" + arcTapSave[j] + "),";
+						}
+						//Bug discover and fix
+						//arctap(74922),arctap(74922)];
 					}
 					//System.out.println(anotherArcSave[anotherCount]); //Print a full type of arc
 					counttt = 0;
