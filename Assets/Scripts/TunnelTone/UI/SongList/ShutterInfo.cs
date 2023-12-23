@@ -20,8 +20,8 @@ namespace TunnelTone.UI.SongList
         {
             SystemEventReference.Instance.OnChartLoad.AddListener(delegate
             {
-                title.text = SongListManager.Instance.currentlySelected.title;
-                artist.text = SongListManager.Instance.currentlySelected.artist;
+                title.text = SongListManager.currentlySelected.songTitle;
+                artist.text = SongListManager.currentlySelected.artist;
                 jacket.sprite = UIElementReference.Instance.songJacket.sprite;
 
                 // TODO: Implement charter

@@ -4,9 +4,10 @@ using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
-using TunnelTone.GameSystem;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
+using Song = TunnelTone.GameSystem.Song;
 
 namespace TunnelTone.UI.SongList
 {
@@ -14,10 +15,9 @@ namespace TunnelTone.UI.SongList
     {
         [SerializeField] private GameObject container;
         [SerializeField] private TextAsset songList;
+        [SerializeField] private SongData[] songContainer;
         
-        public Song currentlySelected;
-        
-        public Song[] Songs { get; set; }
+        internal static SongData currentlySelected;
 
         private UIElementReference UIElement => UIElementReference.Instance;
         private float oldSliderValue = 0.15f;
@@ -25,35 +25,24 @@ namespace TunnelTone.UI.SongList
         private IEnumerator Start()
         {
             SongListEventReference.Instance.OnSelectItem.AddListener(OnSelectItem);
-            
-            if (songList != null)
+
+            if (songContainer is not null)
             {
-                // Deserialize songList to List<Song> object
-                Songs = JsonConvert.DeserializeObject<Song[]>(songList.text);
-
-                // Determine container height based on song count
                 var containerRect = container.GetComponent<RectTransform>();
-                containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Songs.Length * 160);
-
-                // Instantiate song list items
-                foreach (var song in Songs)
-                {
-                    var songListItem = Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"),
-                        container.transform);
-                    var listItem = songListItem.GetComponent<SongListItem>();
-                    listItem.title.text = song.title;
-                    listItem.artist.text = song.artist;
-                    listItem.difficulty.text = $"{song.difficulty[3]}";
-                    listItem.songJacket.sprite = Resources.Load<Sprite>($"Songs/{song.title}/Jacket") ?? null;
-                    listItem.previewStart = song.previewStart;
-                    listItem.previewDuration = song.previewDuration;
-                    listItem.source = song;
-                }
+                containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, songContainer.Length * 160);
                 
-                currentlySelected = Songs[0];
-                yield return null;
-                SongListEventReference.Instance.OnEnterSongList.Trigger();
+                foreach (var song in songContainer)
+                {
+                    if (song is null) continue;
+                    Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"), container.transform)
+                        .GetComponent<SongListItem>()
+                        .SetData(song);
+                }
             }
+
+            currentlySelected = songContainer?[0];
+            yield return null;
+            SongListEventReference.Instance.OnEnterSongList.Trigger();
         }
 
         private void Update()
@@ -62,9 +51,9 @@ namespace TunnelTone.UI.SongList
             {
                 UIElement.startSlider.value = 0.15f;
                 UIElement.startSlider.interactable = false;
-                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}") is null)
+                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}") is null)
                 {
-                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}.json",
+                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}.json",
                         new[] {"OK"}, new Action[] {
                             () =>
                             {
@@ -85,10 +74,10 @@ namespace TunnelTone.UI.SongList
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;
             UIElement.topView.enabled = false;
-            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{currentlySelected.title}/{DifficultyManager.Instance.currentlySelected}"));
+            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}"));
         }
         
-        IEnumerator TurnOffAndOn()
+        private IEnumerator TurnOffAndOn()
         {
             UIElement.startSlider.interactable = false;
             yield return new WaitForSeconds(0);
@@ -98,7 +87,7 @@ namespace TunnelTone.UI.SongList
         private void OnSelectItem(params object[] param)
         {
             var item = (SongListItem)param[0];
-            currentlySelected = item.source;
+            currentlySelected = item.songData;
         }
     }
 }

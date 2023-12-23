@@ -26,13 +26,13 @@ namespace TunnelTone.UI.SongList
         
         [SerializeField] private Image mainImage;
 
-        private Slider _currentSelected;
+        private Slider currentSelected;
 
-        public byte currentlySelected 
+        internal byte CurrentlySelected 
         {
             get
             {
-                return _currentSelected.gameObject.name switch
+                return currentSelected.gameObject.name switch
                 {
                     "Easy" => 0,
                     "Hard" => 1,
@@ -58,21 +58,21 @@ namespace TunnelTone.UI.SongList
             var song = (SongListItem)param[0];
 
             LeanTween.cancel(easy.gameObject);
-            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, song.source.difficulty[0], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, song.songData.GetDifficulties()[0], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(hard.gameObject);
-            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, song.source.difficulty[1], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, song.songData.GetDifficulties()[1], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(intensive.gameObject);
-            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, song.source.difficulty[2], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, song.songData.GetDifficulties()[2], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(insane.gameObject);
-            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, song.source.difficulty[3], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, song.songData.GetDifficulties()[3], .35f).setEase(LeanTweenType.easeOutCubic);
         }
 
         private void UpdateSliderValue(Slider slider, TMP_Text ind, float f)
         {
             slider.value = f;
             ind.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(slider.value)];
-            if (!_currentSelected || slider == main) return;
-            main.value = _currentSelected.value;
+            if (!currentSelected || slider == main) return;
+            main.value = currentSelected.value;
             mainText.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(main.value)];
         }
 
@@ -120,7 +120,7 @@ namespace TunnelTone.UI.SongList
         public void ChangeDifficulty(Slider target)
         {
             LeanTween.value(mainImage.gameObject, f => { UpdateSliderValue(main, mainText, f); }, main.value, target.value, .35f).setEase(LeanTweenType.easeOutCubic);
-            _currentSelected = target;
+            currentSelected = target;
         }
 
         public void FadeSliderColor(Image targetImage)

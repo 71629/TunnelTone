@@ -28,9 +28,9 @@ namespace TunnelTone.UI.SongList
         {
             yield return null;
             
-            title.text = songListItem.source.title;
-            artist.text = songListItem.source.artist;
-            bpm.text = $"{songListItem.source.bpm:BPM: 0}";
+            title.text = songListItem.songData.songTitle;
+            artist.text = songListItem.songData.artist;
+            bpm.text = $"{songListItem.songData.bpm:BPM: 0}";
         }
     }
 }

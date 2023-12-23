@@ -12,8 +12,10 @@ namespace TunnelTone.PlayArea
 {
     public class Touch : MonoBehaviour
     {
+        private static Camera MainCamera => UIElementReference.Instance.mainCamera;
+        
         private RaycastHit hit;
-        private GameObject trackingTrail;
+        internal GameObject trackingTrail;
         [SerializeField] private SphereCollider trackingRange;
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private SplineContainer splineContainer;
@@ -22,7 +24,7 @@ namespace TunnelTone.PlayArea
         private Vector3 Position => transform.position;
         private TouchControl trackingTouch;
 
-        public Direction direction;
+        internal Direction direction;
 
         private void Awake()
         {
@@ -30,19 +32,41 @@ namespace TunnelTone.PlayArea
             direction = Direction.Any;
         }
 
-        public GameObject Initialize(in TouchControl touch)
+        internal Touch Initialize(in TouchControl touch)
         {
             trackingTouch = touch;
 
             LeanTween.value(gameObject, f =>
                     {
-                        
+                        Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
                         splineExtrude.Rebuild();
                     },
-                    0, 15f, .5f)
+                    0, 250f, .3f)
                 .setEase(LeanTweenType.easeOutSine);
 
-            return gameObject;
+            return this;
+        }
+
+        internal Touch FindTap()
+        {
+            Ray ray = new(transform.position + Vector3.back * 1000, Vector3.forward);
+            if (Physics.Raycast(ray, out var hit, 1200, 1 << 10))
+            {
+                if (hit.collider.GetComponent<Tap>().Hit() <= 100)
+                {
+                    LeanTween.cancel(gameObject);
+                    LeanTween.value(gameObject, f =>
+                    {
+                        splineExtrude.Radius = f;
+                    }, 
+                    4, .3f, .3f)
+                    .setEase(LeanTweenType.easeOutSine);
+                }
+                Debug.DrawRay(ray.origin, Vector3.forward * hit.distance, Color.green);
+                return this;
+            }
+            Debug.DrawRay(ray.origin, Vector3.forward * 1200, Color.red);
+            return this;
         }
 
         private void Update()
@@ -55,17 +79,70 @@ namespace TunnelTone.PlayArea
                 }
                 Destroy(gameObject);
             }
-            transform.position = UIElementReference.Instance.mainCamera.ScreenToWorldPoint((Vector3)trackingTouch.position.value + Vector3.forward * 100);
+            
+            // Update object position
+            transform.position = MainCamera.ScreenToWorldPoint((Vector3)trackingTouch.position.value + Vector3.forward * 100);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Long Note") && direction == Direction.Any)
+            if ( other.gameObject == trackingTrail || (other.gameObject.layer == LayerMask.NameToLayer("Long Note") && direction == Direction.Any))
             {
-                GameObject o;
-                direction = (o = other.gameObject).GetComponent<Trail>().Direction;
+                var o = other.gameObject;
+                direction = o.GetComponent<Trail>().Direction;
                 trackingTrail = o;
+                
+                LeanTween.cancel(gameObject);
+                LeanTween.value(gameObject,
+                    f =>
+                    {
+                        Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
+                        splineExtrude.Rebuild();
+                    },
+                    Spline.Knots.ToArray()[1].Position.z, 175f, .3f)
+                .setEase(LeanTweenType.easeOutSine);
+                
+                LeanTween.value(gameObject,
+                    f =>
+                    {
+                        splineExtrude.Radius = f;
+                    },
+                    splineExtrude.Radius, 4f, .3f)
+                .setEase(LeanTweenType.easeOutSine);
             }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject == trackingTrail)
+            {
+                LeanTween.cancel(gameObject);
+                LeanTween.value(gameObject,
+                    f =>
+                    {
+                        Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
+                        splineExtrude.Rebuild();
+                    },
+                    Spline.Knots.ToArray()[1].Position.z, 250f, .3f)
+                .setEase(LeanTweenType.easeOutSine);
+
+                LeanTween.value(gameObject,
+                    f =>
+                    {
+                        splineExtrude.Radius = f;
+                    },
+                    splineExtrude.Radius, .3f, .3f)
+                .setEase(LeanTweenType.easeOutSine);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            LeanTween.cancel(gameObject);
+            if (trackingTrail is null) return;
+            var trail = trackingTrail.GetComponent<Trail>();
+            trail.isTracking = false;
+            trail.trackingTouch = null;
         }
     }
 }

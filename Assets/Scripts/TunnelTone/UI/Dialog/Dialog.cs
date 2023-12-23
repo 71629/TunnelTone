@@ -38,7 +38,7 @@ namespace TunnelTone.UI.Dialog
             title.text = (string)param[0];
             message.text = (string)param[1];
             var optionText = (string[])param[2];
-            //Pass the action to be taken when the option is clicked
+            //Pass the action previewDuration be taken when the option is clicked
             var options = (Action[])param[3];
             backdrop.color = SeverityColor[(Severity)param[4]];
 

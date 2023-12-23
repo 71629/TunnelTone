@@ -3862,7 +3862,7 @@ public class LTRect : System.Object{
 * Object that describes the event to an event listener
 * @class LTEvent
 * @constructor
-* @param {object} data:object Data that has been passed from the dispatchEvent method
+* @param {object} data:object SongData that has been passed from the dispatchEvent method
 */
 public class LTEvent {
     public int id;

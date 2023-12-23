@@ -15,14 +15,14 @@ namespace TunnelTone.Elements
         // Basic trail properties
         private float startTime, endTime;
         private bool virtualTrail;
-        public Direction Direction { get; private set; }
+        internal Direction Direction { get; private set; }
         
         // Trail References
         private Trail next;
         
         // Status Reference
         private bool isHit;
-        public bool isTracking;
+        internal bool isTracking;
         
         // Coupled Components
         [SerializeField] private SplineContainer splineContainer;
@@ -32,7 +32,7 @@ namespace TunnelTone.Elements
         [SerializeField] private MeshFilter meshFilter;
         private Spline spline;
         private List<GameObject> comboPoint;
-        public GameObject trackingTouch;
+        internal GameObject trackingTouch;
         private List<TrailSubsegment> subsegments;
         
         // Objects
@@ -93,7 +93,7 @@ namespace TunnelTone.Elements
 
             spline = splineContainer.Spline;
             
-            // Create curve with respect to easing and easing ratio
+            // Create curve with respect previewDuration easing and easing ratio
             switch (easing)
             {
                 case EasingMode.Straight:
@@ -140,19 +140,6 @@ namespace TunnelTone.Elements
             
             meshFilter.mesh = new Mesh();
             
-#if USE_MESH // Keeping the code in case if needed
-            if (newTrail)
-                BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, direction, virtualTrail);
-            
-            // Build subsegments
-            for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-            {
-                BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, direction, virtualTrail);
-            }
-            BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, direction, virtualTrail);
-#endif
-
-#if USE_LINE_RENDERER
             // Build critical combo points based on bpm
             if (!virtualTrail)
             {
@@ -167,15 +154,13 @@ namespace TunnelTone.Elements
                 float tail = 0;
                 for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
-                    var subSegment = Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>();
-                    subSegment.Initialize(this, spline, 
+                    Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline, 
                         (Vector3)spline.EvaluatePosition(tail), 
                         (Vector3)spline.EvaluatePosition(i), 
                         spline.EvaluatePosition(tail).z, 
                         spline.EvaluatePosition(i).z
                     );
                     tail = i;
-                    // BuildSubsegment((Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z, false);
                 }
                 Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline,
                     (Vector3)spline.EvaluatePosition(tail), 
@@ -183,13 +168,12 @@ namespace TunnelTone.Elements
                     spline.EvaluatePosition(tail).z, 
                     spline.EvaluatePosition(1).z
                 );
-                // BuildSubsegment((Vector3)spline.EvaluatePosition(1), spline.ElementAt(1).Position.z, false);
             }
             else
             {
                 var j = 0;
                 lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
-                for (var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+                for (var i = 0f; i < 1; i += 80 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
                     lineRenderer.SetPosition(j, spline.EvaluatePosition(i));
                     lineRenderer.positionCount++;
@@ -198,7 +182,6 @@ namespace TunnelTone.Elements
                 lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
                 lineRenderer.positionCount--;
             }
-#endif
         }
 
         private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
@@ -270,70 +253,18 @@ namespace TunnelTone.Elements
             meshFilter.mesh = mesh1;
         }
 
-        private void BuildSubsegment(Vector2 coordinate, float time, bool virtualTrail)
-        {
-            var position = new Vector3(coordinate.x, coordinate.y, time);
-            var mesh = meshFilter.mesh;
-
-            // Concatenate new vertices
-            var vertices = !virtualTrail
-            
-                ? new[]
-                {
-                    position + new Vector3(0, 40, 0),
-                    position + new Vector3(40, 0, 0),
-                    position + new Vector3(0, -40, 0),
-                    position + new Vector3(-40, 0, 0)
-                }
-                : new[]
-                {
-                    position + new Vector3(0, 8, 0),
-                    position + new Vector3(8, 0, 0),
-                    position + new Vector3(0, -8, 0),
-                    position + new Vector3(-8, 0, 0)
-                };
-            mesh.vertices = meshFilter.mesh.vertices.Concat(vertices).ToArray();
-
-            // Concatenate new triangles
-            var i = mesh.vertices.Length;
-            var triangles = new[]
-            {
-                i - 8, i - 4, i - 3,
-                i - 8, i - 3, i - 7,
-                i - 7, i - 3, i - 2,
-                i - 7, i - 2, i - 6,
-                i - 6, i - 2, i - 1,
-                i - 6, i - 1, i - 5,
-                i - 5, i - 1, i - 4,
-                i - 5, i - 4, i - 8
-            };
-
-            // Concatenate new UVs
-            var uv = new List<Vector2>
-            {
-                new(1f, 1f),
-                new(1f, 0),
-                new(0, 0),
-                new(0, 1f)
-            };
-
-            // Repeat the UVs for each vertex in the mesh
-            var totalVertices = mesh.vertexCount + vertices.Length;
-            uv = Enumerable.Repeat(uv, totalVertices / uv.Count).SelectMany(x => x).ToList();
-
-            // Set the vertices, triangles, and UVs in the correct order
-            mesh.triangles = meshFilter.mesh.triangles.Concat(triangles).ToArray();
-            mesh.uv = uv.ToArray();
-
-            // Recalculate bounds and normals
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
-        }
-
         private void Update()
         {
             if(NoteRenderer.currentTime * 1000 > endTime + 120 && NoteRenderer.IsPlaying)
                 Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (trackingTouch is null || virtualTrail) return;
+            var touch = trackingTouch.GetComponent<PlayArea.Touch>();
+            touch.trackingTrail = null;
+            touch.direction = Direction.Any;
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
 
 namespace TunnelTone.UI.SongList
@@ -25,9 +25,8 @@ namespace TunnelTone.UI.SongList
         public float previewStart;
         public float previewDuration;
 
-        public Song source;
-
-        private Color color = new Color();
+        public AudioClip source;
+        public SongData songData;
         
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
         private SongListEventReference SongListEvent => SongListEventReference.Instance;
@@ -49,13 +48,13 @@ namespace TunnelTone.UI.SongList
             });
             SongListEvent.OnSelectItem.AddListener(OnSelectItem);
             SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
-            previewAudio = (AudioClip)Resources.Load($"Songs/{source.title}/{source.title}");
+            previewAudio = songData.music;
         }
         
         private void OnDifficultyChange(object[] param)
         {
             var index = (int)param[0];
-            difficulty.text = $"{Dictionaries.Instance.difficultyDictionary[source.difficulty[index]]}";
+            difficulty.text = $"{Dictionaries.Instance.difficultyDictionary[songData.GetDifficulties()[index]]}";
             difficultyBackground.color = index switch
             {
                 0 => UIElement.easy,
@@ -70,7 +69,22 @@ namespace TunnelTone.UI.SongList
         {
             CancelInvoke();
             animator.SetBool(IsSelected, false);
-            button.interactable = SongListManager.Instance.currentlySelected != source;
+            button.interactable = SongListManager.currentlySelected != songData;
+        }
+        
+        internal SongListItem SetData(SongData data)
+        {
+            songData = data;
+            
+            title.text = data.songTitle;
+            artist.text = data.artist;
+            difficulty.text = $"{data.GetDifficulty(3)}";
+            songJacket.sprite = data.jacket;
+            previewStart = data.previewStart;
+            previewDuration = data.previewDuration;
+            source = data.music;
+            
+            return this;
         }
     }
 }

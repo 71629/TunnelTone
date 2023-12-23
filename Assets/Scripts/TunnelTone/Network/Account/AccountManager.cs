@@ -193,7 +193,7 @@ namespace TunnelTone.Network.Account
 
             using var req = UnityWebRequest.Post($"{APIURL}register", form);
             
-            SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Connecting to server...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
+            SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Connecting previewDuration server...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
 
             req.timeout = 10;
             yield return req.SendWebRequest();

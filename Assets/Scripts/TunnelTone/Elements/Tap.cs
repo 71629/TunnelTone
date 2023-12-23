@@ -130,11 +130,12 @@ namespace TunnelTone.Elements
             Destroy(gameObject);
         }
         
-        public void Hit()
+        internal float Hit(bool requireAbsoluteValue = true)
         {
-            offset = Mathf.Abs((float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time);
-            HitEffect(offset);
-            ChartEventReference.Instance.OnNoteHit.Trigger(offset);
+            HitEffect(Mathf.Abs(offset = (float)(AudioSettings.dspTime - NoteRenderer.dspSongStartTime) * 1000 - time));
+            ChartEventReference.Instance.OnNoteHit.Trigger(Mathf.Abs(offset));
+            
+            return requireAbsoluteValue ? Mathf.Abs(offset) : offset;
         }
     }
 }

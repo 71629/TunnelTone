@@ -52,8 +52,10 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.texcoord = v.texcoord;
+                
                 o.color = v.color * _Color;
                 o.screenPos = ComputeScreenPos(o.vertex);
+                o.screenPos.y = 1 - o.screenPos.y;
                 return o;
             }
 
@@ -74,19 +76,22 @@
             
                 // Apply a blur effect to the grabbed texture
                 // Increase the blur radius for a stronger blur effect
-                float2 offset = 15.0 / _ScreenParams.xy;
+                float2 offset = 2.0 / _ScreenParams.xy;
                 grabCol = 0;
-                for (int y = -30; y <= 30; y++)
+                _MainTex = _GrabTexture;
+                for (int y = -24; y <= 24; y++)
                 {
-                    for (int x = -30; x <= 30; x++)
+                    for (int x = -24; x <= 24; x++)
                     {
                         grabCol += tex2Dproj(_GrabTexture, i.screenPos + float4(offset.x * x, offset.y * y, 0, 0));
                     }
                 }
-                grabCol /= 3721.0;
+                grabCol /= 2401;
+                grabCol *= 0.55;
             
                 // Combine the UI color and the blurred background
-                col = lerp(grabCol, col, 0);
+                col = lerp(grabCol, i.color * tex2D(_MainTex, distortedUV), 0);
+                col.a = 1;
             
                 return col;
             }

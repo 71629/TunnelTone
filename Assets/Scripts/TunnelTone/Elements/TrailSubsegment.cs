@@ -1,5 +1,6 @@
 ﻿using System;
 using TunnelTone.UI.Reference;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -32,7 +33,7 @@ namespace TunnelTone.Elements
         private float endTime;
         private Direction direction;
 
-        internal void Initialize(Trail segmentParent, Spline segmentSpline, Vector2 startCoordinate, Vector2 endCoordinate, float startTime, float endTime)
+        internal TrailSubsegment Initialize(Trail segmentParent, Spline segmentSpline, Vector2 startCoordinate, Vector2 endCoordinate, float startTime, float endTime)
         {
             parent = segmentParent;
             this.startCoordinate = startCoordinate;
@@ -43,6 +44,8 @@ namespace TunnelTone.Elements
             Spline = segmentSpline;
             
             SetMesh();
+
+            return this;
         }
 
         private void SetMesh()
