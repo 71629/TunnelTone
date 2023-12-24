@@ -1,10 +1,9 @@
 Just Run the .bat file when you need that
 
-Use Converter\Converter.sln open project to run the Program.cs (Visual Studio 2022)
-Change the location generation inside the Program.cs
+This java program will directly open the sln file while the convert is done in java
 
-Convert .aff file need a Sample.osu file inside the file
+Convert 2.aff file need a Sample.osu file inside the folder.
 
-Convert.aff to 71629's format need a 2.aff file inside
+Convert.aff to 71629's format need a 2.aff file inside the folder.
 
 ConvertEnd.txt -> Copy to 71629's converter

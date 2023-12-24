@@ -1,10 +1,10 @@
 import java.io.*;
+import java.io.File;
 import java.util.Scanner;
 import java.util.Random;
 import java.lang.Math;
 class ConvertConverter {
 	public static void main (String args[]) throws Exception{
-		Scanner input = new Scanner(System.in);
 		File file = new File(
 		 	"..\\A_Converter\\2.aff");
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -64,7 +64,7 @@ class ConvertConverter {
 		}
 		File files = new File("..\\A_Converter\\Program.cs");
 		System.out.println("");
-		System.out.println("ConvertEnd.txt has been create in Desktop!");
+		//System.out.println("ConvertEnd.txt has been create in Desktop!");
 		System.out.println("");
 		FileWriter fw = new FileWriter("..\\A_Converter\\Converter\\Converter\\Program.cs");
 		System.out.println("Writing Program.cs...");
@@ -100,7 +100,7 @@ class ConvertConverter {
 		counttt = 0;
 		do {
 			fw.write("            " + arcSave[counttt] + "\r\n");
-			System.out.println("Write Line" + counttt + ": " + arcSave[counttt]);
+			//System.out.println("Write Line" + counttt + ": " + arcSave[counttt]);
 			counttt++;
 		}while(arcSave[counttt] != null);
 
@@ -110,10 +110,16 @@ class ConvertConverter {
 		fw.write("            var ret = JsonSerializer.Serialize(chart, new JsonSerializerOptions{WriteIndented = true});" + "\r\n");
 		fw.write("\r\n");
 		fw.write("            // Output the result to a new json file" + "\r\n");
-		fw.write("            File.WriteAllText(@" + "\"D:\\Prismatic.json\"" +", ret);" + "\r\n");
+		Scanner input = new Scanner(System.in);
+		System.out.println("");
+		System.out.println("");
+		System.out.println("Example: D:\\SongName");
+		System.out.print("Please enter the create JSON file location and name: ");
+		String input_S = input.nextLine();  // Read user input
+		fw.write("            File.WriteAllText(@" + "\"" + input_S +".json" + "\"" +", ret);" + "\r\n");
 		fw.write("\r\n");
 		fw.write("            //Open explorer" + "\r\n");
-		fw.write("            Process.Start(" + "\"explorer.exe\"" + ", @" +"\"D:\\\");" + "\r\n");
+		fw.write("            Process.Start(" + "\"explorer.exe\"" + ", @" +"\"" + input_S.substring(0,2) +"\\\");" + "\r\n");
 		fw.write("        }" + "\r\n");
 		fw.write("\r\n");
 		fw.write("        private static void arc(int startTime, int endTime, double startX, double endX, int easingMode, double startY, double endY, int color, int fx, bool virtualArc)" + "\r\n");

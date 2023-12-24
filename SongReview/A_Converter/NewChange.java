@@ -32,37 +32,23 @@ public class NewChange {
 			//System.out.println(arcTapSave[count]); //It should be cut it into the array
 		}
 
-		counttt = 1;
-		count = 0;
-		do {
-			try{
-				if(arcTapSave[count].substring((counttt-1),counttt).equals(",")) {
-					arcTapSave[count] = arcTapSave[count].substring(counttt,arcTapSave[count].length());
-					//System.out.println(arcTapSave[count]); //Remove first,
+		for(int i=0; i<2;i++){
+			counttt = 1;
+			count = 0;
+			do {
+				try{
+					if(arcTapSave[count].substring((counttt-1),counttt).equals(",")) {
+						arcTapSave[count] = arcTapSave[count].substring(counttt,arcTapSave[count].length());
+						//System.out.println(arcTapSave[count]); //Remove top two,
+						count++;
+						counttt = 1;
+					} else { counttt++; }
+				}catch (Exception b) {
 					count++;
 					counttt = 1;
-				} else { counttt++; }
-			}catch (Exception b) {
-				count++;
-				counttt = 1;
-			}
-		}while(arcTapSave[count] != null);
-
-		counttt = 1;
-		count = 0;
-		do {
-			try{
-				if(arcTapSave[count].substring((counttt-1),counttt).equals(",")) {
-					arcTapSave[count] = arcTapSave[count].substring(counttt,arcTapSave[count].length());
-					//System.out.println(arcTapSave[count]); //Remove Second,
-					count++;
-					counttt = 1;
-				} else { counttt++; }
-			}catch (Exception b) {
-				count++;
-				counttt = 1;
-			}
-		}while(arcTapSave[count] != null);
+				}
+			}while(arcTapSave[count] != null);
+		}
 
 		counttt = 0;
 		count = 0;
