@@ -12,16 +12,19 @@ namespace TunnelTone.GameSystem
         
         [Header("This GameObject")]
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private Animator animator;
         
-        private static readonly int FadeOut = Animator.StringToHash("FadeOut");
-        private static readonly int IsPreviewing = Animator.StringToHash("isPreviewing");
-        private static readonly int EnterSong = Animator.StringToHash("EnterSong");
         private static SongListEventReference SongListEvent => SongListEventReference.Instance;
         private static ChartEventReference ChartEvent => ChartEventReference.Instance;
+        
         private void Start()
         {
-            SongListEvent.OnSelectItem.AddListener(Preview);
+            SongListEvent.OnSelectItem.AddListener(o =>
+            {
+                LeanTween.cancel(gameObject);
+                current = (SongListItem)o[0];
+                audioSource.clip = current.previewAudio;
+                StartCoroutine(Preview());
+            });
             SongListEvent.OnSongStart.AddListener(StopPreview);
             
             // Fade out the audio when the the chart ends
@@ -32,39 +35,40 @@ namespace TunnelTone.GameSystem
             });
         }
 
-        private void Preview(params object[] param)
-        {
-            current = (SongListItem)param[0];
-            StopAllCoroutines();
-            StartCoroutine(PlayPreview());
+        private void FadePreview()
+        { 
+            LeanTween.cancel(gameObject);
+            LeanTween.value(gameObject, f =>
+            {
+                audioSource.volume = f;
+            }, 1f, 0f, 1.2f)
+            .setOnComplete(() =>
+            {
+                audioSource.Stop();
+                StartCoroutine(Preview());
+            });
         }
 
-        private IEnumerator PlayPreview()
+        private IEnumerator Preview()
         {
-            audioSource.clip = current.previewAudio;
+            audioSource.volume = 1f;
             audioSource.Play();
-
-            while(true)
-            {
-                audioSource.time = current.previewStart * 0.001f;
-                yield return new WaitForSecondsRealtime(current.previewDuration * 0.001f);
-                animator.SetTrigger(FadeOut);
-                yield return new WaitForSecondsRealtime(1.2f);
-            }
+            
+            audioSource.time = current.previewStart * 0.001f;
+            yield return new WaitUntil(() => audioSource.time >= (current.previewStart + current.previewDuration) * 0.001f);
+            FadePreview();
         }
         
         private void StopPreview(params object[] param)
         {
-            StopAllCoroutines();
-            animator.SetBool(IsPreviewing, false);
-            animator.SetTrigger(EnterSong);
-            Invoke(nameof(DisableAnimator), 1.1f);
-        }
-
-        private void DisableAnimator()
-        {
-            animator.enabled = false;
-            audioSource.Stop();
+            LeanTween.value(gameObject, f =>
+                {
+                    audioSource.volume = f;
+                }, audioSource.volume, 0f, 1.2f)
+                .setOnComplete(() =>
+                {
+                    audioSource.Stop();
+                });
         }
     }
 }

@@ -43,6 +43,11 @@ namespace TunnelTone.Core
             
             return JsonConvert.DeserializeObject<Score>(Encoding.UTF8.GetString(File.ReadAllBytes(path)));
         }
+
+        internal void UploadScore()
+        {
+            
+        }
         
         [MenuItem("TunnelTone/Storage/Clear Local Settings")]
         private static void ClearLocalSettings()

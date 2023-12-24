@@ -9,6 +9,5 @@ namespace TunnelTone.ScriptableObjects
         [SerializeField] internal string chartDesigner = "[Redacted]";
         
         [SerializeField] internal TextAsset chart;
-        [SerializeField] private int score;
     }
 }

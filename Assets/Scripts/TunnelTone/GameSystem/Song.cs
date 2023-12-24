@@ -3,11 +3,11 @@
     [System.Serializable]
     public class Song
     {
-        public string title { get; set; }
-        public string artist { get; set; }
-        public float bpm { get; set; }
-        public int[] difficulty { get; set; }
-        public float previewStart { get; set; }
-        public float previewDuration { get; set; }
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public float Bpm { get; set; }
+        public int[] Difficulty { get; set; }
+        public float PreviewStart { get; set; }
+        public float PreviewDuration { get; set; }
     }
 }

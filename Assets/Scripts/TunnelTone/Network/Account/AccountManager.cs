@@ -265,6 +265,7 @@ namespace TunnelTone.Network.Account
             }
         }
         
+        [Obsolete("AccountManager.UploadScore is deprecated, please use Score.UploadScore instead.")]
         public void UploadScore(string song, int score, int difficulty)
         {
             WWWForm form = new();
@@ -273,11 +274,6 @@ namespace TunnelTone.Network.Account
             form.AddField("scorePost", score);
             form.AddField("difficultyPost", difficulty);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
-        }
-        
-        internal class Credential
-        {
-            public int uid { get; set; }
         }
     }
 }
