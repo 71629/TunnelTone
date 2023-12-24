@@ -40,6 +40,14 @@ namespace TunnelTone.Elements
         public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool IsPlaying = false;
         
+        // Debug
+        private float _currentTime;
+
+        private void Update()
+        {
+            _currentTime = currentTime;
+        }
+        
         private void Start()
         {
             _transform = GetComponent<Transform>();

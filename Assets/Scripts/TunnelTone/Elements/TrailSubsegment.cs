@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TunnelTone.UI.Reference;
 using Unity.XR.OpenVR;
 using UnityEngine;
@@ -45,13 +46,36 @@ namespace TunnelTone.Elements
             
             SetMesh();
 
+            StartCoroutine(AdjustMesh());
+
             return this;
+        }
+
+        private IEnumerator AdjustMesh()
+        {
+            yield return new WaitUntil(() => NoteRenderer.currentTime * 1000 > startTime && parent.isTracking);
+
+            gameObject.layer = 20;
+            
+            for (var i = 0; i <= 3; i++)
+            {
+                var index = i;
+                LeanTween.value(gameObject, pos =>
+                        {
+                            Mesh.vertices[index] = pos;
+                            if(Mesh.vertices[index].z > Mesh.vertices[index + 4].z) Destroy(gameObject);
+                            UpdateMesh();
+                        }, 
+                        Mesh.vertices[index], Mesh.vertices[index + 4], endTime - NoteRenderer.currentTime * 1000)
+                    .setOnComplete(() => Destroy(gameObject));
+            }
         }
 
         private void SetMesh()
         {
-            var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime);
-            var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime);
+            Mesh.MarkDynamic();
+            var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * NoteRenderer.Instance.chartSpeedModifier);
+            var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * NoteRenderer.Instance.chartSpeedModifier);
             
             Material = direction switch
             {
@@ -100,11 +124,15 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if (NoteRenderer.currentTime * 1000 > endTime + 120 && NoteRenderer.IsPlaying) Destroy(gameObject);
+            if (NoteRenderer.currentTime * 1000 > endTime + 60 && NoteRenderer.IsPlaying)
+            {
+                Destroy(gameObject);
+            }
             if (startTime > NoteRenderer.currentTime * 1000 || !NoteRenderer.IsPlaying || !parent.isTracking) return;
             for (var i = 0; i <= 3; i++)
             {
-                Mesh.vertices[i] = new Vector3(Mesh.vertices[i].x, Mesh.vertices[i].y, 0);
+                Mesh.vertices[i] = new Vector3(Mesh.vertices[i].x, Mesh.vertices[i].y, -transform.position.z);
+                if (Mesh.vertices[i].z > Mesh.vertices[i + 4].z) Destroy(gameObject);
             }
             UpdateMesh();
         }

@@ -152,13 +152,13 @@ namespace TunnelTone.Elements
                 }
                 // Build subsegments
                 float tail = 0;
-                for(var i = 0f; i < 1; i += 200 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+                for(var i = 0f; i < 1; i += 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
                     Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline, 
                         (Vector3)spline.EvaluatePosition(tail), 
                         (Vector3)spline.EvaluatePosition(i), 
-                        spline.EvaluatePosition(tail).z, 
-                        spline.EvaluatePosition(i).z
+                        Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(tail).z)), 
+                        Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(i).z))
                     );
                     tail = i;
                 }

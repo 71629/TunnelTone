@@ -10,7 +10,6 @@ namespace TunnelTone.GameSystem
     {
         private SongListItem current;
         
-        [Header("This GameObject")]
         [SerializeField] private AudioSource audioSource;
         
         private static SongListEventReference SongListEvent => SongListEventReference.Instance;
