@@ -28,7 +28,7 @@ namespace TunnelTone.UI.SongList
 
         private Slider currentSelected;
 
-        internal byte CurrentlySelected 
+        internal int CurrentlySelected 
         {
             get
             {
@@ -38,6 +38,17 @@ namespace TunnelTone.UI.SongList
                     "Hard" => 1,
                     "Intensive" => 2,
                     "Insane" => 3,
+                    _ => throw new ArgumentException()
+                };
+            }
+            set
+            {
+                currentSelected = value switch
+                {
+                    0 => easy,
+                    1 => hard,
+                    2 => intensive,
+                    3 => insane,
                     _ => throw new ArgumentException()
                 };
             }
@@ -76,47 +87,6 @@ namespace TunnelTone.UI.SongList
             mainText.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(main.value)];
         }
 
-/*
-        private IEnumerator UpdateDifficultySlider(Slider slider, TextMeshProUGUI ind, float i, float f, float t = 0.21f, int iterations = 1)
-        {
-            yield return new WaitForEndOfFrame();
-            
-            if (t > 0.999f || Math.Abs(slider.value - f) < 0.005f)
-            {
-                slider.value = f;
-                yield break;
-            }
-
-            slider.value = Mathf.Lerp(i, f, t);
-            ind.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(slider.value)];
-
-            if (_currentSelected && slider != main)
-            {
-                main.value = _currentSelected.value;
-                mainText.text = Dictionaries.Instance.difficultyDictionary[Mathf.RoundToInt(main.value)];
-            }
-            
-            StartCoroutine(UpdateDifficultySlider(slider, ind, i, f, t + 0.15f * Mathf.Pow(0.85f, iterations), iterations + 1));
-        }
-*/
-
-/*
-        private IEnumerator FadeSliderColor(Graphic image, Color i, Color f, float t = 0.21f, int iterations = 1)
-        {
-            yield return new WaitForEndOfFrame();
-            
-            if (t > 0.999f || image.color == f)
-            {
-                image.color = f;
-                yield break;
-            }
-            
-            image.color = Color.Lerp(i, f, t);
-            
-            StartCoroutine(FadeSliderColor(image, i, f, t + 0.15f * Mathf.Pow(0.85f, iterations), iterations + 1));
-        }
-*/
-
         public void ChangeDifficulty(Slider target)
         {
             LeanTween.value(mainImage.gameObject, f => { UpdateSliderValue(main, mainText, f); }, main.value, target.value, .35f).setEase(LeanTweenType.easeOutCubic);
@@ -125,6 +95,11 @@ namespace TunnelTone.UI.SongList
 
         public void FadeSliderColor(Image targetImage)
         {
+            if (targetImage == insane.fillRect.GetComponent<Image>())
+            {
+                LeanTween.value(main.gameObject, color => { UpdateSliderColor(mainImage, color); }, mainImage.color, new Color32(190, 65, 207, 255), .35f).setEase(LeanTweenType.easeOutCubic);
+                return;
+            }
             LeanTween.value(main.gameObject, color => { UpdateSliderColor(mainImage, color); }, mainImage.color, targetImage.color, .35f).setEase(LeanTweenType.easeOutCubic);
         }
 
@@ -136,6 +111,14 @@ namespace TunnelTone.UI.SongList
         public void OnDifficultyChange(int difficulty)
         {
             SongListEventReference.Instance.OnDifficultyChange.Trigger(difficulty);
+        }
+        
+        public void QuickChangeDifficulty()
+        {
+            CurrentlySelected = (CurrentlySelected + 1) % 4;
+            SongListEventReference.Instance.OnDifficultyChange.Trigger(CurrentlySelected);
+            ChangeDifficulty(currentSelected);
+            FadeSliderColor(currentSelected.fillRect.GetComponent<Image>());
         }
     }
 }

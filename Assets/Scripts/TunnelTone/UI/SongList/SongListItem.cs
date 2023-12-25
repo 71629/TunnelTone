@@ -29,10 +29,10 @@ namespace TunnelTone.UI.SongList
         public SongData songData;
         
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
-        private SongListEventReference SongListEvent => SongListEventReference.Instance;
-        private UIElementReference UIElement => UIElementReference.Instance;
+        private static SongListEventReference SongListEvent => SongListEventReference.Instance;
+        private static UIElementReference UIElement => UIElementReference.Instance;
         
-        public void ItemSelected()
+        internal void ItemSelected()
         {
             SongListEvent.OnSelectItem.Trigger(this);
             
