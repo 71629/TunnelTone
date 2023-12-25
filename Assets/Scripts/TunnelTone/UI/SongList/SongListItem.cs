@@ -37,7 +37,7 @@ namespace TunnelTone.UI.SongList
             SongListEvent.OnSelectItem.Trigger(this);
             
             animator.SetBool(IsSelected, true);
-            UIElement.songJacket.sprite = songJacket.sprite;
+            UIElement.songJacket.sprite = songData.jacket;
         }
         
         private void Start()

@@ -76,17 +76,17 @@
             
                 // Apply a blur effect to the grabbed texture
                 // Increase the blur radius for a stronger blur effect
-                float2 offset = 2.0 / _ScreenParams.xy;
+                float2 offset = 1.5 / _ScreenParams.xy;
                 grabCol = 0;
                 _MainTex = _GrabTexture;
-                for (int y = -24; y <= 24; y++)
+                for (int y = -18; y <= 18; y++)
                 {
-                    for (int x = -24; x <= 24; x++)
+                    for (int x = -18; x <= 18; x++)
                     {
                         grabCol += tex2Dproj(_GrabTexture, i.screenPos + float4(offset.x * x, offset.y * y, 0, 0));
                     }
                 }
-                grabCol /= 2401;
+                grabCol /= 1521;
                 grabCol *= 0.55;
             
                 // Combine the UI color and the blurred background

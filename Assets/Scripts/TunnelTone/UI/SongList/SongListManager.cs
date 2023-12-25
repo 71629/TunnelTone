@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
-using Song = TunnelTone.GameSystem.Song;
+using UnityEngine.UI;
 
 namespace TunnelTone.UI.SongList
 {
@@ -16,6 +15,7 @@ namespace TunnelTone.UI.SongList
         [SerializeField] private GameObject container;
         [SerializeField] private TextAsset songList;
         [SerializeField] private SongData[] songContainer;
+        [SerializeField] private GameObject currentBackground;
         
         internal static SongData currentlySelected;
 
@@ -88,6 +88,20 @@ namespace TunnelTone.UI.SongList
         {
             var item = (SongListItem)param[0];
             currentlySelected = item.songData;
+            
+            var newBackground = Instantiate(currentBackground, transform.parent).GetComponent<Image>();
+            newBackground.gameObject.name = "Background";
+            newBackground.transform.SetSiblingIndex(1);
+            newBackground.sprite = item.songData.jacket;
+            LeanTween.value(newBackground.gameObject, f =>
+                {
+                    newBackground.color = new Color(1, 1, 1, f);
+                }, 0f, 1f, .25f)
+                .setOnComplete(() =>
+                {
+                    Destroy(currentBackground);
+                    currentBackground = newBackground.gameObject;
+                });
         }
     }
 }
