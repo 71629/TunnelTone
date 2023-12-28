@@ -135,6 +135,7 @@ namespace TunnelTone.Elements
             }
             else
             {
+                gameObject.layer = 20;
                 meshRenderer.material = NoteRenderer.Instance.none;
             }
             
@@ -264,7 +265,6 @@ namespace TunnelTone.Elements
             if (trackingTouch is null || virtualTrail) return;
             var touch = trackingTouch.GetComponent<PlayArea.Touch>();
             touch.trackingTrail = null;
-            touch.direction = Direction.Any;
         }
     }
 }

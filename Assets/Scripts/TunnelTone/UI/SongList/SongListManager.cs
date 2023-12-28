@@ -51,9 +51,9 @@ namespace TunnelTone.UI.SongList
             {
                 UIElement.startSlider.value = 0.15f;
                 UIElement.startSlider.interactable = false;
-                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}") is null)
+                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}") is null)
                 {
-                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}.json",
+                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}.json",
                         new[] {"OK"}, new Action[] {
                             () =>
                             {
@@ -62,7 +62,7 @@ namespace TunnelTone.UI.SongList
                             }}, Dialog.Dialog.Severity.Error);
                     return;
                 }
-                SongListEventReference.Instance.OnSongStart.Trigger();
+                SongListEventReference.Instance.OnSongStart.Trigger(currentlySelected);
                 NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
                 StartCoroutine(EnableCanvasDelayed());
             }
@@ -74,7 +74,7 @@ namespace TunnelTone.UI.SongList
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;
             UIElement.topView.enabled = false;
-            SystemEventReference.Instance.OnChartLoad.Trigger(Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{DifficultyManager.Instance.CurrentlySelected}"));
+            SystemEventReference.Instance.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
         }
         
         private IEnumerator TurnOffAndOn()

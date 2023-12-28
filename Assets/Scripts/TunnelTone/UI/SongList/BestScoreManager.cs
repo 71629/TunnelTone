@@ -19,7 +19,7 @@ namespace TunnelTone.UI.SongList
         
         private void UpdateDifficulty(params object[] param)
         {
-            var finalScore = SongListManager.currentlySelected.GetScore(DifficultyManager.Instance.CurrentlySelected);
+            var finalScore = SongListManager.currentlySelected.GetScore(SongListDifficultyManager.Instance.CurrentlySelected);
             
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, f =>
@@ -43,7 +43,7 @@ namespace TunnelTone.UI.SongList
             var song = (SongListItem)param[0];
             var songData = song.songData;
             
-            var finalScore = songData.GetScore(DifficultyManager.Instance.CurrentlySelected);
+            var finalScore = songData.GetScore(SongListDifficultyManager.Instance.CurrentlySelected);
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, f =>
                 {

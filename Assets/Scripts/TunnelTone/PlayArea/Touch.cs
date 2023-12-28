@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using TunnelTone.Elements;
+using TunnelTone.GameSystem;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
@@ -35,6 +37,7 @@ namespace TunnelTone.PlayArea
         internal Touch Initialize(in TouchControl touch)
         {
             trackingTouch = touch;
+            transform.position = MainCamera.ScreenToWorldPoint((Vector3)touch.position.value + Vector3.forward * 100);
 
             LeanTween.value(gameObject, f =>
                     {
@@ -49,7 +52,7 @@ namespace TunnelTone.PlayArea
 
         internal Touch FindTap()
         {
-            Ray ray = new(transform.position + Vector3.back * 1000, Vector3.forward);
+            Ray ray = new( transform.position + Vector3.back * 1000, Vector3.forward);
             if (Physics.Raycast(ray, out var hit, 1200, 1 << 10))
             {
                 if (hit.collider.GetComponent<Tap>().Hit() <= 100)
@@ -62,10 +65,10 @@ namespace TunnelTone.PlayArea
                     4, .3f, .3f)
                     .setEase(LeanTweenType.easeOutSine);
                 }
-                Debug.DrawRay(ray.origin, Vector3.forward * hit.distance, Color.green);
+                Debug.DrawRay(ray.origin, Vector3.forward * hit.distance, Color.green, 1f);
                 return this;
             }
-            Debug.DrawRay(ray.origin, Vector3.forward * 1200, Color.red);
+            Debug.DrawRay(ray.origin, Vector3.forward * 1200, Color.red, 1f);
             return this;
         }
 
