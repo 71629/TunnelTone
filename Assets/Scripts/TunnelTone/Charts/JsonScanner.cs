@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
+using TunnelTone.ScriptableObjects;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 
@@ -26,8 +27,9 @@ namespace TunnelTone.Charts
 
         private void Scan(params object[] param)
         {
-            var chartFile = (TextAsset)param[0];
-            var chart = JsonConvert.DeserializeObject<Chart>(chartFile.text);
+            var songData = (SongData)param[0];
+            var difficulty = (int)param[1];
+            var chart = JsonConvert.DeserializeObject<Chart>(songData.GetChart(difficulty).text);
             chartCache = chart;
             StartCoroutine(CreateElement(chart));
         }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TunnelTone.Events;
 using UnityEngine;
 using UnityEngine.UI;
-using Sprite = UnityEngine.Sprite;
 
 namespace TunnelTone.Elements
 {
@@ -12,10 +10,10 @@ namespace TunnelTone.Elements
     {
         public Vector2 position;
         public float time;
-        private GameObject _hitHint;
-        private GameObject _audioSource;
+        private GameObject hitHint;
+        private GameObject audioSource;
         private float offset;
-        private bool _isHit;
+        private bool isHit;
         private SphereCollider Collider => GetComponent<SphereCollider>();
 
         #region Load sprites
@@ -31,7 +29,7 @@ namespace TunnelTone.Elements
         {
             gameObject.layer = 10;
             gameObject.tag = "Note";
-            _hitHint = new GameObject
+            hitHint = new GameObject
             {
                 transform =
                 {
@@ -61,11 +59,11 @@ namespace TunnelTone.Elements
                 }
             };
             StartCoroutine(FadeColor(GetComponent<Image>()));
-            var hitHintImage = _hitHint.AddComponent<Image>();
+            var hitHintImage = hitHint.AddComponent<Image>();
             hitHintImage.sprite = Resources.Load<Sprite>("Sprites/HitHint");
             hitHintImage.color = new Color(1, 1, 1, 0);
             Collider.radius = 250;
-            StartCoroutine(ShowHitHint(hitHintImage, _hitHint));
+            StartCoroutine(HitHint(hitHintImage));
         }
 
         private bool CheckZPosition(float target) => transform.position.z > target;
@@ -82,6 +80,17 @@ namespace TunnelTone.Elements
             }
 
             StartCoroutine(FadeColor(image));
+        }
+
+        private IEnumerator HitHint(Graphic image)
+        {
+            yield return new WaitUntil(() => NoteRenderer.currentTime * 1000 >= time - 500 && NoteRenderer.IsPlaying);
+            
+            hitHint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+            LeanTween.value(hitHint, v3 => { hitHint.transform.localScale = v3; }, Vector3.one * 1.5f, Vector3.one * 1f, .5f);
+            LeanTween.value(hitHint, c => { image.color = c; }, Color.clear, Color.white, .5f)
+                .setOnComplete(() => Destroy(hitHint, 1.2f));
         }
 
         private IEnumerator ShowHitHint(Graphic image, GameObject hitHint)
@@ -116,7 +125,7 @@ namespace TunnelTone.Elements
                 <= 120 => Bad,
             };
 
-            GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), _hitHint.transform.position, Quaternion.identity, _hitHint.transform.parent);
+            GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), hitHint.transform.position, Quaternion.identity, hitHint.transform.parent);
             effect.transform.localScale = Vector3.one * 1.25f;
             var component = effect.GetComponent<Image>();
             component.sprite = sprite;
@@ -126,7 +135,7 @@ namespace TunnelTone.Elements
         
         private void Destroy()
         {
-            Destroy(_hitHint);
+            Destroy(hitHint);
             Destroy(gameObject);
         }
         
