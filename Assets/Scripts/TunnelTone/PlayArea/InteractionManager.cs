@@ -21,7 +21,7 @@ namespace TunnelTone.PlayArea
 
         private void Update()
         {
-            if (Touchscreen is not { wasUpdatedThisFrame: true } || !NoteRenderer.IsPlaying) return;
+            if (Touchscreen is not { wasUpdatedThisFrame: true } || !NoteRenderer.isPlaying) return;
             
             // Tap note interaction
             foreach (var touch in Touches.Where(touch => touch.phase.value == TouchPhase.Began))

@@ -14,6 +14,8 @@ namespace TunnelTone.PlayArea
 {
     public class Touch : MonoBehaviour
     {
+        private static bool effectEnabled = false;
+        
         private static Camera MainCamera => UIElementReference.Instance.mainCamera;
         
         private RaycastHit hit;
@@ -39,13 +41,16 @@ namespace TunnelTone.PlayArea
             trackingTouch = touch;
             transform.position = MainCamera.ScreenToWorldPoint((Vector3)touch.position.value + Vector3.forward * 100);
 
-            LeanTween.value(gameObject, f =>
-                    {
-                        Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
-                        splineExtrude.Rebuild();
-                    },
-                    0, 250f, .3f)
-                .setEase(LeanTweenType.easeOutSine);
+            if(effectEnabled)
+            {
+                LeanTween.value(gameObject, f =>
+                        {
+                            Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
+                            splineExtrude.Rebuild();
+                        },
+                        0, 250f, .3f)
+                    .setEase(LeanTweenType.easeOutSine);
+            }
 
             return this;
         }
@@ -94,33 +99,31 @@ namespace TunnelTone.PlayArea
                 var o = other.gameObject;
                 direction = o.GetComponent<Trail>().Direction;
                 trackingTrail = o;
-                
+
+                if (!effectEnabled) return;
                 LeanTween.cancel(gameObject);
                 LeanTween.value(gameObject,
-                    f =>
-                    {
-                        Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
-                        splineExtrude.Rebuild();
-                    },
-                    Spline.Knots.ToArray()[1].Position.z, 175f, .3f)
-                .setEase(LeanTweenType.easeOutSine);
-                
+                        f =>
+                        {
+                            Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
+                            splineExtrude.Rebuild();
+                        },
+                        Spline.Knots.ToArray()[1].Position.z, 175f, .3f)
+                    .setEase(LeanTweenType.easeOutSine);
+
                 LeanTween.value(gameObject,
-                    f =>
-                    {
-                        splineExtrude.Radius = f;
-                    },
-                    splineExtrude.Radius, 4f, .3f)
-                .setEase(LeanTweenType.easeOutSine);
+                        f => { splineExtrude.Radius = f; },
+                        splineExtrude.Radius, 4f, .3f)
+                    .setEase(LeanTweenType.easeOutSine);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject == trackingTrail)
-            {
-                LeanTween.cancel(gameObject);
-                LeanTween.value(gameObject,
+            if (other.gameObject != trackingTrail || !effectEnabled) return;
+            
+            LeanTween.cancel(gameObject);
+            LeanTween.value(gameObject,
                     f =>
                     {
                         Spline.SetKnot(1, new BezierKnot(new float3(0, 0, f)));
@@ -129,14 +132,13 @@ namespace TunnelTone.PlayArea
                     Spline.Knots.ToArray()[1].Position.z, 250f, .3f)
                 .setEase(LeanTweenType.easeOutSine);
 
-                LeanTween.value(gameObject,
+            LeanTween.value(gameObject,
                     f =>
                     {
                         splineExtrude.Radius = f;
                     },
                     splineExtrude.Radius, .3f, .3f)
                 .setEase(LeanTweenType.easeOutSine);
-            }
         }
 
         private void OnDestroy()

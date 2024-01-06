@@ -27,8 +27,8 @@ namespace TunnelTone.UI.Dialog
 
         private void Start()
         {
-            SystemEventReference.Instance.OnDisplayDialog.AddListener(DisplayDialog);
-            SystemEventReference.Instance.OnAbortDialog.AddListener(AbortDialog);
+            SystemEvent.OnDisplayDialog.AddListener(DisplayDialog);
+            SystemEvent.OnAbortDialog.AddListener(AbortDialog);
         }
 
         private void DisplayDialog(params object[] param)

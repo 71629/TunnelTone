@@ -5,10 +5,193 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14014523-faa6-46a2-bfd7-27b59090afd2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank A.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank A.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank AA.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank AA.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank AAA.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank AAA.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank B.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank B.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank C.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank C.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank D.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank D.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank EX.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Rank EX.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist-Italic-VariableFont_wght.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist-Italic-VariableFont_wght.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist-VariableFont_wght.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist-VariableFont_wght.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Black SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Black SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Black.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Black.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BlackItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BlackItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BlackItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BlackItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Bold SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Bold SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Bold.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BoldItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BoldItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-BoldItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBold SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBold SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBold.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBoldItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBoldItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraBoldItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLight SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLight SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLight.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLight.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLightItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLightItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLightItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ExtraLightItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Italic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Italic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Italic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Light SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Light SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Light.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-LightItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-LightItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-LightItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-LightItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Medium SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Medium SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Medium.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-MediumItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-MediumItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-MediumItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-MediumItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Regular SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Regular SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Regular.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBold SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBold SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBold.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBoldItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBoldItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-SemiBoldItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Thin SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Thin SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Thin.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-Thin.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ThinItalic SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ThinItalic SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ThinItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Urbanist/Urbanist-ThinItalic.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank A.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank A.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank AA.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank AA.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank AAA.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank AAA.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank B.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank B.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank C.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank C.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank D.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank D.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank EX.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Rank/Rank EX.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/Apply.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/Apply.psd.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/ButtonSpriteLeft.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/ButtonSpriteLeft.psd.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/ButtonSpriteRight.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/ButtonSpriteRight.psd.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/DetailsJudjementValueContainer.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/DetailsJudjementValueContainer.psd.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/Discard.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/Discard.psd.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/SettingIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Sprites/SettingIcon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/CustomButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/CustomButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/SettingsManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/SettingsManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/CompletionGauge.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/CompletionGauge.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/Gauge.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/Gauge.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/GaugeManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/GaugeManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/IntegrityGauge.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/IntegrityGauge.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/PlayResult.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/PlayResult.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/ResultScreen.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/ResultScreen.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/AlphaMask.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/AlphaMask.shader.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraBold SDF.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraLightItalic SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-ExtraLightItalic SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Light SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Light SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-LightItalic SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-LightItalic SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-Medium SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-MediumItalic SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-MediumItalic SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/NotoSansJP-VariableFont_wght SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/NotoSansJP-VariableFont_wght SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/README.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Touch.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Touch.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Songs/PUPA/PUPA.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Songs/PUPA/PUPA.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Songs/Prismatic/0.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Songs/Prismatic/0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Gradient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Gradient.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main/SplineExtrude_GameObject 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main/SplineExtrude_GameObject 1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Charts/JsonScanner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Charts/JsonScanner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Score.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Score.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Settings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/ComboPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/ComboPoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/NoteRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/NoteRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/Tap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/Tap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/Trail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/Trail.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/TrailSubsegment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/TrailSubsegment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/GameEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/GameEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Events/SystemEventReference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/GameSystem/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/GameSystem/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/GameSystem/GameManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/GameSystem/GameManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ComboManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ComboManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/InteractionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/PlayAreaDifficultyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/PlayAreaDifficultyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ScoreManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ScoreManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/Touch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/Touch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/Chart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/Chart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/SongData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/SongData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Reference/UIElementReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Reference/UIElementReference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/Shutter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/Shutter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/ShutterInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/ShutterInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TunnelTone.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/TunnelTone.sln.DotSettings" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +200,39 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="InstanceColorv3">
+    <option name="map">
+      <map>
+        <entry key="t.tree">
+          <value>
+            <ColorState>
+              <option name="customOrder" value="1" />
+              <option name="first">
+                <RgbState>
+                  <option name="blue" value="60" />
+                  <option name="darkBlue" value="60" />
+                  <option name="darkGreen" value="68" />
+                  <option name="darkRed" value="206" />
+                  <option name="green" value="68" />
+                  <option name="red" value="206" />
+                </RgbState>
+              </option>
+              <option name="second">
+                <RgbState>
+                  <option name="blue" value="65" />
+                  <option name="darkBlue" value="65" />
+                  <option name="darkGreen" value="126" />
+                  <option name="darkRed" value="231" />
+                  <option name="green" value="126" />
+                  <option name="red" value="231" />
+                </RgbState>
+              </option>
+            </ColorState>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -44,13 +260,16 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "duplicates.index",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "com.intellij.writerside.settings.WritersideConfigurable",
+    "vue.rearranger.settings.migration": "true",
+    "writerside.last.selected.productTunnelTone": "t"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
       "tidb",
       "postgresql"
+    ],
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": [
     ]
   }
 }]]></component>

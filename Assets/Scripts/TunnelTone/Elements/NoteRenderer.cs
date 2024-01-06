@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.Core;
 using TunnelTone.Events;
+using TunnelTone.PlayArea;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;
@@ -12,13 +14,17 @@ namespace TunnelTone.Elements
 {
     public class NoteRenderer : Singleton<NoteRenderer>
     {
+        internal static readonly GameEvent OnDestroyChart = new();
+        
+        [SerializeField] private ParticleSystem particleSystem;
         [SerializeField] private Transform noteContainer;
         #region Element Container
-
+        
         public static readonly List<GameObject> TrailList = new();
         public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
         public static GameObject TrailReference => TrailList.Last();
+        public static AnimationCurve timingSheet;
         
         #endregion
         
@@ -27,37 +33,64 @@ namespace TunnelTone.Elements
         public AudioSource audioSource;
         public Material left, right, none;
         #endregion
-        
-        private Transform _transform;
 
         public float chartSpeedModifier;
-        
+
+        public float universalOffset;
         public float offsetTime;
         public const float StartDelay = 2500f;
         public static float dspSongStartTime, dspSongEndTime;
 
         public float currentBpm;
-        public static float currentTime => (float)AudioSettings.dspTime - dspSongStartTime;
-        public static bool IsPlaying = false;
+        public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
+        public static bool isPlaying = false;
         
         // Debug
         private float _currentTime;
 
         private void Update()
         {
-            _currentTime = currentTime;
+            _currentTime = CurrentTime;
         }
         
         private void Start()
         {
-            _transform = GetComponent<Transform>();
-            _transform.localPosition = Vector3.zero;
+            transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
+            SystemEvent.OnChartLoadFinish.AddListener(delegate
+            {
+                Resume();
+            });
+            SystemEvent.OnSettingsChanged.AddListener(delegate
+            {
+                var settings = Settings.instance;
+                chartSpeedModifier = settings.chartSpeed;
+                universalOffset = settings.universalOffset;
+                var main = particleSystem.main;
+                main.startSpeed = new ParticleSystem.MinMaxCurve(1000 * (chartSpeedModifier / 6.5f), 2500 * (chartSpeedModifier / 6.5f));
+            });
+            OnDestroyChart.AddListener(delegate
+            {
+                StopAllCoroutines();
+                ResetContainer();
+            });
+        }
+
+        internal void ResetContainer()
+        {
+            isPlaying = false;
+            transform.localPosition = Vector3.zero;
+            foreach (var gb in GetComponentsInChildren<Transform>())
+            {
+                if (gb.gameObject == gameObject) continue;
+                Destroy(gb.gameObject);
+            }
         }
         
         private IEnumerator PlayChart()
         {
-            IsPlaying = true;
+            Debug.Log(ScoreManager.totalCombo);
+            isPlaying = true;
             while (true)
             {
                 if (transform.childCount == 0)
@@ -65,7 +98,7 @@ namespace TunnelTone.Elements
                     ChartEventReference.Instance.OnSongEnd.Trigger();
                     yield break;
                 }
-                yield return _transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * currentTime + offsetTime + StartDelay));
+                yield return transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * CurrentTime + offsetTime + StartDelay + universalOffset));
             }
         }
 
@@ -74,6 +107,7 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnPause.Trigger();
             UIElementReference.Instance.pause.SetActive(true);
             AudioListener.pause = true;
+            particleSystem.Pause();
         }
         
         public void Resume()
@@ -81,17 +115,18 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnResume.Trigger();
             UIElementReference.Instance.pause.SetActive(false);
             AudioListener.pause = false;
+            particleSystem.Play();
         }
 
         private void ResumeForListener(object param)
         {
             Resume();
-            SystemEventReference.Instance.OnChartLoadFinish.RemoveListener(ResumeForListener);
+            SystemEvent.OnChartLoadFinish.RemoveListener(ResumeForListener);
         }
         
         public void Retry()
         {
-            IsPlaying = false;
+            isPlaying = false;
             StopAllCoroutines();
             transform.position = Vector3.zero;
             foreach (var gb in GetComponentsInChildren<Transform>())
@@ -100,7 +135,7 @@ namespace TunnelTone.Elements
                 Destroy(gb.gameObject);
             }
             ChartEventReference.Instance.OnRetry.Trigger();
-            SystemEventReference.Instance.OnChartLoadFinish.AddListener(ResumeForListener);
+            SystemEvent.OnChartLoadFinish.AddListener(ResumeForListener);
         }
         
         public void Quit()
@@ -118,7 +153,7 @@ namespace TunnelTone.Elements
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
 
             audioSource.time = 0;
-            audioSource.volume = 1;
+            audioSource.volume = .2f;
             audioSource.PlayDelayed(StartDelay / 1000f);
             StartCoroutine(PlayChart());
         }

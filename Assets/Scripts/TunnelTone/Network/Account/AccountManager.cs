@@ -166,16 +166,16 @@ namespace TunnelTone.Network.Account
 
             using var req = UnityWebRequest.Post($"{APIURL}logout", form);
             
-            SystemEventReference.Instance.OnDisplayDialog.Trigger("Logout", "Logging out...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
+            SystemEvent.OnDisplayDialog.Trigger("Logout", "Logging out...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
             
             yield return req.SendWebRequest();
-            SystemEventReference.Instance.OnAbortDialog.Trigger();
+            SystemEvent.OnAbortDialog.Trigger();
             
             Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
             
             if (req.downloadHandler.text == "LOGOUT_SUCCESS")
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", "Logged out successfully", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                SystemEvent.OnDisplayDialog.Trigger("Success", "Logged out successfully", new[]{"OK"}, new Action[]{() => { SystemEvent.OnAbortDialog.Trigger(); }}, Dialog.Severity.Info);
                 user.text = "GUEST";
                 statusIndicator.color = new Color(.7f, .7f, .7f);
                 accountInfo.SetTrigger(Dismiss);
@@ -193,25 +193,25 @@ namespace TunnelTone.Network.Account
 
             using var req = UnityWebRequest.Post($"{APIURL}register", form);
             
-            SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Connecting previewDuration server...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
+            SystemEvent.OnDisplayDialog.Trigger("Account creation", "Connecting previewDuration server...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
 
             req.timeout = 10;
             yield return req.SendWebRequest();
-            SystemEventReference.Instance.OnAbortDialog.Trigger();
+            SystemEvent.OnAbortDialog.Trigger();
 
             Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
 
             if (req.downloadHandler.text == "DUPLICATE_EMAIL")
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", $"{email} is already registered", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Error);
+                SystemEvent.OnDisplayDialog.Trigger("Account creation", $"{email} is already registered", new[]{"OK"}, new Action[]{() => { SystemEvent.OnAbortDialog.Trigger(); }}, Dialog.Severity.Error);
             }
             else if (req.downloadHandler.text == "DUPLICATE_USERNAME")
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", $"{username} is already registered", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Error);
+                SystemEvent.OnDisplayDialog.Trigger("Account creation", $"{username} is already registered", new[]{"OK"}, new Action[]{() => { SystemEvent.OnAbortDialog.Trigger(); }}, Dialog.Severity.Error);
             }
             else if (req.downloadHandler.text == "SUCCESS")
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Account creation", "Account created successfully", new[]{"OK", "Login"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }, () => Login(username, password)}, Dialog.Severity.Info);
+                SystemEvent.OnDisplayDialog.Trigger("Account creation", "Account created successfully", new[]{"OK", "Login"}, new Action[]{() => { SystemEvent.OnAbortDialog.Trigger(); }, () => Login(username, password)}, Dialog.Severity.Info);
                 accountInfo.SetTrigger(Dismiss);
             }
         }
@@ -248,15 +248,15 @@ namespace TunnelTone.Network.Account
 
             using var req = UnityWebRequest.Post($"{APIURL}login", form);
             
-            SystemEventReference.Instance.OnDisplayDialog.Trigger("Login", "Logging in...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
+            SystemEvent.OnDisplayDialog.Trigger("Login", "Logging in...", Array.Empty<string>(), Array.Empty<Action>(), Dialog.Severity.Info);
             yield return req.SendWebRequest();
-            SystemEventReference.Instance.OnAbortDialog.Trigger();
+            SystemEvent.OnAbortDialog.Trigger();
 
             Debug.Log(req.result != UnityWebRequest.Result.Success ? req.error : req.downloadHandler.text);
 
             if (req.downloadHandler.text.Contains("LOGIN_SUCCESS"))
             {
-                SystemEventReference.Instance.OnDisplayDialog.Trigger("Success", $"Logged in as {username}", new[]{"OK"}, new Action[]{() => { SystemEventReference.Instance.OnAbortDialog.Trigger(); UIElementReference.Instance.startSlider.interactable = true; }}, Dialog.Severity.Info);
+                SystemEvent.OnDisplayDialog.Trigger("Success", $"Logged in as {username}", new[]{"OK"}, new Action[]{() => { SystemEvent.OnAbortDialog.Trigger(); }}, Dialog.Severity.Info);
                 user.text = username;
                 statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
                 accountInfo.SetTrigger(Dismiss);

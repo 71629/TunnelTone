@@ -51,7 +51,6 @@ MonoBehaviour:
   rigidBody: {fileID: 1311047637206470743}
   splineContainer: {fileID: 8229916884951331389}
   splineExtrude: {fileID: 8271703078023333054}
-  direction: 3
 --- !u!135 &4045782733838482954
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -62,10 +61,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1053751
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

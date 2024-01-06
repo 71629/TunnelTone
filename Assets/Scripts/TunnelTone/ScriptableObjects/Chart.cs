@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.Splines;
 
 namespace TunnelTone.ScriptableObjects
 {
@@ -9,5 +11,6 @@ namespace TunnelTone.ScriptableObjects
         [SerializeField] internal string chartDesigner = "[Redacted]";
         
         [SerializeField] internal TextAsset chart;
+        [SerializeField] internal AnimationCurve timingSheet;
     }
 }

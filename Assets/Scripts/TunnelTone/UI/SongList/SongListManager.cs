@@ -45,43 +45,30 @@ namespace TunnelTone.UI.SongList
             SongListEventReference.Instance.OnEnterSongList.Trigger();
         }
 
-        private void Update()
+        public void StartSong()
         {
-            if (UIElement.startSlider.value >= 0.9f)
+            if (Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}") is null)
             {
-                UIElement.startSlider.value = 0.15f;
-                UIElement.startSlider.interactable = false;
-                if (Resources.Load<TextAsset>($"Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}") is null)
-                {
-                    SystemEventReference.Instance.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}.json",
-                        new[] {"OK"}, new Action[] {
-                            () =>
-                            {
-                                SystemEventReference.Instance.OnAbortDialog.Trigger();
-                                UIElement.startSlider.interactable = true;
-                            }}, Dialog.Dialog.Severity.Error);
-                    return;
-                }
-                SongListEventReference.Instance.OnSongStart.Trigger(currentlySelected);
-                NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
-                StartCoroutine(EnableCanvasDelayed());
+                SystemEvent.OnDisplayDialog.Trigger("Error", $"Chart not found.\npath: Songs/{currentlySelected.songTitle}/{SongListDifficultyManager.Instance.CurrentlySelected}.json",
+                    new[] {"OK"}, new Action[] {
+                        () =>
+                        {
+                            SystemEvent.OnAbortDialog.Trigger();
+                        }}, Dialog.Dialog.Severity.Error);
+                return;
             }
+            SongListEventReference.Instance.OnSongStart.Trigger(currentlySelected);
+            NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
+            StartCoroutine(EnableCanvasDelayed());
         }
 
         IEnumerator EnableCanvasDelayed()
         {
+            SystemEvent.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
             yield return new WaitForSecondsRealtime(0.5f);
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;
             UIElement.topView.enabled = false;
-            SystemEventReference.Instance.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
-        }
-        
-        private IEnumerator TurnOffAndOn()
-        {
-            UIElement.startSlider.interactable = false;
-            yield return new WaitForSeconds(0);
-            UIElement.startSlider.interactable = true;
         }
 
         private void OnSelectItem(params object[] param)

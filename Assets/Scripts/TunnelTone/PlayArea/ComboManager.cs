@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using TunnelTone.Events;
+using TunnelTone.UI.PlayResult;
 using UnityEngine;
 
 namespace TunnelTone.PlayArea
@@ -9,14 +10,24 @@ namespace TunnelTone.PlayArea
         private TextMeshProUGUI Combo => GetComponent<TextMeshProUGUI>();
 
         private static short CurrentCombo { get; set; }
+        private static short MaxCombo { get; set; }
 
         private void Start()
         {
+            SystemEvent.OnChartLoadFinish.AddListener(delegate
+            {
+                CurrentCombo = 0;
+                Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            });
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateCombo);
             ChartEventReference.Instance.OnNoteMiss.AddListener(delegate
             {
                 CurrentCombo = 0;
                 Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            });
+            ChartEventReference.Instance.OnSongEnd.AddListener(delegate
+            {
+                ResultScreen.playResult.maxCombo = MaxCombo;
             });
         }
         
@@ -40,6 +51,15 @@ namespace TunnelTone.PlayArea
             }
             // Update Combo text
             Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            MaxCombo = CurrentCombo > MaxCombo ? CurrentCombo : MaxCombo;
         }
+    }
+}
+
+namespace TunnelTone.Core
+{
+    public partial struct PlayResult
+    {
+        public int maxCombo;
     }
 }

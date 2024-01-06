@@ -20,9 +20,21 @@ namespace TunnelTone.Charts
 
         private void Start()
         {
-            SystemEventReference.Instance.OnChartLoad.AddListener(Scan);
-            ChartEventReference.Instance.OnRetry.AddListener(delegate { StartCoroutine(CreateElement(chartCache)); });
+            SystemEvent.OnChartLoad.AddListener(o =>
+            {
+                StartCoroutine(DelayedScan(o));
+            });
+            ChartEventReference.Instance.OnRetry.AddListener(delegate
+            {
+                StartCoroutine(Retry());
+            });
             ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
+        }
+        
+        private IEnumerator DelayedScan(params object[] param)
+        {
+            yield return new WaitForSeconds(.5f);
+            Scan(param);
         }
 
         private void Scan(params object[] param)
@@ -31,11 +43,23 @@ namespace TunnelTone.Charts
             var difficulty = (int)param[1];
             var chart = JsonConvert.DeserializeObject<Chart>(songData.GetChart(difficulty).text);
             chartCache = chart;
+            
+            NoteRenderer.timingSheet = songData.charts[difficulty].timingSheet;
+            
+            NoteRenderer.ResetContainer();
             StartCoroutine(CreateElement(chart));
+        }
+
+        private IEnumerator Retry()
+        {
+            yield return new WaitForSecondsRealtime(.5f); 
+            NoteRenderer.ResetContainer();
+            StartCoroutine(CreateElement(chartCache));
         }
 
         private IEnumerator CreateElement(Chart chart)
         {
+            ScoreManager.totalCombo = 0;
             foreach(var trail in chart.trails)
             {
                 yield return new WaitForSeconds(0);
@@ -76,11 +100,11 @@ namespace TunnelTone.Charts
                     noteConfig.time = tap.time;
             
                     NoteRenderer.TapList.Add(tgb);
-                    ScoreManager.Instance.totalCombo++;
+                    ScoreManager.totalCombo++;
                 }
             }
             
-            SystemEventReference.Instance.OnChartLoadFinish.Trigger();
+            SystemEvent.OnChartLoadFinish.Trigger();
             Invoke(nameof(StartSong), 1f);
         }
 

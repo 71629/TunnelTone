@@ -18,7 +18,7 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            SystemEventReference.Instance.OnChartLoad.AddListener(delegate
+            SystemEvent.OnChartLoad.AddListener(delegate
             {
                 title.text = SongListManager.currentlySelected.songTitle;
                 artist.text = SongListManager.currentlySelected.artist;
@@ -29,7 +29,7 @@ namespace TunnelTone.UI.SongList
                 
                 DisplaySongInfo();
             });
-            SystemEventReference.Instance.OnChartLoadFinish.AddListener(delegate
+            SystemEvent.OnChartLoadFinish.AddListener(delegate
             {
                 FadeSongInfo();
             });

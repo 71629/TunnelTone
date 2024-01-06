@@ -53,7 +53,7 @@ namespace TunnelTone.Elements
 
         private IEnumerator AdjustMesh()
         {
-            yield return new WaitUntil(() => NoteRenderer.currentTime * 1000 > startTime && parent.isTracking);
+            yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 > startTime && parent.isTracking);
 
             gameObject.layer = 20;
             
@@ -66,7 +66,7 @@ namespace TunnelTone.Elements
                             if(Mesh.vertices[index].z > Mesh.vertices[index + 4].z) Destroy(gameObject);
                             UpdateMesh();
                         }, 
-                        Mesh.vertices[index], Mesh.vertices[index + 4], endTime - NoteRenderer.currentTime * 1000)
+                        Mesh.vertices[index], Mesh.vertices[index + 4], endTime - NoteRenderer.CurrentTime * 1000)
                     .setOnComplete(() => Destroy(gameObject));
             }
         }
@@ -124,11 +124,11 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if (NoteRenderer.currentTime * 1000 > endTime + 60 && NoteRenderer.IsPlaying)
+            if (NoteRenderer.CurrentTime * 1000 > endTime + 60 && NoteRenderer.isPlaying)
             {
                 Destroy(gameObject);
             }
-            if (startTime > NoteRenderer.currentTime * 1000 || !NoteRenderer.IsPlaying || !parent.isTracking) return;
+            if (startTime > NoteRenderer.CurrentTime * 1000 || !NoteRenderer.isPlaying || !parent.isTracking) return;
             for (var i = 0; i <= 3; i++)
             {
                 Mesh.vertices[i] = new Vector3(Mesh.vertices[i].x, Mesh.vertices[i].y, -transform.position.z);

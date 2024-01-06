@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ResultScreen
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 5e067c87298f4768840d7009a5ee0618, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: canvas
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: info
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: texture
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gauge
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gaugeModeText
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: score
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: bestScore
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: delta
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: perfectDisplay
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: perfectText
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: perfectCount
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: greatDisplay
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: greatText
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: greatCount
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: missDisplay
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: missText
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: missCount
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: maxComboDisplay
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: maxComboText
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: maxComboCount
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: rankEX
+    value: 
+    objectReference: {fileID: 5156402781289277818, guid: 11309a46ab8f0e344883ff3bb1212d1f, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankAAA
+    value: 
+    objectReference: {fileID: 2016096347328476733, guid: 98fc35ac35a2c1f4a95975522853fe3d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankAA
+    value: 
+    objectReference: {fileID: 3544654794167293277, guid: a43ebc6b419cbf04e91230ccaa47e2b4, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankA
+    value: 
+    objectReference: {fileID: 7655682115725228933, guid: d1ab9700698de6b4695470a78fc47459, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankB
+    value: 
+    objectReference: {fileID: 6798978512208498646, guid: 60ab867b20f70814e991ff41c90fb812, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankC
+    value: 
+    objectReference: {fileID: 6559298395188476278, guid: d68b1519a4c7a52488e75bb386f67a39, type: 3}
+  - target: {fileID: 0}
+    propertyPath: rankD
+    value: 
+    objectReference: {fileID: 5794890186477213362, guid: 0756085e37d644643a55baa3cd39d1ad, type: 3}
+  m_ExcludedProperties: []

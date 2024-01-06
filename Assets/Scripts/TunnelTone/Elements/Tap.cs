@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using TunnelTone.Events;
+using TunnelTone.Gauge;
+using TunnelTone.UI.PlayResult;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,6 +66,16 @@ namespace TunnelTone.Elements
             hitHintImage.color = new Color(1, 1, 1, 0);
             Collider.radius = 250;
             StartCoroutine(HitHint(hitHintImage));
+            
+            IntegrityGauge.OnSuddenDeath.AddListener(AssumeMiss);
+            ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
+        }
+
+        private void Update()
+        {
+            if (!(NoteRenderer.CurrentTime * 1000 > time + 120) || !NoteRenderer.isPlaying) return;
+            ChartEventReference.Instance.OnNoteMiss.Trigger();
+            Destroy();
         }
 
         private bool CheckZPosition(float target) => transform.position.z > target;
@@ -75,7 +87,6 @@ namespace TunnelTone.Elements
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.1f);
             if (image.color.a <= 0)
             {
-                Destroy();
                 yield break;
             }
 
@@ -84,7 +95,7 @@ namespace TunnelTone.Elements
 
         private IEnumerator HitHint(Graphic image)
         {
-            yield return new WaitUntil(() => NoteRenderer.currentTime * 1000 >= time - 500 && NoteRenderer.IsPlaying);
+            yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 >= time - 500 && NoteRenderer.isPlaying);
             
             hitHint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
@@ -145,6 +156,25 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnNoteHit.Trigger(Mathf.Abs(offset));
             
             return requireAbsoluteValue ? Mathf.Abs(offset) : offset;
+        }
+        
+        private void AssumeMiss(params object[] param)
+        {
+            ResultScreen.playResult.miss++;
+            IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
+        }
+
+        private void OnSongEnd(params object[] param)
+        {
+            StopAllCoroutines();
+            if (hitHint.gameObject != null) Destroy(hitHint.gameObject);
+            enabled = false;
+        }
+        
+        private void OnDestroy()
+        {
+            ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
+            IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
         }
     }
 }

@@ -17,6 +17,10 @@ namespace TunnelTone.GameSystem
         
         private void Start()
         {
+            SystemEvent.OnAudioSystemReset.AddListener(o =>
+            {
+                StartCoroutine(ResetAudioSystem((AudioConfiguration)o[0]));
+            });
             SongListEvent.OnSelectItem.AddListener(o =>
             {
                 LeanTween.cancel(gameObject);
@@ -40,7 +44,7 @@ namespace TunnelTone.GameSystem
             LeanTween.value(gameObject, f =>
             {
                 audioSource.volume = f;
-            }, 1f, 0f, 1.2f)
+            }, .2f, 0f, 1.2f)
             .setOnComplete(() =>
             {
                 audioSource.Stop();
@@ -50,7 +54,7 @@ namespace TunnelTone.GameSystem
 
         private IEnumerator Preview()
         {
-            audioSource.volume = 1f;
+            audioSource.volume = .2f;
             audioSource.Play();
             
             audioSource.time = current.previewStart * 0.001f;
@@ -67,7 +71,15 @@ namespace TunnelTone.GameSystem
                 .setOnComplete(() =>
                 {
                     audioSource.Stop();
+                    StopAllCoroutines();
                 });
+        }
+
+        private IEnumerator ResetAudioSystem(AudioConfiguration config)
+        {
+            LeanTween.cancel(gameObject);
+            yield return AudioSettings.Reset(config);
+            StartCoroutine(Preview());
         }
     }
 }

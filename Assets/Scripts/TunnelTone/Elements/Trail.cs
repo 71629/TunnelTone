@@ -72,7 +72,7 @@ namespace TunnelTone.Elements
             }
             while (spline is not null)
             {
-                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.currentTime * 1000);
+                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
                 yield return col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
             }
         }
@@ -146,10 +146,13 @@ namespace TunnelTone.Elements
             {
                 var bpm = NoteRenderer.Instance.currentBpm;
                 if (newTrail)
-                    BuildHead(startCoordinate, startTime * NoteRenderer.Instance.chartSpeedModifier, false);
-                for (var i = 0f; i < 1; i += bpm * 8 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
+                    BuildHead(spline.EvaluatePosition(0), startTime * NoteRenderer.Instance.chartSpeedModifier, false);
+
+                var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
+                for (var i = 0f; i < 1; i += density * 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
                 {
-                    BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i), spline.EvaluatePosition(i).z / NoteRenderer.Instance.chartSpeedModifier);
+                    BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i),
+                        (spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
                 }
                 // Build subsegments
                 float tail = 0;
@@ -203,28 +206,28 @@ namespace TunnelTone.Elements
                 }
             };
             gb.AddComponent<ComboPoint>().time = time;
-            ScoreManager.Instance.totalCombo++;
+            ScoreManager.totalCombo++;
         }
         
-        private void BuildHead(Vector2 coordinate, float time, bool virtualTrail)
+        private void BuildHead(Vector3 position, float time, bool virtualTrail)
         {
 
             var vertices = !virtualTrail
                 ? new List<Vector3>
                 {
-                    (Vector3)coordinate + new Vector3(0, 0, -25 + time),
-                    (Vector3)coordinate + new Vector3(0, 40, 0 + time),
-                    (Vector3)coordinate + new Vector3(40, 0, 0 + time),
-                    (Vector3)coordinate + new Vector3(0, -40, 0 + time),
-                    (Vector3)coordinate + new Vector3(-40, 0, 0 + time)
+                    position + new Vector3(0, 0, -25 + time),
+                    position + new Vector3(0, 40, 0 + time),
+                    position + new Vector3(40, 0, 0 + time),
+                    position + new Vector3(0, -40, 0 + time),
+                    position + new Vector3(-40, 0, 0 + time)
                 }
                 : new List<Vector3>
                 {
-                    (Vector3)coordinate + new Vector3(0, 0, -8 + time),
-                    (Vector3)coordinate + new Vector3(0, 8, 0 + time),
-                    (Vector3)coordinate + new Vector3(8, 0, 0 + time),
-                    (Vector3)coordinate + new Vector3(0, -8, 0 + time),
-                    (Vector3)coordinate + new Vector3(-8, 0, 0 + time)
+                    position + new Vector3(0, 0, -8 + time),
+                    position + new Vector3(0, 8, 0 + time),
+                    position + new Vector3(8, 0, 0 + time),
+                    position + new Vector3(0, -8, 0 + time),
+                    position + new Vector3(-8, 0, 0 + time)
                 };
 
             var triangles = new List<int>
@@ -256,7 +259,7 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
-            if(NoteRenderer.currentTime * 1000 > endTime + 120 && NoteRenderer.IsPlaying)
+            if(NoteRenderer.CurrentTime * 1000 > endTime + 120 && NoteRenderer.isPlaying)
                 Destroy(gameObject);
         }
 

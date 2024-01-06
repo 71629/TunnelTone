@@ -28,7 +28,6 @@ namespace TunnelTone.UI.Reference
         public TextMeshProUGUI title;
         public TextMeshProUGUI artist;
         public TextMeshProUGUI bpm;
-        public Slider startSlider;
 
         [Header("Canvas")] 
         public Canvas songList;

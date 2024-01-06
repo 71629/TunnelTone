@@ -1,15 +1,16 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 using TMPro;
-using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
-using UnityEngine;
+using TunnelTone.Core;
+using TunnelTone.UI.PlayResult;
 
 namespace TunnelTone.PlayArea
 {
     public class ScoreManager : Singleton<ScoreManager>
     {
-        public int totalCombo;
+        public static int totalCombo;
         private const decimal MaxScore = 10000000;
         private TextMeshProUGUI Score => GetComponent<TextMeshProUGUI>();
         private static decimal CurrentScore { get; set; }
@@ -19,11 +20,19 @@ namespace TunnelTone.PlayArea
         private void Start()
         {
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateScore);
-            ChartEventReference.Instance.OnRetry.AddListener(delegate
+            SystemEvent.OnChartLoadFinish.AddListener(delegate
             {
                 CurrentScore = 0;
                 DisplayScore = 0;
                 Score.text = $"{DisplayScore:00000000}";
+            });
+            ChartEventReference.Instance.OnSongEnd.AddListener(delegate
+            {
+                ResultScreen.playResult.score = (int)CurrentScore;
+            });
+            ChartEventReference.Instance.OnNoteMiss.AddListener(delegate
+            {
+                ResultScreen.playResult.miss++;
             });
         }
 
@@ -38,14 +47,17 @@ namespace TunnelTone.PlayArea
             switch (offset)
             {
                 case <= 25:
-                    CurrentScore += MaxScore + 10000m / totalCombo;
+                    ResultScreen.playResult.perfect++;
+                    CurrentScore += (MaxScore + 10000m) / totalCombo;
                     StartCoroutine(UpdateDisplay((MaxScore + 10000) / totalCombo / LerpIteration, LerpIteration));
                     break;
                 case <= 50:
+                    ResultScreen.playResult.perfect++;
                     CurrentScore += MaxScore / totalCombo;
                     StartCoroutine(UpdateDisplay(MaxScore / totalCombo / LerpIteration, LerpIteration));
                     break;
                 case <= 100:
+                    ResultScreen.playResult.great++;
                     CurrentScore += 0.6m * (MaxScore / totalCombo);
                     StartCoroutine(UpdateDisplay(0.6m * (MaxScore / totalCombo / LerpIteration), LerpIteration));
                     break;
@@ -66,5 +78,17 @@ namespace TunnelTone.PlayArea
             remain--;
             StartCoroutine(UpdateDisplay(delta, remain));
         }
+    }
+}
+
+namespace TunnelTone.Core
+{
+    public partial struct PlayResult
+    {
+        public int score; // Assigned
+        
+        public int perfect; //Assigned
+        public int great; //Assigned
+        public int miss; //Assigned
     }
 }

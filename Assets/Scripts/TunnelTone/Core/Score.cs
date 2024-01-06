@@ -1,7 +1,10 @@
 ﻿using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TunnelTone.Events;
+using TunnelTone.ScriptableObjects;
+using TunnelTone.UI.PlayResult;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +13,7 @@ namespace TunnelTone.Core
     [System.Serializable]
     public class Score : Statistic
     {
-        internal string title;
+        public string title;
         public int[] score;
 
         public Score(string title, int[] data = null)
@@ -22,6 +25,21 @@ namespace TunnelTone.Core
         protected internal static void InitializeOnLoad()
         {
             Directory.CreateDirectory($"{Application.persistentDataPath}/data");
+            ResultScreen.OnPlayResultCreated.AddListener(SetResultScreenBestScore);
+            SystemEvent.OnDisplayResult.AddListener(delegate
+            {
+                // TODO: Import statistics to result screen
+            });
+        }
+
+        internal static void SetResultScreenBestScore(params object[] param)
+        {
+            var songData = (SongData)param[0];
+            var difficulty = (int)param[1];
+                
+            var bestScore = LoadLocalScore(songData.songTitle).score[difficulty];
+                
+            ResultScreen.playResult.bestScore = bestScore;
         }
         
         internal static Score SaveLocal(Score data)
@@ -49,12 +67,6 @@ namespace TunnelTone.Core
             
         }
         
-        [MenuItem("TunnelTone/Storage/Clear Local Settings")]
-        private static void ClearLocalSettings()
-        {
-            File.Delete($"{Application.persistentDataPath}/player/settings.json");
-        }
-        
         [MenuItem("TunnelTone/Storage/Clear Local Score")]
         private static void ClearLocalScore()
         {
@@ -63,5 +75,11 @@ namespace TunnelTone.Core
                 File.Delete($"{directory}/score.json");
             }
         }
+    }
+    
+    [StructLayout(LayoutKind.Auto)]
+    public partial struct PlayResult
+    {
+        public int bestScore;  // Assigned
     }
 }

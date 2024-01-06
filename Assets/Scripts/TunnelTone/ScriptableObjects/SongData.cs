@@ -2,8 +2,11 @@
 using System.Diagnostics.Contracts;
 using Newtonsoft.Json;
 using TunnelTone.Core;
+using TunnelTone.Events;
+using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.SongList;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TunnelTone.ScriptableObjects
 {
@@ -25,9 +28,26 @@ namespace TunnelTone.ScriptableObjects
         [SerializeField] internal float previewDuration;
         
         [Space(10)]
-        [SerializeField] private Chart[] charts = { null, null, null, null };
+        [SerializeField]
+        internal Chart[] charts = { null, null, null, null };
 
         private Score scoreData;
+        private static SongData currentlyPlaying;
+        
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void InitializeOnLoad()
+        {
+            SystemEvent.OnChartLoad.AddListener(o =>
+            {
+                currentlyPlaying = (SongData)o[0];
+            });
+            SystemEvent.OnChartLoadFinish.AddListener(o =>
+            {
+                ResultScreen.playResult.title = currentlyPlaying.songTitle;
+                ResultScreen.playResult.artist = currentlyPlaying.artist;
+                ResultScreen.playResult.jacket = currentlyPlaying.jacket;
+            });
+        }
 
         private void OnEnable()
         {
@@ -67,5 +87,15 @@ namespace TunnelTone.ScriptableObjects
         {
             return JsonConvert.DeserializeObject<SongData>(data);
         }
+    }
+}
+
+namespace TunnelTone.Core
+{
+    public partial struct PlayResult
+    {
+        public string title; // Assigned
+        public string artist; // Assigned
+        public Sprite jacket;
     }
 }
