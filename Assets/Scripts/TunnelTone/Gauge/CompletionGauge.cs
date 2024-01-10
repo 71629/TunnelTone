@@ -1,8 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using TunnelTone.PlayArea;
+﻿using TunnelTone.PlayArea;
 using TunnelTone.UI.PlayResult;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TunnelTone.Gauge

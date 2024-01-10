@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using TunnelTone.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -24,14 +25,34 @@ namespace TunnelTone.UI.Dialog
         private List<GameObject> _dialogOptions;
         
         private static readonly int Dismiss = Animator.StringToHash("Dismiss");
+        internal static UnityEvent<string, string, DialogOption[]> OnDisplayDialog = new();
+        internal static UnityEvent OnAbortDialog = new();
 
         private void Start()
         {
-            SystemEvent.OnDisplayDialog.AddListener(DisplayDialog);
-            SystemEvent.OnAbortDialog.AddListener(AbortDialog);
+            SystemEvent.OnDisplayDialog.AddListener(DisplayDialogEvent);
+            SystemEvent.OnAbortDialog.AddListener(AbortDialogEvent);
+            OnDisplayDialog.AddListener(DisplayDialog);
+            OnAbortDialog.AddListener(AbortDialog);
+        }
+        
+        private void DisplayDialog(string title, string message, IEnumerable<DialogOption> options)
+        {
+            CancelInvoke();
+            PurgeOptions();
+            foreach (var option in options)
+            {
+                var gb = (GameObject)Instantiate(dialogOptionPrefab, foot);
+                gb.GetComponentInChildren<TextMeshProUGUI>().text = option.text;
+                gb.GetComponent<Button>().onClick.AddListener(() => option.action.Invoke());
+            }
+            
+            GetComponent<Canvas>().enabled = true;
+            animator.enabled = true;
+            animator.Rebind();
         }
 
-        private void DisplayDialog(params object[] param)
+        private void DisplayDialogEvent(params object[] param)
         {
             CancelInvoke();
             PurgeOptions();
@@ -54,7 +75,13 @@ namespace TunnelTone.UI.Dialog
             animator.Rebind();
         }
         
-        private void AbortDialog(params object[] param)
+        private void AbortDialogEvent(params object[] param)
+        {
+            animator.SetTrigger(Dismiss);
+            Invoke(nameof(DisableAnimatorAndCanvas), 0.5f);
+        }
+        
+        private void AbortDialog()
         {
             animator.SetTrigger(Dismiss);
             Invoke(nameof(DisableAnimatorAndCanvas), 0.5f);
@@ -86,5 +113,11 @@ namespace TunnelTone.UI.Dialog
             {Severity.Warning, new Color(1f, 1f, 0.17f)},
             {Severity.Error, new Color(1f, 0.26f, 0.26f)}
         };
+    }
+
+    internal class DialogOption
+    {
+        internal string text;
+        internal Action action;
     }
 }

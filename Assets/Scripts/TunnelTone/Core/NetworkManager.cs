@@ -1,72 +1,110 @@
-﻿using System.Collections;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TunnelTone.UI.Entry;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace TunnelTone.Core
 {
     internal static class NetworkManager
     {
-        private const string ApiAddress = "https://hashtag071629.com/";
+        internal static UnityEvent OnUserLogin = new();
+        internal static UnityEvent OnUserLogout = new();
+        
+        internal static UnityEvent<int> OnSyncError = new();
+
+        internal const string ApiAddress = "https://hashtag071629.com/tunneltone";
         
         internal static string GameVersion => Application.version;
-        internal static string FirstLevelVersion => GameVersion.Split('.')[0];
-        internal static string SecondLevelVersion => GameVersion.Split('.')[1];
-        internal static string ThirdLevelVersion => GameVersion.Split('.')[2];
-        internal static bool isOnline;
+        internal static NetworkStatus status;
 
+        private static string apiKey;
         internal static int uid;
         internal static string username;
-
-        // Obsolete soon
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
-        private static void AutoLogin()
+        
+        internal static async void AutoLoginJson()
         {
-            WWWForm form = new();
-            form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
-            form.AddField("applicationVersionPost", "TunnelTone");
-
-            using var req = UnityWebRequest.Post($"{ApiAddress}autologin", form);
+            if (Application.internetReachability == NetworkReachability.NotReachable) return;
             
-            req.SendWebRequest();
+            AutoLogin rawData = new()
+            {
+                index = "/autologin"
+            };
             
-            if (req.downloadHandler.text.Contains("LOGIN_SUCCESS"))
-            {
-                // output format LOGIN_SUCCESS_{uid:int}_{username:string}
-                var data = req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length);
-                username = data.Split('_')[1];
-                uid = int.Parse(data.Split('_')[0]);
-            }
-        }
+            // var req = new UnityWebRequest($"http://localhost:80/dev/php/autoLogin.php", "POST");
+            // var req = new UnityWebRequest($"{ApiAddress}/autologin", "POST");
 
-        private static void AutoLoginJson()
-        {
-            var req = new UnityWebRequest();
-            req.url = $"{ApiAddress}autologin";
-            req.SetRequestHeader("Content-Type", "application/json");
-            req.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new
-            {
-                application = "TunnelTone",
-                version = GameVersion,
-                deviceID = SystemInfo.deviceUniqueIdentifier
-            })));
-            req.downloadHandler = new DownloadHandlerBuffer();
+            // var response = SendUnityRequest(rawData, "/autologin");
 
-            Task.Run(() =>
+            var response = new AutoLogin();
+            response = await SendRequest(rawData, "/autologin", () =>
             {
-                var response = SendRequest<AutoLoginResponse>(req);
-                if (!response.isSuccessful) return;
-                uid = response.uid;
-                username = response.username;
+                Debug.Log($"{response.exitCode}: {response.message}");
+                GameEntry.OnInitializeComplete.Invoke();
             });
+
+            if (response.exitCode != 0)
+            {
+                status = NetworkStatus.SyncError;
+                OnSyncError.Invoke(response.exitCode);
+                return;
+            }
+            uid = response.uid;
+            username = response.username;
+            status = NetworkStatus.Online;
         }
 
-        private static T SendRequest<T>(UnityWebRequest req) where T : ServerResponse
+        [Obsolete]
+        private static T MakeRequest<T>(UnityWebRequest req) where T : TunnelTonePackage
         {
             req.SendWebRequest();
-
-            return JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(req.downloadHandler.data));
+            
+            while (!req.isDone) { }
+            
+            var response = JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(req.downloadHandler.data));
+            Debug.Log($"{response.exitCode}: {response.message}");
+            return response;
         }
+
+        [Obsolete]
+        internal static T SendUnityRequest<T>(T obj, string index) where T : TunnelTonePackage
+        {
+            var req = new UnityWebRequest( $"{ApiAddress}{index}", "POST");
+            req.timeout = 15;
+            req.SetRequestHeader("Content-Type", "application/json");
+            req.downloadHandler = new DownloadHandlerBuffer();
+            req.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj)));
+            
+            return MakeRequest<T>(req);
+        }
+        
+        private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage
+        {
+            var client = new HttpClient();
+            var req = new HttpRequestMessage(HttpMethod.Post, $"{ApiAddress}{index}");
+            req.Content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj)));
+            
+            var response = await client.SendAsync(req);
+            var result = await response.Content.ReadAsByteArrayAsync();
+
+            return JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(result));
+        }
+
+        internal static async Task<T> SendRequest<T>(T obj, string index, Action onCompleteCallback = null) where T : TunnelTonePackage
+        {
+            var ret = await SendHttpRequest(obj, obj.index);
+            onCompleteCallback?.Invoke();
+            return ret;
+        }
+    }
+
+    internal enum NetworkStatus
+    {
+        Offline,
+        Online,
+        SyncError
     }
 }

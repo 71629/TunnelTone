@@ -1,7 +1,5 @@
-﻿using System;
-using TunnelTone.Core;
+﻿using TunnelTone.Core;
 using TunnelTone.Events;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
-using UnityEngine;
 
 namespace TunnelTone.GameSystem
 {

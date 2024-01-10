@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using TunnelTone.Elements;
-using TunnelTone.GameSystem;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
@@ -20,6 +18,7 @@ namespace TunnelTone.PlayArea
         
         private RaycastHit hit;
         internal GameObject trackingTrail;
+        
         [SerializeField] private SphereCollider trackingRange;
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private SplineContainer splineContainer;
@@ -29,6 +28,8 @@ namespace TunnelTone.PlayArea
         private TouchControl trackingTouch;
 
         internal Direction direction;
+
+        internal UnityEvent OnRelease = new();
 
         private void Awake()
         {
@@ -81,6 +82,7 @@ namespace TunnelTone.PlayArea
         {
             if (trackingTouch.phase.value == TouchPhase.Ended)
             {
+                OnRelease.Invoke();
                 if(trackingTrail is not null) {
                     trackingTrail.GetComponent<Trail>().isTracking = false;
                     trackingTrail.GetComponent<Trail>().trackingTouch = null;
@@ -146,6 +148,8 @@ namespace TunnelTone.PlayArea
             LeanTween.cancel(gameObject);
             if (trackingTrail is null) return;
             var trail = trackingTrail.GetComponent<Trail>();
+            trail.state = new Idle();
+            trail.OnStateChanged.Invoke();
             trail.isTracking = false;
             trail.trackingTouch = null;
         }

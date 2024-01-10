@@ -22,7 +22,7 @@ namespace TunnelTone.UI.SongList
         private UIElementReference UIElement => UIElementReference.Instance;
         private float oldSliderValue = 0.15f;
         
-        private IEnumerator Start()
+        private void Start()
         {
             SongListEventReference.Instance.OnSelectItem.AddListener(OnSelectItem);
 
@@ -41,8 +41,8 @@ namespace TunnelTone.UI.SongList
             }
 
             currentlySelected = songContainer?[0];
-            yield return null;
-            SongListEventReference.Instance.OnEnterSongList.Trigger();
+            // yield return null;
+            // SongListEventReference.Instance.OnEnterSongList.Trigger();
         }
 
         public void StartSong()

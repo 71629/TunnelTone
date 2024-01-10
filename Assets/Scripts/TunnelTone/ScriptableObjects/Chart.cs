@@ -1,6 +1,4 @@
-﻿using UnityEditor.UIElements;
-using UnityEngine;
-using UnityEngine.Splines;
+﻿using UnityEngine;
 
 namespace TunnelTone.ScriptableObjects
 {

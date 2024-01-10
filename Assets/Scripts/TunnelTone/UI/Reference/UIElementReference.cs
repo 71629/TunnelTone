@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +42,9 @@ namespace TunnelTone.UI.Reference
 
         [Header("Material")] 
         public Material leftTrail;
+        public Material leftTrailHit;
         public Material rightTrail;
+        public Material rightTrailHit;
 
         public void ToSongSelect()
         {

@@ -192,7 +192,7 @@ namespace TunnelTone.Core
             };
         }
         
-        [MenuItem("TunnelTone/Storage/Clear Local Settings")]
+        // [MenuItem("TunnelTone/Storage/Clear Local Settings")]
         private static void ClearLocalSettings()
         {
             if (Application.isPlaying)

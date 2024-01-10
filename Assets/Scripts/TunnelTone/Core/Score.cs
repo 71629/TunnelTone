@@ -1,8 +1,8 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
-using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.PlayResult;
 using UnityEditor;
@@ -26,10 +26,6 @@ namespace TunnelTone.Core
         {
             Directory.CreateDirectory($"{Application.persistentDataPath}/data");
             ResultScreen.OnPlayResultCreated.AddListener(SetResultScreenBestScore);
-            SystemEvent.OnDisplayResult.AddListener(delegate
-            {
-                // TODO: Import statistics to result screen
-            });
         }
 
         internal static void SetResultScreenBestScore(params object[] param)
@@ -61,13 +57,8 @@ namespace TunnelTone.Core
             
             return JsonConvert.DeserializeObject<Score>(Encoding.UTF8.GetString(File.ReadAllBytes(path)));
         }
-
-        internal void UploadScore()
-        {
-            
-        }
         
-        [MenuItem("TunnelTone/Storage/Clear Local Score")]
+        // [MenuItem("TunnelTone/Storage/Clear Local Score")]
         private static void ClearLocalScore()
         {
             foreach (var directory in Directory.GetDirectories($"{Application.persistentDataPath}/data"))

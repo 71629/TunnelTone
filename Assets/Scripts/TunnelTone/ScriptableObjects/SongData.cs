@@ -1,12 +1,8 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.UI.PlayResult;
-using TunnelTone.UI.SongList;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TunnelTone.ScriptableObjects
 {

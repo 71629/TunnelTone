@@ -79,14 +79,14 @@
                 float2 offset = 1.5 / _ScreenParams.xy;
                 grabCol = 0;
                 _MainTex = _GrabTexture;
-                for (int y = -18; y <= 18; y++)
+                for (int y = -10; y <= 10; y++)
                 {
-                    for (int x = -18; x <= 18; x++)
+                    for (int x = -10; x <= 10; x++)
                     {
                         grabCol += tex2Dproj(_GrabTexture, i.screenPos + float4(offset.x * x, offset.y * y, 0, 0));
                     }
                 }
-                grabCol /= 1521;
+                grabCol /= 441;
                 grabCol *= 0.55;
             
                 // Combine the UI color and the blurred background

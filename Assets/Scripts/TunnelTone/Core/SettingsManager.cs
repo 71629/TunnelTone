@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
-using TMPro;
+﻿using TMPro;
 using TunnelTone.Events;
-using TunnelTone.Gauge;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using static TunnelTone.Core.Category;
 using static TunnelTone.Core.DSPBufferSize;

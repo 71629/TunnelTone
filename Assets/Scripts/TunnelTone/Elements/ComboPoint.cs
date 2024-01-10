@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TunnelTone.Events;
+﻿using TunnelTone.Events;
 using TunnelTone.Gauge;
 using TunnelTone.UI.PlayResult;
 using UnityEngine;

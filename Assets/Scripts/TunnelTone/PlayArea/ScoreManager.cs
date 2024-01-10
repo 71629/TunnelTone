@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Runtime.InteropServices;
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
-using TunnelTone.Core;
 using TunnelTone.UI.PlayResult;
 
 namespace TunnelTone.PlayArea

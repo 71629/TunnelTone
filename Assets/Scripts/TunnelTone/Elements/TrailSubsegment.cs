@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using TunnelTone.UI.Reference;
-using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -15,6 +14,7 @@ namespace TunnelTone.Elements
         [Header("Components")]
         [SerializeField] private MeshFilter meshFilter;
         [SerializeField] private SplineContainer splineContainer;
+        
         private Spline Spline
         {
             set => splineContainer.Spline = value;
@@ -45,6 +45,11 @@ namespace TunnelTone.Elements
             Spline = segmentSpline;
             
             SetMesh();
+            parent.OnStateChanged.AddListener(() =>
+            {
+                Debug.Log("Changing state");
+                parent.state.UpdateMaterial(meshRenderer, gameObject, direction);
+            });
 
             StartCoroutine(AdjustMesh());
 

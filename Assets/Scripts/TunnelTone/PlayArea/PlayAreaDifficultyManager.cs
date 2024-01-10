@@ -2,11 +2,9 @@
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using UnityEngine;
-using TunnelTone.Core;
 using TunnelTone.GameSystem;
 using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.Reference;
-using TunnelTone.UI.SongList;
 using UnityEngine.UI;
 
 namespace TunnelTone.PlayArea

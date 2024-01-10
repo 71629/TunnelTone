@@ -3,7 +3,6 @@ using System.Collections;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
-using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 
@@ -38,7 +37,7 @@ namespace TunnelTone.UI.SongList
             });
         }
 
-        private void ToSongList()
+        internal void ToSongList(Action onSealedCallback = null)
         {
             CloseShutter(() =>
             {
@@ -49,6 +48,7 @@ namespace TunnelTone.UI.SongList
                 AudioListener.pause = false;
                 SongListEventReference.Instance.OnEnterSongList.Trigger();
                 NoteRenderer.OnDestroyChart.Trigger();
+                onSealedCallback?.Invoke();
             });
         }
 

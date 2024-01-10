@@ -3,7 +3,6 @@ using TMPro;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.Singleton;
-using TunnelTone.UI.PlayResult;
 using UnityEngine;
 using UnityEngine.UI;
 

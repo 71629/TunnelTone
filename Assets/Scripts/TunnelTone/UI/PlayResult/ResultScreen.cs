@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.UI.Reference;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -192,6 +192,25 @@ namespace TunnelTone.UI.PlayResult
                 {
                     gradeObject!.GetComponent<Grade>().Display();
                 });
+            StartCoroutine(UploadScore());
+        }
+
+        private static IEnumerator UploadScore()
+        {
+            yield return NetworkManager.SendRequest(new Package
+            {
+                songTitle = playResult.title,
+                difficulty = playResult.difficulty,
+                score = playResult.score,
+                index = "/uploadscore"
+            }, "/uploadscore");
+        }
+        
+        public class Package : TunnelTonePackage
+        {
+            public string songTitle;
+            public int difficulty;
+            public int score;
         }
     }
 

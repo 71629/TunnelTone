@@ -3,10 +3,10 @@ using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
+using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Dialog;
-using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -44,6 +44,10 @@ namespace TunnelTone.Network.Account
         
         [Header("Text File")]
         [SerializeField] private TextAsset accountInfoText;
+        
+        private static readonly Color Online = new Color(0.07f, 0.8f, 0.13f);
+        private static readonly Color Offline = new Color(0.7f, 0.7f, 0.7f);
+        private static readonly Color Error = new Color(1, 0.3f, 0.3f);
 
         private const string APIURL = "https://hashtag071629.com/";
         
@@ -52,7 +56,7 @@ namespace TunnelTone.Network.Account
 
         private void Start()
         {
-            StartCoroutine(LoginUser(SystemInfo.deviceUniqueIdentifier));
+            Refresh();
         }
         
         public void ShowAccountInfo()
@@ -274,6 +278,40 @@ namespace TunnelTone.Network.Account
             form.AddField("scorePost", score);
             form.AddField("difficultyPost", difficulty);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
+        }
+
+        private void Refresh()
+        {
+            switch(NetworkManager.status)
+            {
+                case NetworkStatus.Online:
+                    statusIndicator.color = Online;
+                    user.text = NetworkManager.username;
+                    break;
+                case NetworkStatus.Offline:
+                    statusIndicator.color = Offline;
+                    user.text = "GUEST";
+                    break;
+                case NetworkStatus.SyncError:
+                    statusIndicator.color = Error;
+                    OnSyncError(1);
+                    break;
+            }
+        }
+
+        private void OnSyncError(int exitCode)
+        {
+            switch (exitCode)
+            {
+                case 101:
+                    statusIndicator.color = Error;
+                    user.text = "Version outdated";
+                    break;
+                default:
+                    statusIndicator.color = Error;
+                    user.text = "Unknown error";
+                    break;
+            }
         }
     }
 }

@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TunnelTone.PlayArea;
+using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 namespace TunnelTone.Elements
@@ -23,6 +26,7 @@ namespace TunnelTone.Elements
         // Status Reference
         private bool isHit;
         internal bool isTracking;
+        internal bool allowTrack;
         
         // Coupled Components
         [SerializeField] private SplineContainer splineContainer;
@@ -40,19 +44,31 @@ namespace TunnelTone.Elements
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
+        internal TrailState state;
+        internal UnityEvent OnStateChanged = new();
 
         private void Start()
         {
             StartCoroutine(UpdateCollider());
+            OnStateChanged.AddListener(() => Debug.Log(state));
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Touch") && other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction.Any || other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction)
+            if (other.gameObject.layer != LayerMask.NameToLayer("Touch")) return;
+            if ((other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction.Any && allowTrack) || other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction)
             {
+                allowTrack = true;
                 isTracking = true;
                 trackingTouch = other.gameObject;
+                state = new Tracking();
+                OnStateChanged.Invoke();
+                return;
             }
+            isTracking = false;
+            allowTrack = false;
+            state = new WrongHand();
+            OnStateChanged.Invoke();
         }
         
         private void OnTriggerExit(Collider other)
@@ -60,6 +76,8 @@ namespace TunnelTone.Elements
             if (other.gameObject.layer == LayerMask.NameToLayer("Touch"))
             {
                 isTracking = false;
+                state = new Idle();
+                OnStateChanged.Invoke();
             }
         }
 
@@ -80,6 +98,7 @@ namespace TunnelTone.Elements
         public void Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
             Direction = direction;
+            allowTrack = true;
             
             this.startTime = startTime;
             this.endTime = endTime;
@@ -268,6 +287,52 @@ namespace TunnelTone.Elements
             if (trackingTouch is null || virtualTrail) return;
             var touch = trackingTouch.GetComponent<PlayArea.Touch>();
             touch.trackingTrail = null;
+        }
+    }
+
+    internal abstract class TrailState
+    {
+        internal abstract void UpdateMaterial(MeshRenderer mr, GameObject gb, Direction dir);
+    }
+
+    internal class Tracking : TrailState
+    {
+        internal override void UpdateMaterial(MeshRenderer mr, GameObject gb, Direction dir)
+        {
+            mr.material = dir switch
+            {
+                Direction.Left => UIElementReference.Instance.leftTrailHit,
+                Direction.Right => UIElementReference.Instance.rightTrailHit,
+                _ => throw new ArgumentOutOfRangeException(nameof(dir), dir,
+                    $"Given direction is not valid for Trail type: {dir}")
+            };
+        }
+    }
+    
+    internal class Idle : TrailState
+    {
+        internal override void UpdateMaterial(MeshRenderer mr, GameObject gb, Direction dir)
+        {
+            mr.material = dir switch
+            {
+                Direction.Left => UIElementReference.Instance.leftTrail,
+                Direction.Right => UIElementReference.Instance.rightTrail,
+                _ => throw new ArgumentOutOfRangeException(nameof(dir), dir,
+                    $"Given direction is not valid for Trail type: {dir}")
+            };
+        }
+    }
+
+    internal class WrongHand : TrailState
+    {
+        internal override void UpdateMaterial(MeshRenderer mr, GameObject gb, Direction dir)
+        {
+            var o = mr.material.color;
+
+            LeanTween.value(gb, f =>
+                {
+                    mr.material.color = Color.Lerp(o, new Color(1, .1f, .1f, .75f), f);
+                }, 1, 0, .6f);
         }
     }
 }
