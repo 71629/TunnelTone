@@ -5,6 +5,7 @@ using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TunnelTone.UI.SongList
 {
@@ -14,6 +15,8 @@ namespace TunnelTone.UI.SongList
         
         private static readonly int Close = Animator.StringToHash("Close");
         private static readonly int Open = Animator.StringToHash("Open");
+
+        internal static UnityEvent OnShutterClose = new();
 
         private void Start()
         {
@@ -51,6 +54,19 @@ namespace TunnelTone.UI.SongList
                 onSealedCallback?.Invoke();
             });
         }
+        
+        internal void Retry(Action onSealedCallback = null)
+        {
+            CloseShutter(() =>
+            {
+                UIElementReference.Instance.musicPlay.enabled = true;
+                UIElementReference.Instance.songList.enabled = false;
+                UIElementReference.Instance.topView.enabled = false;
+                OpenShutter();
+                AudioListener.pause = false;
+                onSealedCallback?.Invoke();
+            });
+        }
 
         private void OnSongEnd(params object[] param)
         {
@@ -69,8 +85,8 @@ namespace TunnelTone.UI.SongList
                 OpenShutter();
             });
         }
-        
-        private void CloseShutter(Action onCompleteCallback = null)
+
+        internal void CloseShutter(Action onCompleteCallback = null)
         {
             shutterAnimator.SetTrigger(Close);
             StartCoroutine(CallbackAfterAnimation(onCompleteCallback));
@@ -81,6 +97,7 @@ namespace TunnelTone.UI.SongList
         {
             yield return new WaitForSecondsRealtime(1f);
             callback?.Invoke();
+            OnShutterClose.Invoke();
         }
     }
 }

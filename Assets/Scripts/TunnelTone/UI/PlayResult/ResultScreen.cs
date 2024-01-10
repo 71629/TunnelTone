@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using TMPro;
+using TunnelTone.Charts;
 using TunnelTone.Core;
+using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.UI.Reference;
+using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -30,6 +33,10 @@ namespace TunnelTone.UI.PlayResult
         [SerializeField] internal TextMeshProUGUI gaugeModeText;
         [Space(10)]
         [SerializeField] internal Transform scoreTransform;
+
+        [Space(10)]
+        [SerializeField] internal Button retry;
+        [SerializeField] internal Button back;
 
         [Space(10)]
         [SerializeField] internal Image difficulty;
@@ -191,6 +198,13 @@ namespace TunnelTone.UI.PlayResult
                 .setOnComplete(() =>
                 {
                     gradeObject!.GetComponent<Grade>().Display();
+                    score.text = $"{playResult.score:D8}";
+                    delta.text = $"{playResult.score - playResult.bestScore:D8}";
+                    
+                    var backRect = back.GetComponent<RectTransform>();
+                    var retryRect = retry.GetComponent<RectTransform>();
+                    LeanTween.value(back.gameObject, v => { backRect.anchoredPosition = v; }, new Vector2(-125, 50), new Vector2(125, 50), .7f);
+                    LeanTween.value(retry.gameObject, v => { retryRect.anchoredPosition = v; }, new Vector2(125, 50), new Vector2(-125, 50), .7f);
                 });
             StartCoroutine(UploadScore());
         }
@@ -204,6 +218,23 @@ namespace TunnelTone.UI.PlayResult
                 score = playResult.score,
                 index = "/uploadscore"
             }, "/uploadscore");
+        }
+
+        public void ToSongList()
+        {
+            Shutter.Instance.ToSongList(() => {
+                canvas.enabled = false;
+            });
+        }
+
+        public void Retry()
+        {
+            Shutter.Instance.CloseShutter(() =>
+            {
+                canvas.enabled = false;
+                UIElementReference.Instance.musicPlay.enabled = true;
+                NoteRenderer.Instance.Retry();
+            });
         }
         
         public class Package : TunnelTonePackage
