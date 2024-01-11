@@ -14,7 +14,7 @@ namespace TunnelTone.UI.SongList
     {
         [SerializeField] private GameObject container;
         [SerializeField] private TextAsset songList;
-        [SerializeField] private SongData[] songContainer;
+        [SerializeField] internal SongData[] songContainer;
         [SerializeField] private GameObject currentBackground;
         
         internal static SongData currentlySelected;

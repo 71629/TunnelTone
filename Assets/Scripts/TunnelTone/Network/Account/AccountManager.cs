@@ -66,6 +66,7 @@ namespace TunnelTone.Network.Account
             }
             accountInfoPanel.SetActive(true);
             offlinePanel.SetActive(false);
+            PlayerInfo.OnDisplayPlayerInfo.Invoke();
         }
         
         private void ResetErrors()

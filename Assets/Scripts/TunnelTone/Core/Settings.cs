@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using TunnelTone.Events;
+using TunnelTone.GameSystem;
 using TunnelTone.Gauge;
 using UnityEditor;
 using UnityEngine;
@@ -28,6 +29,9 @@ namespace TunnelTone.Core
         
         // cloud settings (most likely user preferences / user specific)
         public GaugeMode gaugeMode;
+        
+        // Hidden settings (Changes automatically and cannot be manually edited)
+        public string recentPlay;
 
         internal static Gauge.Gauge Gauge
         {
@@ -49,6 +53,13 @@ namespace TunnelTone.Core
             Directory.CreateDirectory($"{Application.persistentDataPath}/player");
             instance = LoadSettings();
             ApplySettings();
+            
+            Application.quitting += SaveOnQuit;
+        }
+
+        private static void SaveOnQuit()
+        {
+            SaveSettings();
         }
         
         internal static Settings LoadSettings()

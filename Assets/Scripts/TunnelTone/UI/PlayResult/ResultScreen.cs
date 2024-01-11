@@ -212,6 +212,7 @@ namespace TunnelTone.UI.PlayResult
             // Process local and cloud save
             SaveLocal();
             StartCoroutine(UploadScore());
+            Settings.instance.recentPlay = $"{playResult.title} [{playResult.difficulty switch{0 => "ES", 1 => "HD", 2 => "IT", 3 => "IS", _ => "??"}}]";
         }
 
         private static void SaveLocal()
@@ -240,6 +241,7 @@ namespace TunnelTone.UI.PlayResult
         {
             Shutter.Instance.ToSongList(() => {
                 canvas.enabled = false;
+                Grade.OnLeave.Invoke();
             });
         }
 
@@ -253,6 +255,7 @@ namespace TunnelTone.UI.PlayResult
         {
             canvas.enabled = false;
             UIElementReference.Instance.musicPlay.enabled = true;
+            Grade.OnLeave.Invoke();
         }
         
         public class Package : TunnelTonePackage

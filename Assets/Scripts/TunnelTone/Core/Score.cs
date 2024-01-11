@@ -1,10 +1,13 @@
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
+using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.PlayResult;
+using TunnelTone.UI.SongList;
 using UnityEditor;
 using UnityEngine;
 
@@ -61,6 +64,13 @@ namespace TunnelTone.Core
             ret.title = query;
 
             return ret;
+        }
+
+        internal static int GetTotalScore()
+        {
+            // Read all score.json in all subdirectories of data directory
+
+            return SongListManager.Instance.songContainer.SelectMany(song => LoadLocalScore(song.songTitle).score).Sum();
         }
         
         // [MenuItem("TunnelTone/Storage/Clear Local Score")]

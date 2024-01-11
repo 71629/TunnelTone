@@ -19299,7 +19299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 3993.8213}
+  m_AnchoredPosition: {x: 340, y: 6428.3184}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -25324,6 +25324,7 @@ GameObject:
   - component: {fileID: 972631143}
   - component: {fileID: 972631142}
   - component: {fileID: 972631146}
+  - component: {fileID: 972631147}
   m_Layer: 5
   m_Name: Account Info
   m_TagString: Untagged
@@ -25435,6 +25436,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &972631147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972631141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9917e545e0944a44abca99445915b7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  username: {fileID: 397406550}
+  totalScore: {fileID: 615574737}
+  recentPlay: {fileID: 66410169}
+  playerRating: {fileID: 70141488}
 --- !u!1 &991141177
 GameObject:
   m_ObjectHideFlags: 0
@@ -28410,7 +28427,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -202477.52}
+  m_AnchoredPosition: {x: 0, y: -207907.52}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -35166,6 +35183,10 @@ MonoBehaviour:
   songContainer:
   - {fileID: 11400000, guid: ee89096fefb18c84392a1ace789c4dcb, type: 2}
   - {fileID: 11400000, guid: 9313596ad46aa1a4dbcc15dfda35f071, type: 2}
+  - {fileID: 11400000, guid: 59949efbe661e6b49b35f1a9ca38b953, type: 2}
+  - {fileID: 11400000, guid: f563167c7474d7c46b005512734a2f7f, type: 2}
+  - {fileID: 11400000, guid: 803413c1ffc8ca24c9ee1a808f65461c, type: 2}
+  - {fileID: 11400000, guid: c91f478ee4ec18b43aa467be0497e124, type: 2}
   currentBackground: {fileID: 8679249125492562313}
 --- !u!1 &1486329909
 GameObject:
@@ -42632,7 +42653,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

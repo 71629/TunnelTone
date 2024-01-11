@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TunnelTone.UI.PlayResult
@@ -12,6 +13,8 @@ namespace TunnelTone.UI.PlayResult
         private LTRect gradeTextRect;
         private LTRect shadowRect;
 
+        internal static UnityEvent OnLeave = new();
+
         private void Awake()
         {
             gradeText.gameObject.transform.localScale = 1.5f * Vector3.one;
@@ -20,6 +23,8 @@ namespace TunnelTone.UI.PlayResult
             
             gradeTextRect = new LTRect(gradeText.rectTransform.rect);
             shadowRect = new LTRect(shadow.rectTransform.rect);
+            
+            OnLeave.AddListener(DestroyObject);
         }
         
         internal void Display()
@@ -30,6 +35,12 @@ namespace TunnelTone.UI.PlayResult
                 .setEase(LeanTweenType.easeOutCubic);
             LeanTween.value(shadow.gameObject, c => { shadow.color = c; }, shadow.color, shadow.color + Color.black, .5f)
                 .setEase(LeanTweenType.easeOutCubic);
+        }
+
+        internal void DestroyObject()
+        {
+            Destroy(gameObject);
+            Destroy(this);
         }
     }
 }

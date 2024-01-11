@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb49e598d844994bae24c04d3bfbaae, type: 3}
+  m_Name: To The Milky Way
+  m_EditorClassIdentifier: 
+  songTitle: To The Milky Way
+  artist: "\u9ED2\u9B54 / Chroma"
+  bpm: 186
+  jacket: {fileID: 21300000, guid: 984ae8897e4489c41938347eb7ce513f, type: 3}
+  music: {fileID: 8300000, guid: df1319c1eff2c8a41aadfaf2b2239384, type: 3}
+  previewStart: 44000
+  previewDuration: 50000
+  charts:
+  - difficulty: 3
+    chartDesigner: Kinglingmk1
+    chart: {fileID: 4900000, guid: d69daa1810cecb142a050b779c3412a9, type: 3}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 6
+    chartDesigner: Kingilngmk1
+    chart: {fileID: 4900000, guid: 07a54b3bfdda152439c0c5d71af19da4, type: 3}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 11
+    chartDesigner: "\u6708\u591C"
+    chart: {fileID: 4900000, guid: 3e776c28908461648a9c3f8e52a4c609, type: 3}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 14
+    chartDesigner: 71629 in the Milky Way
+    chart: {fileID: 0}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

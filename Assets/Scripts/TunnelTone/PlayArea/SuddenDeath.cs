@@ -15,7 +15,7 @@ namespace TunnelTone.PlayArea
         private void Start()
         {
             IntegrityGauge.OnSuddenDeath.AddListener(OnSuddenDeath);
-            SystemEvent.OnChartLoad.AddListener(ResetUI);
+            SystemEvent.OnDisplayResult.AddListener(ResetUI);
         }
 
         private void OnSuddenDeath(object[] param)
