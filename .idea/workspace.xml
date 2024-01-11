@@ -5,159 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14014523-faa6-46a2-bfd7-27b59090afd2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Bold SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Bold SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Bold.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-BoldItalic SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-BoldItalic SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-BoldItalic.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Italic SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Italic SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Italic.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Regular SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Regular SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/CourierPrime-Regular.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Courier Prime/OFL.txt.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/Lexend-VariableFont_wght.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/Lexend-VariableFont_wght.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/OFL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/OFL.txt.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/README.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/README.txt.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Black SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Black SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Black.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Bold SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Bold SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Bold.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraBold SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraBold SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraBold.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraLight SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraLight SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-ExtraLight.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Light SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Light SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Light.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Medium SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Medium SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Medium.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Regular SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Regular SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Regular.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-SemiBold SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-SemiBold SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-SemiBold.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Thin SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Thin SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lexend/static/Lexend-Thin.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Entry.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Entry/GameEntry.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Entry/GameEntry.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Shaders/Trail.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Shaders/Trail.shader.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/Compass.8tTfmw.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/Compass.8tTfmw.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/Monogame.dcGP8A.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/Monogame.dcGP8A.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/TunnelTone.GtaB-w.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/rainbow_game.2wzNQw.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/rainbow_game.2wzNQw.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/snake_rampage.rktbPg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0ad8e055-8cee-4a0d-9450-fd43465f7bc7/storage_v2/_src_/schema/snake_rampage.rktbPg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBoldOutline SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Exo/static/Exo-SemiBoldOutline SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Editor/LeanTweenDocumentationEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Editor/LeanTweenDocumentationEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Following.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Following.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralAdvancedTechniques.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralAdvancedTechniques.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasics2d.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasics2d.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralCameraShake.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralCameraShake.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEasingTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEasingTypes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEventsListeners.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEventsListeners.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSimpleUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSimpleUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralUISpace.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralUISpace.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/LogoCinematic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/LogoCinematic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier2d.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier2d.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline2d.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline2d.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineEndless.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineEndless.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplinePerformance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplinePerformance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineTrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineTrack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplines.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingUnitTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingUnitTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacyExt.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacyExt.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescrOptional.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescrOptional.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTSeq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTSeq.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanAudio.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanSmooth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanSmooth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTweenExt.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTweenExt.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Scripts/LeanPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/Scripts/LeanPool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingColorTweening.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingColorTweening.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue2.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Trail Subsegment.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Trail Subsegment.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/AutoLoginResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/AutoLogin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/AutoLoginResponse.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/AutoLogin.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Dictionaries.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Dictionaries.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/NetworkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/NetworkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Score.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Score.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/ServerResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/TunnelTonePackage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/ServerResponse.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/TunnelTonePackage.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/Settings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/SettingsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Core/SettingsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/ComboPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/ComboPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/TrailSubsegment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Elements/TrailSubsegment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/CompletionGauge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/CompletionGauge.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/GaugeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Gauge/GaugeManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/Network/Account/AccountManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/PlayAreaDifficultyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/PlayAreaDifficultyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ScoreManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/ScoreManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/Touch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/Touch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/Chart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/Chart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/SongData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/ScriptableObjects/SongData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Dialog/Dialog.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/SuddenDeath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/PlayArea/SuddenDeath.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/ResultScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/PlayResult/ResultScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Reference/UIElementReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/Reference/UIElementReference.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/Shutter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/Shutter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListDifficultyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListDifficultyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TunnelTone/UI/SongList/SongListManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TunnelTone.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/TunnelTone.sln.DotSettings" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,34 +62,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenDatabaseViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
-    &quot;database.data.extractors.current.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;result&quot;,
-    &quot;import_schema_mapping&quot;: &quot;&lt;schema-mapping&gt;\n  &lt;databases&gt;\n    &lt;list&gt;\n      &lt;schema-mapping-item&gt;\n        &lt;source-data-source-id&gt;0ad8e055-8cee-4a0d-9450-fd43465f7bc7&lt;/source-data-source-id&gt;\n        &lt;source-path&gt;schema/&amp;quot;TunnelTone&amp;quot;&lt;/source-path&gt;\n        &lt;target-data-source-id&gt;0ad8e055-8cee-4a0d-9450-fd43465f7bc7&lt;/target-data-source-id&gt;\n        &lt;target-path&gt;schema/&amp;quot;Compass&amp;quot;&lt;/target-path&gt;\n      &lt;/schema-mapping-item&gt;\n    &lt;/list&gt;\n  &lt;/databases&gt;\n&lt;/schema-mapping&gt;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/grepo/TunnelTone&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;writerside.last.selected.productTunnelTone&quot;: &quot;t&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
+    "database.data.extractors.current.id": "Comma-separated (CSV)_id",
+    "git-widget-placeholder": "result-screen-control",
+    "import_schema_mapping": "<schema-mapping>\n  <databases>\n    <list>\n      <schema-mapping-item>\n        <source-data-source-id>0ad8e055-8cee-4a0d-9450-fd43465f7bc7</source-data-source-id>\n        <source-path>schema/&quot;TunnelTone&quot;</source-path>\n        <target-data-source-id>0ad8e055-8cee-4a0d-9450-fd43465f7bc7</target-data-source-id>\n        <target-path>schema/&quot;Compass&quot;</target-path>\n      </schema-mapping-item>\n    </list>\n  </databases>\n</schema-mapping>",
+    "last_opened_file_path": "D:/grepo/TunnelTone",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "Errors",
+    "vue.rearranger.settings.migration": "true",
+    "writerside.last.selected.productTunnelTone": "t"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;tidb&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "tidb",
+      "postgresql"
     ],
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: [
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": [
     ]
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

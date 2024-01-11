@@ -25,7 +25,7 @@ namespace TunnelTone.PlayArea
             animator.Rebind();
         }
 
-        private void ResetUI(object[] param)
+        internal void ResetUI(object[] param)
         {
             frame.gameObject.SetActive(false);
         }

@@ -16,10 +16,11 @@ namespace TunnelTone.UI.SongList
         private static readonly int Close = Animator.StringToHash("Close");
         private static readonly int Open = Animator.StringToHash("Open");
 
-        internal static UnityEvent OnShutterClose = new();
+        internal static UnityEvent<Action> OnShutterClose = new();
 
         private void Start()
         {
+            OnShutterClose.AddListener(CloseShutter);
             SongListEventReference.Instance.OnSongStart.AddListener(delegate
             {
                 ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
@@ -97,7 +98,6 @@ namespace TunnelTone.UI.SongList
         {
             yield return new WaitForSecondsRealtime(1f);
             callback?.Invoke();
-            OnShutterClose.Invoke();
         }
     }
 }

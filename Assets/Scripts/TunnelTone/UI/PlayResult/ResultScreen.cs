@@ -6,6 +6,8 @@ using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
+using TunnelTone.Gauge;
+using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -229,12 +231,14 @@ namespace TunnelTone.UI.PlayResult
 
         public void Retry()
         {
-            Shutter.Instance.CloseShutter(() =>
-            {
-                canvas.enabled = false;
-                UIElementReference.Instance.musicPlay.enabled = true;
-                NoteRenderer.Instance.Retry();
-            });
+            NoteRenderer.Instance.Retry();
+            Invoke(nameof(SwitchCanvas), 0.6f);
+        }
+
+        private void SwitchCanvas()
+        {
+            canvas.enabled = false;
+            UIElementReference.Instance.musicPlay.enabled = true;
         }
         
         public class Package : TunnelTonePackage
