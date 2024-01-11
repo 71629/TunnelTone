@@ -17,6 +17,9 @@ namespace TunnelTone.UI.Entry
         
         [TextArea(5, 10)][SerializeField] private string bootText;
         [TextArea(5, 10)][SerializeField] private string loadingText;
+
+        [SerializeField] private RectTransform notice;
+        [SerializeField] private TextMeshProUGUI noticeText;
         
         internal static UnityEvent OnInitializeComplete = new();
 
@@ -30,6 +33,13 @@ namespace TunnelTone.UI.Entry
                 start.interactable = true;
                 OnInitializeComplete.RemoveAllListeners();
             });
+            NetworkManager.OnStatusChanged.AddListener(delegate
+            {
+                if (NetworkManager.status is NetworkStatus.Online)
+                {
+                    DisplayNotice($"Logged in as {NetworkManager.username}");
+                }
+            });
             NetworkManager.AutoLoginJson();
         }
         
@@ -39,5 +49,25 @@ namespace TunnelTone.UI.Entry
 
             Shutter.Instance.ToSongList(() => canvas.enabled = false);
         }
-     }
+
+        private void DisplayNotice(string text)
+        {
+            noticeText.text = text;
+            var anchoredPosition = notice.anchoredPosition;
+            LeanTween.value(notice.gameObject, v =>
+                {
+                    notice.anchoredPosition = v;
+                }, anchoredPosition, anchoredPosition - new Vector2(noticeText.preferredWidth + 100, 0), .5f)
+                .setEase(LeanTweenType.easeOutCubic)
+                .setOnComplete(() =>
+                {
+                    LeanTween.value(notice.gameObject, v =>
+                        {
+                            notice.anchoredPosition = v;
+                        }, notice.anchoredPosition, anchoredPosition, .5f)
+                        .setEase(LeanTweenType.easeInCubic)
+                        .setDelay(2.5f);
+                });
+        }
+    }
 }

@@ -226,6 +226,7 @@ namespace TunnelTone.UI.PlayResult
 
         private static IEnumerator UploadScore()
         {
+            if(NetworkManager.status is not NetworkStatus.Online) yield break;
             yield return NetworkManager.SendRequest(new Package
             {
                 songTitle = playResult.title,

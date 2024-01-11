@@ -6,6 +6,7 @@ using TunnelTone.UI.Entry;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using UnityEngine.UIElements;
 
 namespace TunnelTone.Core
 {
@@ -15,6 +16,7 @@ namespace TunnelTone.Core
         internal static UnityEvent OnUserLogout = new();
         
         internal static UnityEvent<int> OnSyncError = new();
+        internal static UnityEvent OnStatusChanged = new();
 
         internal const string ApiAddress = "https://hashtag071629.com/tunneltone";
         
@@ -49,12 +51,14 @@ namespace TunnelTone.Core
             if (response.exitCode != 0)
             {
                 status = NetworkStatus.SyncError;
+                OnStatusChanged.Invoke();
                 OnSyncError.Invoke(response.exitCode);
                 return;
             }
             uid = response.uid;
             username = response.username;
             status = NetworkStatus.Online;
+            OnStatusChanged.Invoke();
         }
         
         private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage

@@ -50,18 +50,15 @@ namespace TunnelTone.Network.Account
         private static readonly Color Error = new Color(1, 0.3f, 0.3f);
 
         private const string APIURL = "https://hashtag071629.com/";
-        
-        private bool _isLoggedIn = false;
-        private int _uid;
 
         private void Start()
         {
-            Refresh();
+            NetworkManager.OnStatusChanged.AddListener(Refresh);
         }
         
         public void ShowAccountInfo()
         {
-            if (!_isLoggedIn)
+            if (NetworkManager.status == NetworkStatus.Offline)
             {
                 accountInfoPanel.SetActive(false);
                 offlinePanel.SetActive(true);
@@ -165,7 +162,7 @@ namespace TunnelTone.Network.Account
         public IEnumerator UserLogout()
         {
             WWWForm form = new();
-            form.AddField("uidPost", _uid);
+            form.AddField("uidPost", NetworkManager.uid);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
 
             using var req = UnityWebRequest.Post($"{APIURL}logout", form);
@@ -183,7 +180,7 @@ namespace TunnelTone.Network.Account
                 user.text = "GUEST";
                 statusIndicator.color = new Color(.7f, .7f, .7f);
                 accountInfo.SetTrigger(Dismiss);
-                _isLoggedIn = false;
+                NetworkManager.status = NetworkStatus.Offline;
             }
         }
         
@@ -238,8 +235,8 @@ namespace TunnelTone.Network.Account
                 var data = req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length);
                 user.text = data.Split('_')[1];
                 statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
-                _isLoggedIn = true;
-                _uid = int.Parse(data.Split('_')[0]);
+                NetworkManager.status = NetworkStatus.Online;
+                NetworkManager.uid = int.Parse(data.Split('_')[0]);
             }
         }
         
@@ -264,8 +261,8 @@ namespace TunnelTone.Network.Account
                 user.text = username;
                 statusIndicator.color = new Color(0.07f, 0.8f, 0.13f);
                 accountInfo.SetTrigger(Dismiss);
-                _isLoggedIn = true;
-                _uid = int.Parse(req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length).Split('_')[0]);
+                NetworkManager.status = NetworkStatus.Online;
+                NetworkManager.uid = int.Parse(req.downloadHandler.text.Remove(0, "LOGIN_SUCCESS_".Length).Split('_')[0]);
             }
         }
         
@@ -273,7 +270,7 @@ namespace TunnelTone.Network.Account
         public void UploadScore(string song, int score, int difficulty)
         {
             WWWForm form = new();
-            form.AddField("uidPost", _uid);
+            form.AddField("uidPost", NetworkManager.uid);
             form.AddField("songPost", song);
             form.AddField("scorePost", score);
             form.AddField("difficultyPost", difficulty);
