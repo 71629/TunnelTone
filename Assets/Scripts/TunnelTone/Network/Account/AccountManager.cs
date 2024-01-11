@@ -164,6 +164,7 @@ namespace TunnelTone.Network.Account
             WWWForm form = new();
             form.AddField("uidPost", NetworkManager.uid);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
+            form.AddField("applicationNamePost", "TunnelTone");
 
             using var req = UnityWebRequest.Post($"{APIURL}logout", form);
             
@@ -246,6 +247,7 @@ namespace TunnelTone.Network.Account
             form.AddField("usernamePost", username);
             form.AddField("passwordPost", password);
             form.AddField("deviceIDPost", SystemInfo.deviceUniqueIdentifier);
+            form.AddField("applicationNamePost", "TunnelTone");
 
             using var req = UnityWebRequest.Post($"{APIURL}login", form);
             

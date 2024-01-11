@@ -48,9 +48,9 @@ namespace TunnelTone.Core
                 GameEntry.OnInitializeComplete.Invoke();
             });
 
-            if (response.exitCode != 0)
+            if (response.exitCode is >= 500 and <= 600)
             {
-                status = NetworkStatus.SyncError;
+                status = NetworkStatus.Offline;
                 OnStatusChanged.Invoke();
                 OnSyncError.Invoke(response.exitCode);
                 return;
