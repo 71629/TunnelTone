@@ -68,18 +68,6 @@ namespace TunnelTone.Core
             Debug.Log($"{response.exitCode}: {response.message}");
             return response;
         }
-
-        [Obsolete]
-        internal static T SendUnityRequest<T>(T obj, string index) where T : TunnelTonePackage
-        {
-            var req = new UnityWebRequest( $"{ApiAddress}{index}", "POST");
-            req.timeout = 15;
-            req.SetRequestHeader("Content-Type", "application/json");
-            req.downloadHandler = new DownloadHandlerBuffer();
-            req.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj)));
-            
-            return MakeRequest<T>(req);
-        }
         
         private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage
         {
