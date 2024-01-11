@@ -55,7 +55,7 @@ namespace TunnelTone.Core
             uid = response.uid;
             username = response.username;
             status = NetworkStatus.Online;
-        }c
+        }
         
         private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage
         {
