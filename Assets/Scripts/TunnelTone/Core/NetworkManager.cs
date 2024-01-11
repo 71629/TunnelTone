@@ -55,19 +55,7 @@ namespace TunnelTone.Core
             uid = response.uid;
             username = response.username;
             status = NetworkStatus.Online;
-        }
-
-        [Obsolete]
-        private static T MakeRequest<T>(UnityWebRequest req) where T : TunnelTonePackage
-        {
-            req.SendWebRequest();
-            
-            while (!req.isDone) { }
-            
-            var response = JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(req.downloadHandler.data));
-            Debug.Log($"{response.exitCode}: {response.message}");
-            return response;
-        }
+        }c
         
         private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage
         {
