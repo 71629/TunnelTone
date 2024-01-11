@@ -45,6 +45,8 @@ namespace TunnelTone.Core
             File.WriteAllBytes($"{path}/score.json", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data)));
             return LoadLocalScore(data.title);
         }
+
+        internal Score SaveLocal() => SaveLocal(this);
         
         internal static Score LoadLocalScore(string query)
         {
@@ -55,7 +57,10 @@ namespace TunnelTone.Core
                 SaveLocal(new Score(query));
             }
             
-            return JsonConvert.DeserializeObject<Score>(Encoding.UTF8.GetString(File.ReadAllBytes(path)));
+            var ret = JsonConvert.DeserializeObject<Score>(Encoding.UTF8.GetString(File.ReadAllBytes(path)));
+            ret.title = query;
+
+            return ret;
         }
         
         // [MenuItem("TunnelTone/Storage/Clear Local Score")]

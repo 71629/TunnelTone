@@ -208,7 +208,20 @@ namespace TunnelTone.UI.PlayResult
                     LeanTween.value(back.gameObject, v => { backRect.anchoredPosition = v; }, new Vector2(-125, 50), new Vector2(125, 50), .7f);
                     LeanTween.value(retry.gameObject, v => { retryRect.anchoredPosition = v; }, new Vector2(125, 50), new Vector2(-125, 50), .7f);
                 });
+            
+            // Process local and cloud save
+            SaveLocal();
             StartCoroutine(UploadScore());
+        }
+
+        private static void SaveLocal()
+        {
+            var scoreData = Score.LoadLocalScore(playResult.title);
+            if(playResult.score > scoreData.score[playResult.difficulty])
+            {
+                scoreData.score[playResult.difficulty] = playResult.score;
+            }
+            scoreData.SaveLocal();
         }
 
         private static IEnumerator UploadScore()

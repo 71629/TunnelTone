@@ -13,8 +13,8 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEventReference.Instance.OnSelectItem.AddListener(UpdateScore);
-            SongListEventReference.Instance.OnDifficultyChange.AddListener(UpdateDifficulty);
+            SongListEvent.OnSelectItem.AddListener(UpdateScore);
+            SongListEvent.OnDifficultyChange.AddListener(UpdateDifficulty);
         }
         
         private void UpdateDifficulty(params object[] param)

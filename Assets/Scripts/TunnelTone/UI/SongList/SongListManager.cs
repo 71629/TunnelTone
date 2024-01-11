@@ -24,7 +24,7 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEventReference.Instance.OnSelectItem.AddListener(OnSelectItem);
+            SongListEvent.OnSelectItem.AddListener(OnSelectItem);
 
             if (songContainer is not null)
             {
@@ -42,7 +42,7 @@ namespace TunnelTone.UI.SongList
 
             currentlySelected = songContainer?[0];
             // yield return null;
-            // SongListEventReference.Instance.OnEnterSongList.Trigger();
+            // SongListEvent.Instance.OnEnterSongList.Trigger();
         }
 
         public void StartSong()
@@ -57,7 +57,7 @@ namespace TunnelTone.UI.SongList
                         }}, Dialog.Dialog.Severity.Error);
                 return;
             }
-            SongListEventReference.Instance.OnSongStart.Trigger(currentlySelected);
+            SongListEvent.OnSongStart.Trigger(currentlySelected);
             NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
             StartCoroutine(EnableCanvasDelayed());
         }

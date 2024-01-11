@@ -12,7 +12,7 @@ namespace TunnelTone.GameSystem
         
         [SerializeField] private AudioSource audioSource;
         
-        private static SongListEventReference SongListEvent => SongListEventReference.Instance;
+        private static SongListEvent SongListEvent => SongListEvent.Instance;
         private static ChartEventReference ChartEvent => ChartEventReference.Instance;
         
         private void Start()

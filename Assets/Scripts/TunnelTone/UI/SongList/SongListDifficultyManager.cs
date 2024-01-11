@@ -56,8 +56,8 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            SongListEventReference.Instance.OnSelectItem.AddListener(UpdateDifficulty);
-            SongListEventReference.Instance.OnEnterSongList.AddListener(delegate
+            SongListEvent.OnSelectItem.AddListener(UpdateDifficulty);
+            SongListEvent.OnEnterSongList.AddListener(delegate
             {
                 ChangeDifficulty(easy);
                 mainImage.color = easy.fillRect.GetComponent<Image>().color;
@@ -110,13 +110,13 @@ namespace TunnelTone.UI.SongList
         
         public void OnDifficultyChange(int difficulty)
         {
-            SongListEventReference.Instance.OnDifficultyChange.Trigger(difficulty);
+            SongListEvent.OnDifficultyChange.Trigger(difficulty);
         }
         
         public void QuickChangeDifficulty()
         {
             CurrentlySelected = (CurrentlySelected + 1) % 4;
-            SongListEventReference.Instance.OnDifficultyChange.Trigger(CurrentlySelected);
+            SongListEvent.OnDifficultyChange.Trigger(CurrentlySelected);
             ChangeDifficulty(currentSelected);
             FadeSliderColor(currentSelected.fillRect.GetComponent<Image>());
         }

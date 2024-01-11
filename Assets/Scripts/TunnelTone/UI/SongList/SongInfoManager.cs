@@ -14,7 +14,7 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEventReference.Instance.OnSelectItem.AddListener(UpdateInfo);
+            SongListEvent.OnSelectItem.AddListener(UpdateInfo);
         }
 
         private void UpdateInfo(params object[] param)

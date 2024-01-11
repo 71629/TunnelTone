@@ -47,6 +47,15 @@ namespace TunnelTone.ScriptableObjects
 
         private void OnEnable()
         {
+            RefreshScoreData();
+            SongListEvent.OnEnterSongList.AddListener(delegate
+            {
+                RefreshScoreData();
+            });
+        }
+        
+        private void RefreshScoreData()
+        {
             scoreData = Score.LoadLocalScore(songTitle);
         }
 

@@ -21,7 +21,7 @@ namespace TunnelTone.UI.SongList
         private void Start()
         {
             OnShutterClose.AddListener(CloseShutter);
-            SongListEventReference.Instance.OnSongStart.AddListener(delegate
+            SongListEvent.OnSongStart.AddListener(delegate
             {
                 ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
                 CloseShutter();
@@ -50,7 +50,7 @@ namespace TunnelTone.UI.SongList
                 UIElementReference.Instance.musicPlay.enabled = false;
                 OpenShutter();
                 AudioListener.pause = false;
-                SongListEventReference.Instance.OnEnterSongList.Trigger();
+                SongListEvent.OnEnterSongList.Trigger();
                 NoteRenderer.OnDestroyChart.Trigger();
                 onSealedCallback?.Invoke();
             });
