@@ -174,15 +174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a28231c9aa4cfc8e7631cc3dca629f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameArea: {fileID: 0}
-  isTracking: 0
   splineContainer: {fileID: 8051457755194373471}
   col: {fileID: 1817073458840728485}
   lineRenderer: {fileID: 5221743329064423129}
   meshRenderer: {fileID: 5929479616983605116}
   meshFilter: {fileID: 8527366788073702805}
-  trackingTouch: {fileID: 0}
   trailSubsegmentPrefab: {fileID: 7075174116204886813, guid: 0e1c85b23b39c064a8b6353ddb0b09ec, type: 3}
+  virtualTrailMaterial: {fileID: 2100000, guid: 33dc2d5f4fcdff64f933da9766f40464, type: 2}
 --- !u!23 &5929479616983605116
 MeshRenderer:
   m_ObjectHideFlags: 0

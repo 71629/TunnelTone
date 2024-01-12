@@ -41,6 +41,7 @@ namespace TunnelTone.Elements
         
         // Objects
         [SerializeField] private GameObject trailSubsegmentPrefab;
+        [SerializeField] private Material virtualTrailMaterial;
         
         private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
         private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
@@ -147,8 +148,8 @@ namespace TunnelTone.Elements
             {
                 meshRenderer.material = direction switch
                 {
-                    Direction.Left => NoteRenderer.Instance.left,
-                    Direction.Right => NoteRenderer.Instance.right,
+                    Direction.Left => UIElementReference.Instance.leftTrail,
+                    Direction.Right => UIElementReference.Instance.rightTrail,
                     _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, $"Given direction is not valid for Trail type: {direction}")
                 };
             }
@@ -204,6 +205,7 @@ namespace TunnelTone.Elements
                 }
                 lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
                 lineRenderer.positionCount--;
+                lineRenderer.material = virtualTrailMaterial;
             }
         }
 
