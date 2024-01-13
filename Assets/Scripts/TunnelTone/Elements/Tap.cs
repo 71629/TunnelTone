@@ -73,6 +73,10 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
+            if (NoteRenderer.isPlaying && NoteRenderer.CurrentTime * 1000 >= time)
+            {
+                Hit();
+            }
             if (!(NoteRenderer.CurrentTime * 1000 > time + 120) || !NoteRenderer.isPlaying) return;
             ChartEventReference.Instance.OnNoteMiss.Trigger();
             Destroy();

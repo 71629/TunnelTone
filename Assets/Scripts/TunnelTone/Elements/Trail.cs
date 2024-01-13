@@ -280,6 +280,11 @@ namespace TunnelTone.Elements
 
         private void Update()
         {
+            if (NoteRenderer.isPlaying && NoteRenderer.CurrentTime * 1000 >= startTime && !virtualTrail)
+            {
+                isTracking = true;
+                state = new Tracking();
+            }
             if(NoteRenderer.CurrentTime * 1000 > endTime + 120 && NoteRenderer.isPlaying)
                 Destroy(gameObject);
         }

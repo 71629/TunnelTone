@@ -20,6 +20,12 @@ namespace TunnelTone.Elements
             float currentTime = NoteRenderer.CurrentTime * 1000;
             
             if (!NoteRenderer.isPlaying) return;
+            
+            if (NoteRenderer.isPlaying && currentTime >= time)
+            {
+                ChartEventReference.Instance.OnNoteHit.Trigger(0f);
+                Destroy(gameObject);
+            }
             if (currentTime < time)
             {
                 return;
