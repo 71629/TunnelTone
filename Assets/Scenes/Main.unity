@@ -19731,7 +19731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 7970.1665}
+  m_AnchoredPosition: {x: 340, y: 8051.3164}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -29086,7 +29086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -429517.53}
+  m_AnchoredPosition: {x: 0, y: -429690.03}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -35995,10 +35995,7 @@ MonoBehaviour:
   songList: {fileID: 4900000, guid: cf2f2a5a592040c1a1bcb3ed84936c4d, type: 3}
   songContainer:
   - {fileID: 11400000, guid: ee89096fefb18c84392a1ace789c4dcb, type: 2}
-  - {fileID: 11400000, guid: 9313596ad46aa1a4dbcc15dfda35f071, type: 2}
   - {fileID: 11400000, guid: 59949efbe661e6b49b35f1a9ca38b953, type: 2}
-  - {fileID: 11400000, guid: f563167c7474d7c46b005512734a2f7f, type: 2}
-  - {fileID: 11400000, guid: 803413c1ffc8ca24c9ee1a808f65461c, type: 2}
   - {fileID: 11400000, guid: c91f478ee4ec18b43aa467be0497e124, type: 2}
   currentBackground: {fileID: 8679249125492562313}
 --- !u!1 &1486329909
