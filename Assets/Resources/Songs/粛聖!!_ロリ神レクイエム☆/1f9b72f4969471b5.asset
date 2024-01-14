@@ -39,7 +39,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   - difficulty: 8
-    chartDesigner: "\u6708\u591C"
+    chartDesigner: yueye
     chart: {fileID: 4900000, guid: 3b32470151a640f4787cf8256e47bf58, type: 3}
     timingSheet:
       serializedVersion: 2
