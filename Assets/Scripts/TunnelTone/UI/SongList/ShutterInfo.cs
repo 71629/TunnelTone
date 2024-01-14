@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using TunnelTone.Events;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;
@@ -18,14 +19,17 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            SystemEvent.OnChartLoad.AddListener(delegate
+            SystemEvent.OnChartLoad.AddListener(o =>
             {
-                title.text = SongListManager.currentlySelected.songTitle;
-                artist.text = SongListManager.currentlySelected.artist;
-                jacket.sprite = UIElementReference.Instance.songJacket.sprite;
+                var songData = (SongData) o[0];
+                var difficulty = (int) o[1];
+
+                title.text = songData.songTitle;
+                artist.text = songData.artist;
+                jacket.sprite = songData.jacket;
 
                 // TODO: Implement charter
-                charter.text = "Charter: 71629";
+                charter.text = songData.charts[difficulty].chartDesigner;
                 
                 DisplaySongInfo();
             });

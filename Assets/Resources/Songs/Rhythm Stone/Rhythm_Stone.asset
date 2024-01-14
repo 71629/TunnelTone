@@ -16,7 +16,7 @@ MonoBehaviour:
   artist: TOS
   bpm: 146
   jacket: {fileID: 21300000, guid: 7a7e01b0d43da1443ac8ed16447b7709, type: 3}
-  music: {fileID: 8300000, guid: 92e95b0ab6d79024db1726721ca51a2b, type: 3}
+  music: {fileID: 8300000, guid: a5f2e3e66fac44a449eec75a023e84c4, type: 3}
   previewStart: 33200
   previewDuration: 70000
   charts:
@@ -39,7 +39,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   - difficulty: 8
-    chartDesigner: "\u6708\u591C"
+    chartDesigner: yueye
     chart: {fileID: 4900000, guid: d6e7e456727ed024dae43da4a80bc92a, type: 3}
     timingSheet:
       serializedVersion: 2
