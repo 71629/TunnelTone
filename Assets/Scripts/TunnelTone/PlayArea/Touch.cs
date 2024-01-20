@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;

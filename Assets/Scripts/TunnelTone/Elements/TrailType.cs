@@ -8,6 +8,9 @@ using Object = UnityEngine.Object;
 
 namespace TunnelTone.Elements
 {
+    /// <summary>
+    /// State machine for trail
+    /// </summary>
     internal abstract class TrailType
     {
         internal abstract void Initialize(Trail t);

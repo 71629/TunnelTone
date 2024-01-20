@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using TunnelTone.Events;
 using TunnelTone.Gauge;
 using TunnelTone.UI.PlayResult;
@@ -175,6 +175,7 @@ namespace TunnelTone.Elements
         {
             ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
             IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
+            Destroy(hitHint);
         }
     }
 }

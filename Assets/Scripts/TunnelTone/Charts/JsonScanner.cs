@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -83,7 +83,7 @@ namespace TunnelTone.Charts
                 foreach (var c in NoteRenderer.TrailList.Select(q => q.GetComponent<Trail>()).Where(c => component.startTime == c.endTime && component.startCoordinate == c.endCoordinate))
                 {
                     component.next = c;
-                    c.skipSpawnAnimation = true;
+                    c.skipSpawnAnimation = false;
                 }
                 
                 NoteRenderer.TrailList.Add(gb);
