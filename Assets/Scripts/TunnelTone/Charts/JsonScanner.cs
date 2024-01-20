@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
@@ -70,7 +71,7 @@ namespace TunnelTone.Charts
                 gb.transform.rotation = Quaternion.identity;
                 gb.transform.localScale = Vector3.one;
                 
-                gb.GetComponent<Trail>().Initialize(trail.startTime, trail.endTime,
+                var component = gb.GetComponent<Trail>().Initialize(trail.startTime, trail.endTime,
                     new Vector2((float)trail.startX - 0.5f, (float)trail.startY - 0.4f),
                     new Vector2((float)trail.endX - 0.5f, (float)trail.endY - 0.4f), 
                     directionDictionary[trail.color],
@@ -78,6 +79,12 @@ namespace TunnelTone.Charts
                     trail.easingRatio, 
                     true, 
                     trail.virtualTrail);
+
+                foreach (var c in NoteRenderer.TrailList.Select(q => q.GetComponent<Trail>()).Where(c => component.startTime == c.endTime && component.startCoordinate == c.endCoordinate))
+                {
+                    component.next = c;
+                    c.skipSpawnAnimation = true;
+                }
                 
                 NoteRenderer.TrailList.Add(gb);
                 foreach(var tap in trail.taps)

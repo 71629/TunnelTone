@@ -13,7 +13,6 @@ namespace TunnelTone.UI.SongList
     public class SongListManager : Singleton<SongListManager>
     {
         [SerializeField] private GameObject container;
-        [SerializeField] private TextAsset songList;
         [SerializeField] internal SongData[] songContainer;
         [SerializeField] private GameObject currentBackground;
         

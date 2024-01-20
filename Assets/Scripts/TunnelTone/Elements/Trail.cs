@@ -16,12 +16,14 @@ namespace TunnelTone.Elements
     public class Trail : MonoBehaviour
     {
         // Basic trail properties
-        private float startTime, endTime;
+        internal float startTime, endTime;
+        internal Vector2 startCoordinate, endCoordinate;
         private bool virtualTrail;
         internal Direction Direction { get; private set; }
         
         // Trail References
-        private Trail next;
+        internal Trail next;
+        internal bool skipSpawnAnimation = false;
         
         // Status Reference
         private bool isHit;
@@ -38,13 +40,15 @@ namespace TunnelTone.Elements
         private List<GameObject> comboPoint;
         internal GameObject trackingTouch;
         private List<TrailSubsegment> subsegments;
+        private TrailHint trailHint;
+        [SerializeField] private GameObject trailHintObject;
         
         // Objects
         [SerializeField] private GameObject trailSubsegmentPrefab;
         [SerializeField] private Material virtualTrailMaterial;
+        [SerializeField] private Sprite outerRing;
+        [SerializeField] private Sprite innerRing;
         
-        private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
-        private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
         internal TrailState state;
         internal UnityEvent OnStateChanged = new();
 
@@ -92,17 +96,26 @@ namespace TunnelTone.Elements
             while (spline is not null)
             {
                 var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
-                yield return col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
+                col.center = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+
+                if (!virtualTrail)
+                {
+                    trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+                }
+
+                yield return null;
             }
         }
         
-        public void Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
+        public Trail Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
             Direction = direction;
             allowTrack = true;
             
             this.startTime = startTime;
             this.endTime = endTime;
+            this.startCoordinate = startCoordinate;
+            this.endCoordinate = endCoordinate;
             this.virtualTrail = virtualTrail;
             
             startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
@@ -152,6 +165,9 @@ namespace TunnelTone.Elements
                     Direction.Right => UIElementReference.Instance.rightTrail,
                     _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, $"Given direction is not valid for Trail type: {direction}")
                 };
+                trailHint = Instantiate(trailHintObject, GameObject.Find("Hit Zone").transform).GetComponent<TrailHint>();
+                trailHint.transform.localPosition = new Vector3(startPosition.x, startPosition.y, 0);
+                StartCoroutine(TrailHint());
             }
             else
             {
@@ -207,6 +223,8 @@ namespace TunnelTone.Elements
                 lineRenderer.positionCount--;
                 lineRenderer.material = virtualTrailMaterial;
             }
+
+            return this;
         }
 
         private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
@@ -278,6 +296,12 @@ namespace TunnelTone.Elements
             meshFilter.mesh = mesh1;
         }
 
+        private IEnumerator TrailHint()
+        {
+            yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 >= startTime - 550 && NoteRenderer.isPlaying);
+            trailHint.Enable(Direction);
+        }
+
         private void Update()
         {
             if(NoteRenderer.CurrentTime * 1000 > endTime + 120 && NoteRenderer.isPlaying)
@@ -286,7 +310,8 @@ namespace TunnelTone.Elements
 
         private void OnDestroy()
         {
-            if (trackingTouch is null || virtualTrail) return;
+            if (!virtualTrail) trailHint.OnParentDestroy.Invoke();
+            if (trackingTouch is null) return;
             var touch = trackingTouch.GetComponent<PlayArea.Touch>();
             touch.trackingTrail = null;
         }

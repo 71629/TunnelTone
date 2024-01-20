@@ -179,8 +179,11 @@ MonoBehaviour:
   lineRenderer: {fileID: 5221743329064423129}
   meshRenderer: {fileID: 5929479616983605116}
   meshFilter: {fileID: 8527366788073702805}
+  trailHintObject: {fileID: 1844913505857722835, guid: ee80cb8e91d340f43b49bd07207b15ca, type: 3}
   trailSubsegmentPrefab: {fileID: 7075174116204886813, guid: 0e1c85b23b39c064a8b6353ddb0b09ec, type: 3}
   virtualTrailMaterial: {fileID: 2100000, guid: 33dc2d5f4fcdff64f933da9766f40464, type: 2}
+  outerRing: {fileID: 4719883077728192157, guid: 28ed34099d1965143af60a291f758307, type: 3}
+  innerRing: {fileID: 8875220047382585036, guid: 28ed34099d1965143af60a291f758307, type: 3}
 --- !u!23 &5929479616983605116
 MeshRenderer:
   m_ObjectHideFlags: 0
