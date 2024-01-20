@@ -14,7 +14,7 @@ using Object = UnityEngine.Object;
 namespace TunnelTone.Elements
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class Trail : MonoBehaviour
+    public partial class Trail : MonoBehaviour
     {
         // Basic trail properties
         internal float startTime, endTime;
@@ -34,7 +34,7 @@ namespace TunnelTone.Elements
         
         // Coupled Components
         [SerializeField] private SplineContainer splineContainer;
-        [SerializeField] private SphereCollider col;
+        [SerializeField] internal SphereCollider col;
         [SerializeField] internal LineRenderer lineRenderer;
         [SerializeField] internal MeshRenderer meshRenderer;
         [SerializeField] private MeshFilter meshFilter;
@@ -56,7 +56,6 @@ namespace TunnelTone.Elements
 
         private void Start()
         {
-            StartCoroutine(UpdateCollider());
             OnStateChanged.AddListener(() => Debug.Log(state));
         }
 
@@ -87,27 +86,6 @@ namespace TunnelTone.Elements
                 OnStateChanged.Invoke();
             }
         }
-
-        private IEnumerator UpdateCollider()
-        {
-            if (trailContext is VirtualTrail)
-            {
-                col.enabled = false;
-                yield break;
-            }
-            while (spline is not null)
-            {
-                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
-                col.center = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
-
-                if (trailContext is RealTrail)
-                {
-                    trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
-                }
-
-                yield return null;
-            }
-        }
         
         public Trail Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
         {
@@ -120,7 +98,7 @@ namespace TunnelTone.Elements
             this.endTime = endTime;
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
-            trailContext = virtualTrail ? new VirtualTrail() : new RealTrail();
+            trailContext = virtualTrail ? new VirtualTrail(this) : new RealTrail(this);
             
             startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
             endCoordinate = new Vector2(endCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
@@ -161,7 +139,8 @@ namespace TunnelTone.Elements
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);
             }
 
-            trailContext.Initialize(this);
+            trailContext.Initialize();
+            trailContext.ConfigureCollider();
 
             // if (!virtualTrail)
             // {

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TunnelTone.UI.Reference;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 using Object = UnityEngine.Object;
@@ -13,13 +15,20 @@ namespace TunnelTone.Elements
     /// </summary>
     internal abstract class TrailType
     {
-        internal abstract void Initialize(Trail t);
+        protected readonly Trail t;
+
+        internal TrailType(Trail t) => this.t = t;
+        
+        internal abstract void Initialize();
         internal abstract List<Vector3> GetVertices(Vector3 position, float time);
+        internal abstract void ConfigureCollider();
     }
     
     internal class RealTrail : TrailType
     {
-        internal override void Initialize(Trail t)
+        internal RealTrail(Trail t) : base(t){}
+
+        internal override void Initialize()
         {
             t.meshRenderer.material = t.Direction switch
             {
@@ -38,7 +47,7 @@ namespace TunnelTone.Elements
             var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
             for (var i = 0f; i < 1; i += density * 1000 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
             {
-                t.BuildCombo(out var gb, (Vector3)t.spline.EvaluatePosition(i),
+                t.BuildCombo(out _, (Vector3)t.spline.EvaluatePosition(i),
                     (t.spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
             }
             // Build subsegments
@@ -72,11 +81,18 @@ namespace TunnelTone.Elements
                 position + new Vector3(-40, 0, 0 + time)
             };
         }
+
+        internal override void ConfigureCollider()
+        {
+            t.StartCoroutine(t.UpdateCollider());
+        }
     }
     
     internal class VirtualTrail : TrailType
     {
-        internal override void Initialize(Trail t)
+        internal VirtualTrail(Trail t) : base(t){}
+
+        internal override void Initialize()
         {
             t.gameObject.layer = 20;
             t.meshRenderer.material = NoteRenderer.Instance.none;
@@ -104,6 +120,27 @@ namespace TunnelTone.Elements
                     position + new Vector3(0, -8, 0 + time),
                     position + new Vector3(-8, 0, 0 + time)
                 };
+        }
+
+        internal override void ConfigureCollider()
+        {
+            t.col.enabled = false;
+        }
+    }
+
+    public partial class Trail
+    {
+        internal IEnumerator UpdateCollider()
+        {
+            while (spline is not null)
+            {
+                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
+                col.center = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+                
+                trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+
+                yield return null;
+            }
         }
     }
 }
