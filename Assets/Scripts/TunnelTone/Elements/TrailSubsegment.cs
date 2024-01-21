@@ -46,7 +46,7 @@ namespace TunnelTone.Elements
             Spline = segmentSpline;
             
             SetMesh();
-            parent.OnStateChanged.AddListener(() =>
+            parent.onStateChanged.AddListener(() =>
             {
                 Debug.Log("Changing state");
                 parent.state.UpdateMaterial(meshRenderer, gameObject, direction);

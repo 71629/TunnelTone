@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace TunnelTone.Elements
             var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
             for (var i = 0f; i < 1; i += density * 1000 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
             {
-                t.BuildCombo(out _, (Vector3)t.spline.EvaluatePosition(i),
+                BuildCombo(out _, (Vector3)t.spline.EvaluatePosition(i),
                     (t.spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
             }
             // Build subsegments
@@ -85,6 +86,27 @@ namespace TunnelTone.Elements
         internal override void ConfigureCollider()
         {
             t.StartCoroutine(t.UpdateCollider());
+        }
+        
+        private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
+        {
+            gb = new GameObject("Combo")
+            {
+                transform =
+                {
+                    parent = t.transform,
+                    localPosition = new Vector3
+                    {
+                        x = coordinate.x,
+                        y = coordinate.y,
+                        z = time
+                    },
+                    rotation = Quaternion.identity,
+                    localScale = Vector3.one
+                }
+            };
+            gb.AddComponent<ComboPoint>().time = time;
+            ScoreManager.totalCombo++;
         }
     }
     

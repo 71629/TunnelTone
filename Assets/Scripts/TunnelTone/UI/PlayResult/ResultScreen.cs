@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
 using TMPro;
-using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
-using TunnelTone.Gauge;
-using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -228,13 +225,14 @@ namespace TunnelTone.UI.PlayResult
         private static IEnumerator UploadScore()
         {
             if(NetworkManager.status is not NetworkStatus.Online) yield break;
-            yield return NetworkManager.SendRequest(new Package
+            var package = new Package
             {
                 songTitle = playResult.title,
                 difficulty = playResult.difficulty,
                 score = playResult.score,
                 index = "/uploadscore"
-            }, "/uploadscore");
+            };
+            yield return package.SendRequest();
         }
 
         public void ToSongList()

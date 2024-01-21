@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Splines;
-using Object = UnityEngine.Object;
 
 namespace TunnelTone.Elements
 {
@@ -21,7 +17,7 @@ namespace TunnelTone.Elements
         internal Vector2 startCoordinate, endCoordinate;
         private bool virtualTrail;
         internal Direction Direction { get; private set; }
-        internal TrailType trailContext;
+        private TrailType trailContext;
         
         // Trail References
         internal Trail next;
@@ -39,8 +35,8 @@ namespace TunnelTone.Elements
         [SerializeField] internal MeshRenderer meshRenderer;
         [SerializeField] private MeshFilter meshFilter;
         internal Spline spline;
-        private List<GameObject> comboPoint;
         internal GameObject trackingTouch;
+        private List<GameObject> comboPoint;
         private List<TrailSubsegment> subsegments;
         internal TrailHint trailHint;
         [SerializeField] internal GameObject trailHintObject;
@@ -52,12 +48,7 @@ namespace TunnelTone.Elements
         [SerializeField] private Sprite innerRing;
         
         internal TrailState state;
-        internal UnityEvent OnStateChanged = new();
-
-        private void Start()
-        {
-            OnStateChanged.AddListener(() => Debug.Log(state));
-        }
+        internal readonly UnityEvent onStateChanged = new();
 
         private void OnTriggerEnter(Collider other)
         {
@@ -68,13 +59,13 @@ namespace TunnelTone.Elements
                 isTracking = true;
                 trackingTouch = other.gameObject;
                 state = new Tracking();
-                OnStateChanged.Invoke();
+                onStateChanged.Invoke();
                 return;
             }
             isTracking = false;
             allowTrack = false;
             state = new WrongHand();
-            OnStateChanged.Invoke();
+            onStateChanged.Invoke();
         }
         
         private void OnTriggerExit(Collider other)
@@ -83,7 +74,7 @@ namespace TunnelTone.Elements
             {
                 isTracking = false;
                 state = new Idle();
-                OnStateChanged.Invoke();
+                onStateChanged.Invoke();
             }
         }
         
@@ -142,93 +133,7 @@ namespace TunnelTone.Elements
             trailContext.Initialize();
             trailContext.ConfigureCollider();
 
-            // if (!virtualTrail)
-            // {
-            //     meshRenderer.material = direction switch
-            //     {
-            //         Direction.Left => UIElementReference.Instance.leftTrail,
-            //         Direction.Right => UIElementReference.Instance.rightTrail,
-            //         _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, $"Given direction is not valid for Trail type: {direction}")
-            //     };
-            //     trailHint = Instantiate(trailHintObject, GameObject.Find("Hit Zone").transform).GetComponent<TrailHint>();
-            //     trailHint.transform.localPosition = new Vector3(startPosition.x, startPosition.y, 0);
-            //     StartCoroutine(TrailHint());
-            // }
-            // else
-            // {
-            //     gameObject.layer = 20;
-            //     meshRenderer.material = NoteRenderer.Instance.none;
-            // }
-            //
-            // // Build critical combo points based on bpm
-            // if (!virtualTrail)
-            // {
-            //     var bpm = NoteRenderer.Instance.currentBpm;
-            //     if (newTrail)
-            //         BuildHead(spline.EvaluatePosition(0), startTime * NoteRenderer.Instance.chartSpeedModifier, false);
-            //
-            //     var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
-            //     for (var i = 0f; i < 1; i += density * 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-            //     {
-            //         BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i),
-            //             (spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
-            //     }
-            //     // Build subsegments
-            //     float tail = 0;
-            //     for(var i = 0f; i < 1; i += 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-            //     {
-            //         Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline, 
-            //             (Vector3)spline.EvaluatePosition(tail), 
-            //             (Vector3)spline.EvaluatePosition(i), 
-            //             Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(tail).z)), 
-            //             Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(i).z))
-            //         );
-            //         tail = i;
-            //     }
-            //     Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline,
-            //         (Vector3)spline.EvaluatePosition(tail), 
-            //         (Vector3)spline.EvaluatePosition(1), 
-            //         spline.EvaluatePosition(tail).z, 
-            //         spline.EvaluatePosition(1).z
-            //     );
-            // }
-            // else
-            // {
-            //     var j = 0;
-            //     lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
-            //     for (var i = 0f; i < 1; i += 80 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-            //     {
-            //         lineRenderer.SetPosition(j, spline.EvaluatePosition(i));
-            //         lineRenderer.positionCount++;
-            //         j++;
-            //     }
-            //     lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
-            //     lineRenderer.positionCount--;
-            //     lineRenderer.material = virtualTrailMaterial;
-            // }
-
             return this;
-        }
-
-        internal void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
-        {
-            gb = new GameObject("Combo")
-            {
-                transform =
-                {
-                    parent = transform,
-                    localPosition = new Vector3
-                    {
-                        x = coordinate.x,
-                        y = coordinate.y,
-                        z = time
-                    },
-                    rotation = Quaternion.identity,
-                    localScale = Vector3.one
-                }
-            };
-            gb.AddComponent<ComboPoint>().time = time;
-            ScoreManager.totalCombo++;
         }
 
         internal void BuildHead(Vector3 position, float time, bool virtualTrail)
