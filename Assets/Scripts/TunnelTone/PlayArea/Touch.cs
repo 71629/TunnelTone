@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
@@ -149,7 +149,7 @@ namespace TunnelTone.PlayArea
             if (trackingTrail is null) return;
             var trail = trackingTrail.GetComponent<Trail>();
             trail.state = new Idle();
-            trail.OnStateChanged.Invoke();
+            trail.onStateChanged.Invoke();
             trail.isTracking = false;
             trail.trackingTouch = null;
         }

@@ -36,6 +36,7 @@ namespace TunnelTone.Elements
 
         internal TrailSubsegment Initialize(Trail segmentParent, Spline segmentSpline, Vector2 startCoordinate, Vector2 endCoordinate, float startTime, float endTime)
         {
+            gameObject.layer = 11;
             parent = segmentParent;
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
@@ -45,7 +46,7 @@ namespace TunnelTone.Elements
             Spline = segmentSpline;
             
             SetMesh();
-            parent.OnStateChanged.AddListener(() =>
+            parent.onStateChanged.AddListener(() =>
             {
                 Debug.Log("Changing state");
                 parent.state.UpdateMaterial(meshRenderer, gameObject, direction);

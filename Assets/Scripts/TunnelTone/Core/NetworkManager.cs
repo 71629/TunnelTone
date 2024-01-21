@@ -3,13 +3,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TunnelTone.UI.Entry;
+using TunnelTone.UI.PlayResult;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Networking;
-using UnityEngine.UIElements;
 
 namespace TunnelTone.Core
 {
+    /// <summary>
+    /// Provides static methods for sending and receiving data from the server.
+    /// </summary>
     internal static class NetworkManager
     {
         internal static UnityEvent OnUserLogin = new();
@@ -42,7 +44,7 @@ namespace TunnelTone.Core
             // var response = SendUnityRequest(rawData, "/autologin");
 
             var response = new AutoLogin();
-            response = await SendRequest(rawData, "/autologin", () =>
+            response = await rawData.SendRequest(() =>
             {
                 Debug.Log($"{response.exitCode}: {response.message}");
                 GameEntry.OnInitializeComplete.Invoke();
@@ -61,7 +63,7 @@ namespace TunnelTone.Core
             OnStatusChanged.Invoke();
         }
         
-        private static async Task<T> SendHttpRequest<T>(T obj, string index) where T : TunnelTonePackage
+        private static async Task<T> SendHttpRequest<T>(this T obj, string index) where T : TunnelTonePackage
         {
             var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, $"{ApiAddress}{index}");
@@ -73,9 +75,9 @@ namespace TunnelTone.Core
             return JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(result));
         }
 
-        internal static async Task<T> SendRequest<T>(T obj, string index, Action onCompleteCallback = null) where T : TunnelTonePackage
+        internal static async Task<T> SendRequest<T>(this T obj, Action onCompleteCallback = null) where T : TunnelTonePackage
         {
-            var ret = await SendHttpRequest(obj, obj.index);
+            var ret = await obj.SendHttpRequest(obj.index);
             onCompleteCallback?.Invoke();
             return ret;
         }

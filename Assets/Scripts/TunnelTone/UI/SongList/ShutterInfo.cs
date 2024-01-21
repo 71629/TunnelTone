@@ -2,7 +2,6 @@
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.UI;
 

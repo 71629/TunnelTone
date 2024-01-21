@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using UnityEngine;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TunnelTone.UI.SongList
@@ -13,7 +13,6 @@ namespace TunnelTone.UI.SongList
     public class SongListManager : Singleton<SongListManager>
     {
         [SerializeField] private GameObject container;
-        [SerializeField] private TextAsset songList;
         [SerializeField] internal SongData[] songContainer;
         [SerializeField] private GameObject currentBackground;
         
