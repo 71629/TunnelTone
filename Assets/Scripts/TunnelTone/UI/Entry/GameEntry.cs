@@ -20,16 +20,25 @@ namespace TunnelTone.UI.Entry
 
         [SerializeField] private RectTransform notice;
         [SerializeField] private TextMeshProUGUI noticeText;
-        
+
+        [SerializeField] private Color color;
+        [SerializeField] private float time;
+        [SerializeField] private bool  upDown;
+        [SerializeField] float scaleTime;
+
         internal static UnityEvent OnInitializeComplete = new();
 
         private void Start()
         {
+            time = 0;
+            status.color = Color.white;
+            upDown = false;
+            scaleTime = 2; //Speed of change color
             version.text = $"version {Application.version}";
             status.text = "Logging in...";
             OnInitializeComplete.AddListener(delegate
             {
-                status.text = "Touch to start";
+                status.text = "— Touch to start —";
                 start.interactable = true;
                 OnInitializeComplete.RemoveAllListeners();
             });
@@ -41,8 +50,22 @@ namespace TunnelTone.UI.Entry
                 }
             });
             NetworkManager.AutoLoginJson();
+            LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
+                .setLoopPingPong();
         }
-        
+
+        //private void Update()
+        //{
+        //    if (!status.text.Equals("Initializing..."))
+        //    {
+        //        color.r = Mathf.PingPong(Time.time / scaleTime, 1) +0.3f;
+        //        color.g = Mathf.PingPong(Time.time / scaleTime, 1) + 0.3f;
+        //        color.b = Mathf.PingPong(Time.time / scaleTime, 1) + 0.3f;
+        //        color.a = Mathf.PingPong(Time.time / scaleTime, 1) + 0.3f;
+        //    }
+        //}
+
+
         public void StartGame()
         {
             start.interactable = false;

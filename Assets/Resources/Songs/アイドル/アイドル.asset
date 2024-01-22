@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb49e598d844994bae24c04d3bfbaae, type: 3}
+  m_Name: "\u30A2\u30A4\u30C9\u30EB"
+  m_EditorClassIdentifier: 
+  songTitle: "\u30A2\u30A4\u30C9\u30EB"
+  artist: YOASOBI
+  bpm: 166
+  jacket: {fileID: 21300000, guid: cfa2d3bf49cd14b4f8b044f3dc4aee84, type: 3}
+  music: {fileID: 8300000, guid: a1cb7c5a1f3248349a5d5fb8abce70f3, type: 3}
+  previewStart: 54800
+  previewDuration: 100000
+  charts:
+  - difficulty: 4
+    chartDesigner: Kinglingmk1
+    chart: {fileID: 4900000, guid: 679c7d7d86f9fa941b6d64d8d0d0ad51, type: 3}
+  - difficulty: 7
+    chartDesigner: Kinglingmk1
+    chart: {fileID: 4900000, guid: 18da77e51cd14b448b6e86af96975d5c, type: 3}
+  - difficulty: 10
+    chartDesigner: '[Redacted]'
+    chart: {fileID: 0}
+  - difficulty: 13
+    chartDesigner: '[Redacted]'
+    chart: {fileID: 0}

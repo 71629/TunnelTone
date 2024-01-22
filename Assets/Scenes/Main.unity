@@ -4659,6 +4659,10 @@ MonoBehaviour:
     mov r7, 1\n    svc 0"
   notice: {fileID: 1821424483}
   noticeText: {fileID: 433751759}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  time: 0
+  upDown: 0
+  scaleTime: 0
 --- !u!1 &215098079
 GameObject:
   m_ObjectHideFlags: 0
@@ -19733,7 +19737,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 10485.827}
+  m_AnchoredPosition: {x: 340, y: 11135.03}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -29287,7 +29291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -464295.03}
+  m_AnchoredPosition: {x: 0, y: -465255.03}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214

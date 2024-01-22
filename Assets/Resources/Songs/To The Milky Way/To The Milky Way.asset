@@ -15,116 +15,44 @@ MonoBehaviour:
   songTitle: To The Milky Way
   artist: "\u9ED2\u9B54 / Chroma"
   bpm: 186
-  jacket: {fileID: 21300000, guid: 984ae8897e4489c41938347eb7ce513f, type: 3}
-  music: {fileID: 8300000, guid: df1319c1eff2c8a41aadfaf2b2239384, type: 3}
+  jacket: {fileID: 21300000, guid: c9b7eab06321f564097708440a66080b, type: 3}
+  music: {fileID: 8300000, guid: 355925bab9f56b44ab71014b8be4a511, type: 3}
   previewStart: 44000
-  previewDuration: 50000
+  previewDuration: 31000
   charts:
   - difficulty: 3
     chartDesigner: Kinglingmk1
-    chart: {fileID: 4900000, guid: d69daa1810cecb142a050b779c3412a9, type: 3}
+    chart: {fileID: 4900000, guid: b08a33fc54c74184091b3444559cd744, type: 3}
     timingSheet:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 80009.6
-        value: 80009.6
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   - difficulty: 6
     chartDesigner: Kingilngmk1
-    chart: {fileID: 4900000, guid: 07a54b3bfdda152439c0c5d71af19da4, type: 3}
+    chart: {fileID: 4900000, guid: 38eb8f5cde95cec4d8f0ca986d129a9f, type: 3}
     timingSheet:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 80009.6
-        value: 80009.6
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   - difficulty: 11
-    chartDesigner: yueye
-    chart: {fileID: 4900000, guid: f63ecf31eff85e545a62ba2cd79e85b4, type: 3}
+    chartDesigner: "\u6708\u591C"
+    chart: {fileID: 4900000, guid: 0f58e1c29403d754a803b8c2b1136784, type: 3}
     timingSheet:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 80009.6
-        value: 80009.6
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   - difficulty: 14
-    chartDesigner: 71629 in the Milky Way
+    chartDesigner: '[Redacted]'
     chart: {fileID: 0}
     timingSheet:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 80009.6
-        value: 80009.6
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

@@ -1,19 +1,6 @@
 {
   "trails": [
     {
-      "startX": 1,
-      "startY": 0.8,
-      "endX": 1,
-      "endY": 0.8,
-      "startTime": 3467,
-      "endTime": 7177,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": false,
-      "taps": []
-    },
-    {
       "startX": 0,
       "startY": 0.2,
       "endX": 0,
@@ -47,6 +34,32 @@
           "time": 4596
         }
       ]
+    },
+    {
+      "startX": 1,
+      "startY": 0.8,
+      "endX": 1,
+      "endY": 0.8,
+      "startTime": 3467,
+      "endTime": 7177,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": false,
+      "taps": []
+    },
+    {
+      "startX": 0,
+      "startY": 0.8,
+      "endX": 0,
+      "endY": 0.8,
+      "startTime": 8548,
+      "endTime": 13306,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": false,
+      "taps": []
     },
     {
       "startX": 1,
@@ -87,32 +100,6 @@
       ]
     },
     {
-      "startX": 0,
-      "startY": 0.8,
-      "endX": 0,
-      "endY": 0.8,
-      "startTime": 8548,
-      "endTime": 13306,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": false,
-      "taps": []
-    },
-    {
-      "startX": 0.5,
-      "startY": 0.8,
-      "endX": -0.5,
-      "endY": 0.8,
-      "startTime": 13387,
-      "endTime": 13548,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": []
-    },
-    {
       "startX": 0.5,
       "startY": 0.8,
       "endX": 1.5,
@@ -128,6 +115,19 @@
           "time": 13387
         }
       ]
+    },
+    {
+      "startX": 0.5,
+      "startY": 0.8,
+      "endX": -0.5,
+      "endY": 0.8,
+      "startTime": 13387,
+      "endTime": 13548,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": []
     },
     {
       "startX": 1,
@@ -334,7 +334,7 @@
     {
       "startX": 0.5,
       "startY": 0.8,
-      "endX": -0.25,
+      "endX": 1.25,
       "endY": 0,
       "startTime": 16693,
       "endTime": 16774,
@@ -351,7 +351,7 @@
     {
       "startX": 0.5,
       "startY": 0.8,
-      "endX": 1.25,
+      "endX": -0.25,
       "endY": 0,
       "startTime": 16693,
       "endTime": 16774,
@@ -624,9 +624,9 @@
       "taps": []
     },
     {
-      "startX": -0.25,
+      "startX": 1.25,
       "startY": 0.8,
-      "endX": -0.25,
+      "endX": 1.25,
       "endY": 0.2,
       "startTime": 21048,
       "endTime": 21370,
@@ -647,9 +647,9 @@
       ]
     },
     {
-      "startX": 1.25,
+      "startX": -0.25,
       "startY": 0.8,
-      "endX": 1.25,
+      "endX": -0.25,
       "endY": 0.2,
       "startTime": 21048,
       "endTime": 21370,
@@ -1217,9 +1217,9 @@
       ]
     },
     {
-      "startX": 0.75,
+      "startX": 0.25,
       "startY": 0,
-      "endX": 1.5,
+      "endX": -0.5,
       "endY": 1,
       "startTime": 28387,
       "endTime": 28709,
@@ -1230,9 +1230,9 @@
       "taps": []
     },
     {
-      "startX": 0.25,
+      "startX": 0.75,
       "startY": 0,
-      "endX": -0.5,
+      "endX": 1.5,
       "endY": 1,
       "startTime": 28387,
       "endTime": 28709,
@@ -1425,19 +1425,6 @@
       "taps": []
     },
     {
-      "startX": -0.25,
-      "startY": 0,
-      "endX": -0.25,
-      "endY": 0,
-      "startTime": 31693,
-      "endTime": 32338,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": false,
-      "taps": []
-    },
-    {
       "startX": 1.25,
       "startY": 0,
       "endX": 1.25,
@@ -1445,6 +1432,19 @@
       "startTime": 31693,
       "endTime": 32338,
       "color": 1,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": false,
+      "taps": []
+    },
+    {
+      "startX": -0.25,
+      "startY": 0,
+      "endX": -0.25,
+      "endY": 0,
+      "startTime": 31693,
+      "endTime": 32338,
+      "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": false,
@@ -1599,26 +1599,6 @@
       ]
     },
     {
-      "startX": 0,
-      "startY": 0,
-      "endX": 1.5,
-      "endY": 0.8,
-      "startTime": 39838,
-      "endTime": 40080,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": [
-        {
-          "time": 39918
-        },
-        {
-          "time": 40080
-        }
-      ]
-    },
-    {
       "startX": -0.5,
       "startY": 0,
       "endX": 1,
@@ -1635,6 +1615,26 @@
         },
         {
           "time": 39999
+        }
+      ]
+    },
+    {
+      "startX": 0,
+      "startY": 0,
+      "endX": 1.5,
+      "endY": 0.8,
+      "startTime": 39838,
+      "endTime": 40080,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": [
+        {
+          "time": 39918
+        },
+        {
+          "time": 40080
         }
       ]
     },
@@ -1679,26 +1679,6 @@
       ]
     },
     {
-      "startX": -0.5,
-      "startY": 0,
-      "endX": 1,
-      "endY": 0.8,
-      "startTime": 40483,
-      "endTime": 40725,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": [
-        {
-          "time": 40483
-        },
-        {
-          "time": 40644
-        }
-      ]
-    },
-    {
       "startX": 0,
       "startY": 0,
       "endX": 1.5,
@@ -1719,22 +1699,22 @@
       ]
     },
     {
-      "startX": 0,
+      "startX": -0.5,
       "startY": 0,
-      "endX": 1.5,
+      "endX": 1,
       "endY": 0.8,
-      "startTime": 40806,
-      "endTime": 41048,
+      "startTime": 40483,
+      "endTime": 40725,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
-          "time": 40886
+          "time": 40483
         },
         {
-          "time": 41048
+          "time": 40644
         }
       ]
     },
@@ -1763,18 +1743,18 @@
       "startY": 0,
       "endX": 1.5,
       "endY": 0.8,
-      "startTime": 41129,
-      "endTime": 41371,
+      "startTime": 40806,
+      "endTime": 41048,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
       "taps": [
         {
-          "time": 41209
+          "time": 40886
         },
         {
-          "time": 41371
+          "time": 41048
         }
       ]
     },
@@ -1799,6 +1779,26 @@
       ]
     },
     {
+      "startX": 0,
+      "startY": 0,
+      "endX": 1.5,
+      "endY": 0.8,
+      "startTime": 41129,
+      "endTime": 41371,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": [
+        {
+          "time": 41209
+        },
+        {
+          "time": 41371
+        }
+      ]
+    },
+    {
       "startX": -0.25,
       "startY": 0.5,
       "endX": -0.25,
@@ -1851,9 +1851,9 @@
       ]
     },
     {
-      "startX": 1.25,
+      "startX": -0.25,
       "startY": 0.5,
-      "endX": 1.25,
+      "endX": -0.25,
       "endY": 0.6,
       "startTime": 42741,
       "endTime": 43467,
@@ -1877,9 +1877,9 @@
       ]
     },
     {
-      "startX": -0.25,
+      "startX": 1.25,
       "startY": 0.5,
-      "endX": -0.25,
+      "endX": 1.25,
       "endY": 0.6,
       "startTime": 42741,
       "endTime": 43467,
@@ -1974,19 +1974,6 @@
       ]
     },
     {
-      "startX": 0.25,
-      "startY": 0.4,
-      "endX": -0.25,
-      "endY": 0,
-      "startTime": 44516,
-      "endTime": 44596,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": []
-    },
-    {
       "startX": 0.75,
       "startY": 0.4,
       "endX": 1.25,
@@ -2005,6 +1992,19 @@
           "time": 44596
         }
       ]
+    },
+    {
+      "startX": 0.25,
+      "startY": 0.4,
+      "endX": -0.25,
+      "endY": 0,
+      "startTime": 44516,
+      "endTime": 44596,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": []
     },
     {
       "startX": 0.75,
@@ -2132,9 +2132,9 @@
       ]
     },
     {
-      "startX": 0.25,
+      "startX": 1.25,
       "startY": 0,
-      "endX": 0.25,
+      "endX": 1.25,
       "endY": 0,
       "startTime": 44596,
       "endTime": 70322,
@@ -2144,130 +2144,160 @@
       "virtualTrail": true,
       "taps": [
         {
-          "time": 44758
+          "time": 44919
         },
         {
-          "time": 45403
+          "time": 45241
         },
         {
-          "time": 46048
+          "time": 45564
         },
         {
-          "time": 46693
+          "time": 45887
         },
         {
-          "time": 47338
+          "time": 46209
         },
         {
-          "time": 47983
+          "time": 46532
         },
         {
-          "time": 49919
+          "time": 46854
         },
         {
-          "time": 50887
+          "time": 47177
         },
         {
-          "time": 51854
+          "time": 47500
         },
         {
-          "time": 52822
+          "time": 47822
         },
         {
-          "time": 52983
+          "time": 48145
         },
         {
-          "time": 53145
+          "time": 49435
         },
         {
-          "time": 52338
+          "time": 49354
         },
         {
-          "time": 52499
+          "time": 49274
         },
         {
-          "time": 52660
+          "time": 50241
         },
         {
-          "time": 54435
+          "time": 50564
         },
         {
-          "time": 54516
+          "time": 51209
         },
         {
-          "time": 54596
+          "time": 51532
         },
         {
-          "time": 55080
+          "time": 54758
         },
         {
-          "time": 55403
+          "time": 55241
         },
         {
-          "time": 55887
+          "time": 55725
         },
         {
-          "time": 56532
+          "time": 56209
         },
         {
-          "time": 56854
+          "time": 56693
         },
         {
-          "time": 57500
+          "time": 57177
         },
         {
-          "time": 57822
+          "time": 57661
         },
         {
-          "time": 58467
+          "time": 58145
         },
         {
-          "time": 59677
+          "time": 58629
         },
         {
-          "time": 59838
+          "time": 61774
         },
         {
-          "time": 62580
+          "time": 61935
         },
         {
-          "time": 62741
+          "time": 62096
         },
         {
-          "time": 62903
+          "time": 62258
         },
         {
-          "time": 63064
+          "time": 62419
         },
         {
-          "time": 63225
+          "time": 63387
         },
         {
-          "time": 64838
+          "time": 63548
         },
         {
-          "time": 64999
+          "time": 63709
         },
         {
-          "time": 69274
+          "time": 63870
         },
         {
-          "time": 69435
+          "time": 64032
         },
         {
-          "time": 69596
+          "time": 64193
         },
         {
-          "time": 69758
+          "time": 65161
         },
         {
-          "time": 69919
+          "time": 65564
         },
         {
-          "time": 70080
+          "time": 66048
         },
         {
-          "time": 70241
+          "time": 66532
+        },
+        {
+          "time": 67016
+        },
+        {
+          "time": 67822
+        },
+        {
+          "time": 67983
+        },
+        {
+          "time": 68145
+        },
+        {
+          "time": 68306
+        },
+        {
+          "time": 68467
+        },
+        {
+          "time": 68629
+        },
+        {
+          "time": 68790
+        },
+        {
+          "time": 68951
+        },
+        {
+          "time": 69112
         }
       ]
     },
@@ -2454,9 +2484,9 @@
       ]
     },
     {
-      "startX": 1.25,
+      "startX": 0.25,
       "startY": 0,
-      "endX": 1.25,
+      "endX": 0.25,
       "endY": 0,
       "startTime": 44596,
       "endTime": 70322,
@@ -2466,160 +2496,130 @@
       "virtualTrail": true,
       "taps": [
         {
-          "time": 44919
+          "time": 44758
         },
         {
-          "time": 45241
+          "time": 45403
         },
         {
-          "time": 45564
+          "time": 46048
         },
         {
-          "time": 45887
+          "time": 46693
         },
         {
-          "time": 46209
+          "time": 47338
         },
         {
-          "time": 46532
+          "time": 47983
         },
         {
-          "time": 46854
+          "time": 49919
         },
         {
-          "time": 47177
+          "time": 50887
         },
         {
-          "time": 47500
+          "time": 51854
         },
         {
-          "time": 47822
+          "time": 52822
         },
         {
-          "time": 48145
+          "time": 52983
         },
         {
-          "time": 49435
+          "time": 53145
         },
         {
-          "time": 49354
+          "time": 52338
         },
         {
-          "time": 49274
+          "time": 52499
         },
         {
-          "time": 50241
+          "time": 52660
         },
         {
-          "time": 50564
+          "time": 54435
         },
         {
-          "time": 51209
+          "time": 54516
         },
         {
-          "time": 51532
+          "time": 54596
         },
         {
-          "time": 54758
+          "time": 55080
         },
         {
-          "time": 55241
+          "time": 55403
         },
         {
-          "time": 55725
+          "time": 55887
         },
         {
-          "time": 56209
+          "time": 56532
         },
         {
-          "time": 56693
+          "time": 56854
         },
         {
-          "time": 57177
+          "time": 57500
         },
         {
-          "time": 57661
+          "time": 57822
         },
         {
-          "time": 58145
+          "time": 58467
         },
         {
-          "time": 58629
+          "time": 59677
         },
         {
-          "time": 61774
+          "time": 59838
         },
         {
-          "time": 61935
+          "time": 62580
         },
         {
-          "time": 62096
+          "time": 62741
         },
         {
-          "time": 62258
+          "time": 62903
         },
         {
-          "time": 62419
+          "time": 63064
         },
         {
-          "time": 63387
+          "time": 63225
         },
         {
-          "time": 63548
+          "time": 64838
         },
         {
-          "time": 63709
+          "time": 64999
         },
         {
-          "time": 63870
+          "time": 69274
         },
         {
-          "time": 64032
+          "time": 69435
         },
         {
-          "time": 64193
+          "time": 69596
         },
         {
-          "time": 65161
+          "time": 69758
         },
         {
-          "time": 65564
+          "time": 69919
         },
         {
-          "time": 66048
+          "time": 70080
         },
         {
-          "time": 66532
-        },
-        {
-          "time": 67016
-        },
-        {
-          "time": 67822
-        },
-        {
-          "time": 67983
-        },
-        {
-          "time": 68145
-        },
-        {
-          "time": 68306
-        },
-        {
-          "time": 68467
-        },
-        {
-          "time": 68629
-        },
-        {
-          "time": 68790
-        },
-        {
-          "time": 68951
-        },
-        {
-          "time": 69112
+          "time": 70241
         }
       ]
     },
@@ -2696,19 +2696,6 @@
       ]
     },
     {
-      "startX": 1.25,
-      "startY": 0,
-      "endX": 0.5,
-      "endY": 0,
-      "startTime": 58870,
-      "endTime": 59515,
-      "color": 1,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": false,
-      "taps": []
-    },
-    {
       "startX": -0.25,
       "startY": 0,
       "endX": 0.5,
@@ -2716,6 +2703,19 @@
       "startTime": 58870,
       "endTime": 59515,
       "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": false,
+      "taps": []
+    },
+    {
+      "startX": 1.25,
+      "startY": 0,
+      "endX": 0.5,
+      "endY": 0,
+      "startTime": 58870,
+      "endTime": 59515,
+      "color": 1,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": false,
@@ -2930,13 +2930,13 @@
       "taps": []
     },
     {
-      "startX": -0.25,
+      "startX": 1.25,
       "startY": 0,
-      "endX": -0.25,
+      "endX": 1.25,
       "endY": 0.8,
       "startTime": 70483,
       "endTime": 70645,
-      "color": 0,
+      "color": 1,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
@@ -2950,13 +2950,13 @@
       ]
     },
     {
-      "startX": 1.25,
+      "startX": -0.25,
       "startY": 0,
-      "endX": 1.25,
+      "endX": -0.25,
       "endY": 0.8,
       "startTime": 70483,
       "endTime": 70645,
-      "color": 1,
+      "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
@@ -3010,29 +3010,6 @@
       ]
     },
     {
-      "startX": -0.25,
-      "startY": 0,
-      "endX": -0.25,
-      "endY": 1,
-      "startTime": 71693,
-      "endTime": 72096,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": [
-        {
-          "time": 71693
-        },
-        {
-          "time": 71935
-        },
-        {
-          "time": 72096
-        }
-      ]
-    },
-    {
       "startX": 1.25,
       "startY": 0,
       "endX": 1.25,
@@ -3056,13 +3033,36 @@
       ]
     },
     {
-      "startX": 1.25,
+      "startX": -0.25,
       "startY": 0,
-      "endX": 1.25,
+      "endX": -0.25,
+      "endY": 1,
+      "startTime": 71693,
+      "endTime": 72096,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": [
+        {
+          "time": 71693
+        },
+        {
+          "time": 71935
+        },
+        {
+          "time": 72096
+        }
+      ]
+    },
+    {
+      "startX": -0.25,
+      "startY": 0,
+      "endX": -0.25,
       "endY": 0.8,
       "startTime": 73064,
       "endTime": 73226,
-      "color": 1,
+      "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
@@ -3076,13 +3076,13 @@
       ]
     },
     {
-      "startX": -0.25,
+      "startX": 1.25,
       "startY": 0,
-      "endX": -0.25,
+      "endX": 1.25,
       "endY": 0.8,
       "startTime": 73064,
       "endTime": 73226,
-      "color": 0,
+      "color": 1,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
