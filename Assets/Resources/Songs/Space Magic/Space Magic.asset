@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb49e598d844994bae24c04d3bfbaae, type: 3}
+  m_Name: Space Magic
+  m_EditorClassIdentifier: 
+  songTitle: Space Magic
+  artist: meganeko
+  bpm: 135
+  jacket: {fileID: 21300000, guid: b1137dfa44463a143bd0d7fa69443dbc, type: 3}
+  music: {fileID: 8300000, guid: 15445489504e6dd42b83a9a395784d76, type: 3}
+  previewStart: 67550
+  previewDuration: 24900
+  charts:
+  - difficulty: 1
+    chartDesigner: '[Redacted]'
+    chart: {fileID: 0}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 266666.72
+        value: 266666.72
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 6
+    chartDesigner: '[Redacted]'
+    chart: {fileID: 0}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 266666.72
+        value: 266666.72
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 8
+    chartDesigner: '[Redacted]'
+    chart: {fileID: 0}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 266666.72
+        value: 266666.72
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - difficulty: 11
+    chartDesigner: 71629
+    chart: {fileID: 4900000, guid: c93bfcec5031fb24cb770a2149b7bd57, type: 3}
+    timingSheet:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 85333.01
+        value: 85333.01
+        inSlope: 1
+        outSlope: 4.2459455
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.06617867
+      - serializedVersion: 3
+        time: 85777
+        value: 85777
+        inSlope: 0.7072184
+        outSlope: 1
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.19135682
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 266666.72
+        value: 266666.72
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

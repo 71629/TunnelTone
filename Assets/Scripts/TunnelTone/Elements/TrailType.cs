@@ -53,21 +53,21 @@ namespace TunnelTone.Elements
             }
             // Build subsegments
             float tail = 0;
-            for(var i = 0f; i < 1; i += 1000 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
+            for(var i = 0f; i < 1; i += 350 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
             {
-                Object.Instantiate(t.trailSubsegmentPrefab, t.transform).GetComponent<TrailSubsegment>().Initialize(t, t.spline, 
-                    (Vector3)t.spline.EvaluatePosition(tail), 
-                    (Vector3)t.spline.EvaluatePosition(i), 
-                    Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(tail).z)), 
-                    Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(i).z))
-                );
+                BuildSubsegment(tail, i);
                 tail = i;
             }
-            Object.Instantiate(t.trailSubsegmentPrefab, t.transform).GetComponent<TrailSubsegment>().Initialize(t, t.spline,
+            BuildSubsegment(tail, 1);
+        }
+
+        private void BuildSubsegment(float tail, float i)
+        {
+            Object.Instantiate(t.trailSubsegmentPrefab, t.transform).GetComponent<TrailSubsegment>().Initialize(t, t.spline, 
                 (Vector3)t.spline.EvaluatePosition(tail), 
-                (Vector3)t.spline.EvaluatePosition(1), 
-                t.spline.EvaluatePosition(tail).z, 
-                t.spline.EvaluatePosition(1).z
+                (Vector3)t.spline.EvaluatePosition(i), 
+                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(tail).z)), 
+                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(i).z))
             );
         }
 

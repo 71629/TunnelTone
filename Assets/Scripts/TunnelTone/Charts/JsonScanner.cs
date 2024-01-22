@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Timers;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
 using TunnelTone.ScriptableObjects;
+using UnityEditor.VersionControl;
 using UnityEngine.Splines;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
+using Task = System.Threading.Tasks.Task;
 
 // ReSharper disable InconsistentNaming
 namespace TunnelTone.Charts
@@ -44,8 +49,7 @@ namespace TunnelTone.Charts
             var difficulty = (int)param[1];
             var chart = JsonConvert.DeserializeObject<Chart>(songData.GetChart(difficulty).text);
             chartCache = chart;
-            
-            NoteRenderer.timingSheet = songData.charts[difficulty].timingSheet;
+            TimingManager.timingSheet = songData.charts[difficulty].timingSheet;
             
             NoteRenderer.ResetContainer();
             StartCoroutine(CreateElement(chart));
@@ -60,10 +64,14 @@ namespace TunnelTone.Charts
 
         private IEnumerator CreateElement(Chart chart)
         {
+            yield return new WaitForSecondsRealtime(0.5f);
+            var timer = new Stopwatch();
+            
             ScoreManager.totalCombo = 0;
             foreach(var trail in chart.trails)
             {
-                yield return new WaitForSeconds(0);
+                timer.Start();
+                
                 var gb = Instantiate(trailPrefab, transform);
                 gb.layer = 11;
                 gb.transform.parent = transform;
@@ -108,6 +116,12 @@ namespace TunnelTone.Charts
             
                     NoteRenderer.TapList.Add(tgb);
                     ScoreManager.totalCombo++;
+                }
+
+                if (timer.ElapsedMilliseconds < Time.deltaTime * 1000)
+                {
+                    yield return null;
+                    timer.Reset();
                 }
             }
             
