@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TunnelTone.Charts;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -40,8 +41,8 @@ namespace TunnelTone.Elements
             parent = segmentParent;
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.startTime = startTime.TranslateTiming();
+            this.endTime = endTime.TranslateTiming();
             direction = segmentParent.Direction;
             Spline = segmentSpline;
             

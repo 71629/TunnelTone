@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
@@ -24,7 +26,6 @@ namespace TunnelTone.Elements
         public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
         public static GameObject TrailReference => TrailList.Last();
-        public static AnimationCurve timingSheet;
         
         #endregion
         
@@ -98,7 +99,7 @@ namespace TunnelTone.Elements
                     ChartEventReference.Instance.OnSongEnd.Trigger();
                     yield break;
                 }
-                yield return transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * CurrentTime + offsetTime + StartDelay + universalOffset));
+                yield return transform.localPosition = new Vector3(0, 0, -chartSpeedModifier * (1000 * CurrentTime + offsetTime + StartDelay + universalOffset).TranslateTiming());
             }
         }
 

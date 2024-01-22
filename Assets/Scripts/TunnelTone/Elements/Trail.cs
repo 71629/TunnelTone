@@ -119,12 +119,12 @@ namespace TunnelTone.Elements
                     spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.HorizontalInVerticalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.VerticalInHorizontalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);

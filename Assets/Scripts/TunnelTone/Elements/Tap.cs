@@ -78,11 +78,11 @@ namespace TunnelTone.Elements
             Destroy();
         }
 
-        private bool CheckZPosition(float target) => transform.position.z > target;
+        private bool CheckTime(float target) => NoteRenderer.CurrentTime * 1000 >= time - target && NoteRenderer.isPlaying;
 
         private IEnumerator FadeColor(Graphic image)
         {
-            yield return new WaitWhile(() => CheckZPosition(0));
+            yield return new WaitUntil(() => CheckTime(0));
             
             image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.1f);
             if (image.color.a <= 0)
@@ -106,7 +106,7 @@ namespace TunnelTone.Elements
 
         private IEnumerator ShowHitHint(Graphic image, GameObject hitHint)
         {
-            yield return new WaitWhile(() => CheckZPosition(300));
+            yield return new WaitWhile(() => CheckTime(300));
 
             // Calculate new scale using a partial variation of the linear function y = ax + b, where 0.1 is the final scale
             var position1 = transform.position;
