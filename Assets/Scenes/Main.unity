@@ -19733,7 +19733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 11784.233}
+  m_AnchoredPosition: {x: 340, y: 16490.955}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -29287,7 +29287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -531202.56}
+  m_AnchoredPosition: {x: 0, y: -578752.56}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -49597,6 +49597,8 @@ MonoBehaviour:
   universalOffset: 0
   offsetTime: -2500
   currentBpm: 0
+  Fill: {fileID: 173829785}
+  FillArea: {fileID: 1561162611}
 --- !u!33 &2134286325
 MeshFilter:
   m_ObjectHideFlags: 0

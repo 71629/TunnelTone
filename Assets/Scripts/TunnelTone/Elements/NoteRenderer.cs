@@ -45,7 +45,10 @@ namespace TunnelTone.Elements
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
-        
+
+        public GameObject Fill;
+        public RectTransform FillArea;
+
         // Debug
         private float _currentTime;
 
@@ -108,6 +111,9 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnPause.Trigger();
             UIElementReference.Instance.pause.SetActive(true);
             AudioListener.pause = true;
+
+            LeanTween.pause(Fill);
+
             particleSystem.Pause();
         }
         
@@ -115,6 +121,9 @@ namespace TunnelTone.Elements
         {
             ChartEventReference.Instance.OnResume.Trigger();
             UIElementReference.Instance.pause.SetActive(false);
+
+            LeanTween.resume(Fill);
+
             AudioListener.pause = false;
             particleSystem.Play();
         }
@@ -135,6 +144,8 @@ namespace TunnelTone.Elements
                 if (gb.gameObject == gameObject) continue;
                 Destroy(gb.gameObject);
             }
+            Fill.transform.position = new Vector2(0,Fill.transform.position.z);
+
             ChartEventReference.Instance.OnRetry.Trigger();
             SystemEvent.OnChartLoadFinish.AddListener(ResumeForListener);
         }
@@ -152,7 +163,9 @@ namespace TunnelTone.Elements
             dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
-
+            
+            LeanTween.moveX(Fill, 85 , dspSongEndTime / 1000);
+            
             audioSource.time = 0;
             audioSource.volume = .2f;
             audioSource.PlayDelayed(StartDelay / 1000f);
