@@ -31,6 +31,7 @@ namespace TunnelTone.UI.SongList
             title.text = songListItem.songData.songTitle;
             artist.text = songListItem.songData.artist;
             bpm.text = $"{songListItem.songData.bpm:BPM: 0}";
+
         }
     }
 }

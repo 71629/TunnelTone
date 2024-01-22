@@ -29,7 +29,6 @@ namespace TunnelTone.UI.SongList
 
                 // TODO: Implement charter
                 charter.text = songData.charts[difficulty].chartDesigner;
-                
                 DisplaySongInfo();
             });
             SystemEvent.OnChartLoadFinish.AddListener(delegate
