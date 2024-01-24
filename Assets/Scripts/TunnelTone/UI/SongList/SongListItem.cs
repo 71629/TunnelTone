@@ -49,6 +49,7 @@ namespace TunnelTone.UI.SongList
             SongListEvent.OnSelectItem.AddListener(OnSelectItem);
             SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
             previewAudio = songData.music;
+            difficultyBackground.color = UIElement.easy;
         }
         
         private void OnDifficultyChange(object[] param)
@@ -78,12 +79,15 @@ namespace TunnelTone.UI.SongList
             
             title.text = data.songTitle;
             artist.text = data.artist;
-            difficulty.text = $"{data.GetDifficulty(3)}";
+            difficulty.text = $"{data.GetDifficulty(0)}";
             songJacket.sprite = data.jacket;
             previewStart = data.previewStart;
             previewDuration = data.previewDuration;
             source = data.music;
-            
+            if (title.text.Length > 15) //If text too long will make text size smaller
+            {
+                title.fontSize = 40;
+            }
             return this;
         }
     }
