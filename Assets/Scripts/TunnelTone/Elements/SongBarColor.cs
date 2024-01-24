@@ -11,7 +11,7 @@ public class SongBarColor : MonoBehaviour
     void Start()
     {
         LengthsBar.rectTransform.sizeDelta = new Vector2(Screen.width, LengthsBar.rectTransform.sizeDelta.y);
-        LengthsBar.transform.position = new Vector2((-85 * 2), LengthsBar.transform.position.y);
+        LengthsBar.transform.position = new Vector2((-86.5f * 2), LengthsBar.transform.position.y);
     }
     void Update()
     {

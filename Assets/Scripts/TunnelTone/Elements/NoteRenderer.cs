@@ -170,7 +170,7 @@ namespace TunnelTone.Elements
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
             
-            LeanTween.moveX(Fill, 85 , dspSongEndTime / 1000);
+            LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
             audioSource.time = 0;
             audioSource.volume = .2f;
             audioSource.PlayDelayed(StartDelay / 1000f);
