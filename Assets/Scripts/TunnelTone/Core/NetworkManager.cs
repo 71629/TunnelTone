@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TunnelTone.UI.Entry;
-using TunnelTone.UI.PlayResult;
 using UnityEngine;
 using UnityEngine.Events;
 

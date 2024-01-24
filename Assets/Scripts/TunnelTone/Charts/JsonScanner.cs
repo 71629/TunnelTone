@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Timers;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
 using TunnelTone.ScriptableObjects;
-using UnityEditor.VersionControl;
 using UnityEngine.Splines;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
-using Task = System.Threading.Tasks.Task;
 
 // ReSharper disable InconsistentNaming
 namespace TunnelTone.Charts
