@@ -17,9 +17,8 @@ namespace TunnelTone.UI.rythmcircle
         // Start is called before the first frame update
         void Start()
         {
-            _testbar = new float[324];
+            _testbar = new float[64];
             _circle = this.gameObject;
-            _source = this._source;
         }
     
         // Update is called once per frame
@@ -37,7 +36,8 @@ namespace TunnelTone.UI.rythmcircle
 
         void GetAudioSpectrumData()
         {
-            _source.GetSpectrumData(_testbar, 0 ,FFTWindow.Hamming);
+            _source.GetSpectrumData(_testbar, 0 ,FFTWindow.Blackman);
+            Debug.Log(_source);
         }
     }
 }
