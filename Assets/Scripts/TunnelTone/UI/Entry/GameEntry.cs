@@ -41,6 +41,8 @@ namespace TunnelTone.UI.Entry
                 }
             });
             NetworkManager.AutoLoginJson();
+            LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
+    .setLoopPingPong(); //Tap to start pingpong display
         }
         
         public void StartGame()
