@@ -3466,9 +3466,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7617eb9e495b1ac469405d2195f1b1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SongBar: {fileID: 173829787}
-  Difficulty: {fileID: 431761268}
-  LengthsBar: {fileID: 1009704070}
+  pause: {fileID: 1516479154}
+  retry: {fileID: 759913518}
+  resume: {fileID: 1319973953}
+  quit: {fileID: 484477070}
+  start: {fileID: 674883559}
+  isPlaying: 0
 --- !u!1 &175361511
 GameObject:
   m_ObjectHideFlags: 0
@@ -19750,7 +19753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 21765.73}
+  m_AnchoredPosition: {x: 340, y: 24037.941}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -26585,7 +26588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 4d170a8aa584240f4b18ce6a5e58ef2e, type: 2}
-  m_Color: {r: 0, g: 0.6911516, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -29379,7 +29382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -621997.56}
+  m_AnchoredPosition: {x: 0, y: -632887.56}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -49689,9 +49692,6 @@ MonoBehaviour:
   universalOffset: 0
   offsetTime: -2500
   currentBpm: 0
-  Fill: {fileID: 173829785}
-  FillArea: {fileID: 1561162611}
-  fillVector2: {x: 0, y: 0}
 --- !u!33 &2134286325
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -46,12 +46,15 @@ namespace TunnelTone.Elements
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
 
-        public GameObject Fill;
-        public RectTransform FillArea;
-        public Vector2 fillVector2;
+        
 
         // Debug
         private float _currentTime;
+
+        //Test Song Bar
+        //private GameObject Fill;
+        //public RectTransform FillArea;
+        //public Vector2 fillVector2;
 
         private void Update()
         {
@@ -60,7 +63,8 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            fillVector2 = Fill.transform.position;
+            //Fill = GameObject.Find("Music Play/UI/Progress/Fill Area/Fill");
+            //fillVector2 = Fill.transform.position;
             transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
             SystemEvent.OnChartLoadFinish.AddListener(delegate
@@ -114,7 +118,7 @@ namespace TunnelTone.Elements
             UIElementReference.Instance.pause.SetActive(true);
             AudioListener.pause = true;
 
-            LeanTween.pause(Fill);
+            //LeanTween.pause(Fill);
 
             particleSystem.Pause();
         }
@@ -124,7 +128,7 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnResume.Trigger();
             UIElementReference.Instance.pause.SetActive(false);
 
-            LeanTween.resume(Fill);
+            //LeanTween.resume(Fill);
 
             AudioListener.pause = false;
             particleSystem.Play();
@@ -140,7 +144,7 @@ namespace TunnelTone.Elements
         {
             //LeanTween.cancel(Fill);
             //Fill.transform.position = new Vector2(-86.15f, 47.60f);
-            LeanTween.move(Fill, fillVector2, 0.1f);
+            //LeanTween.move(Fill, fillVector2, 0.1f);
             isPlaying = false;
             StopAllCoroutines();
             transform.position = Vector3.zero;
@@ -149,7 +153,7 @@ namespace TunnelTone.Elements
                 if (gb.gameObject == gameObject) continue;
                 Destroy(gb.gameObject);
             }
-            Fill.transform.position = new Vector2(0,Fill.transform.position.z);
+            //Fill.transform.position = new Vector2(0,Fill.transform.position.z);
 
             ChartEventReference.Instance.OnRetry.Trigger();
             SystemEvent.OnChartLoadFinish.AddListener(ResumeForListener);
@@ -158,7 +162,7 @@ namespace TunnelTone.Elements
         public void Quit()
         {
             ChartEventReference.Instance.OnQuit.Trigger();
-            LeanTween.move(Fill, fillVector2, 0.1f);
+            //LeanTween.move(Fill, fillVector2, 0.1f);
         }
 
         public void StartSong()
@@ -170,7 +174,7 @@ namespace TunnelTone.Elements
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
             
-            LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
+            //LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
             audioSource.time = 0;
             audioSource.volume = .2f;
             audioSource.PlayDelayed(StartDelay / 1000f);
