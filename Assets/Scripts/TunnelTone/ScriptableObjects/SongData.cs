@@ -55,6 +55,7 @@ namespace TunnelTone.ScriptableObjects
             });
         }
 
+#if UNITY_EDITOR
         [ContextMenu("Generate timing data")]
         public void GenerateTimingData()
         {
@@ -69,6 +70,7 @@ namespace TunnelTone.ScriptableObjects
                 AnimationUtility.SetKeyRightTangentMode(chart.timingSheet, 1, AnimationUtility.TangentMode.Linear);
             }
         }
+#endif
 
         private void OnEnable()
         {
