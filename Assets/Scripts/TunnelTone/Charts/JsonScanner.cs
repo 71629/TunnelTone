@@ -63,6 +63,7 @@ namespace TunnelTone.Charts
             yield return new WaitForSecondsRealtime(0.5f);
             var timer = new Stopwatch();
             
+            NoteRenderer.TrailList.Clear();
             ScoreManager.totalCombo = 0;
             foreach(var trail in chart.trails)
             {
