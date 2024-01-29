@@ -58,15 +58,15 @@ namespace TunnelTone.ScriptableObjects
         [ContextMenu("Generate timing data")]
         public void GenerateTimingData()
         {
-            AnimationUtility.SetKeyLeftTangentMode(defaultTimingData, 0, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(defaultTimingData, 0, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyLeftTangentMode(defaultTimingData, 1, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(defaultTimingData, 1, AnimationUtility.TangentMode.Linear);
             foreach (var chart in charts)
             {
                 if(chart is null) continue;
                 if (chart.timingSheet.length > 1) continue;
                 chart.timingSheet = defaultTimingData;
+                AnimationUtility.SetKeyLeftTangentMode(chart.timingSheet, 0, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyRightTangentMode(chart.timingSheet, 0, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyLeftTangentMode(chart.timingSheet, 1, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyRightTangentMode(chart.timingSheet, 1, AnimationUtility.TangentMode.Linear);
             }
         }
 

@@ -84,7 +84,7 @@ namespace TunnelTone.UI.SongList
             previewStart = data.previewStart;
             previewDuration = data.previewDuration;
             source = data.music;
-            if(title.text.Length > 15)
+            if (title.text.Length > 15) //If text too long will make text size smaller
             {
                 title.fontSize = 40;
             }
