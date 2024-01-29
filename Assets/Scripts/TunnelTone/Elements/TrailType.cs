@@ -157,7 +157,7 @@ namespace TunnelTone.Elements
             while (spline is not null)
             {
                 var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
-                col.center = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+                col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
                 
                 trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
 
