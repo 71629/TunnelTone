@@ -11,6 +11,9 @@ namespace TunnelTone.PlayArea
 {
     public class ProgressBarManager : MonoBehaviour
     {
+        [SerializeField]
+        private Transform cleanupRoot;
+
         [SerializeField] private AudioSource audioSource;
         private int TotalSample => audioSource.clip.samples;
         private Slider Slider => GetComponent<Slider>();
@@ -39,6 +42,16 @@ namespace TunnelTone.PlayArea
         {
             if(NoteRenderer.isPlaying)
                 Slider.value = audioSource.timeSamples / (float)TotalSample;
+        }
+
+        private void LateUpdate()
+        {
+            if (NoteRenderer.isPlaying)
+                return;
+
+            var touches = cleanupRoot.GetComponentsInChildren<Touch>();
+            foreach (var touch in touches)
+                Destroy(touch.gameObject);
         }
     }
 }

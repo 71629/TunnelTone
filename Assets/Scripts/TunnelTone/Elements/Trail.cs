@@ -183,7 +183,7 @@ namespace TunnelTone.Elements
         private void OnDestroy()
         {
             if (trailContext is RealTrail) trailHint.OnParentDestroy.Invoke();
-            if (trackingTouch is null) return;
+            if (trackingTouch == null) return;
             var touch = trackingTouch.GetComponent<PlayArea.Touch>();
             touch.trackingTrail = null;
         }
