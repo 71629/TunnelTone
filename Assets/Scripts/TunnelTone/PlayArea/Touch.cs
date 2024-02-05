@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;
+using TMPro;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace TunnelTone.PlayArea
@@ -23,6 +24,8 @@ namespace TunnelTone.PlayArea
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private SplineExtrude splineExtrude;
+        [SerializeField] private TextMeshPro Score;
+
         private Spline Spline => splineContainer.Spline;
         private Vector3 Position => transform.position;
         private TouchControl trackingTouch;
@@ -83,9 +86,9 @@ namespace TunnelTone.PlayArea
             if (trackingTouch.phase.value == TouchPhase.Ended)
             {
                 OnRelease.Invoke();
-                if(trackingTrail is not null) {
-                    trackingTrail.GetComponent<Trail>().isTracking = false;
-                    trackingTrail.GetComponent<Trail>().trackingTouch = null;
+                if(trackingTrail != null && trackingTrail.TryGetComponent<Trail>(out var trail)) {
+                    trail.isTracking = false;
+                    trail.trackingTouch = null;
                 }
                 Destroy(gameObject);
             }
@@ -146,7 +149,7 @@ namespace TunnelTone.PlayArea
         private void OnDestroy()
         {
             LeanTween.cancel(gameObject);
-            if (trackingTrail is null) return;
+            if (trackingTrail == null) return;
             var trail = trackingTrail.GetComponent<Trail>();
             trail.state = new Idle();
             trail.onStateChanged.Invoke();
