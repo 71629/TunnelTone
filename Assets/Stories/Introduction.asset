@@ -1,0 +1,203 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9175745663736187443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed935186a484f17ba3b0d07bf1e7d45, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  skippible: 1
+  size: 2
+  text: Can you hear me?
+--- !u!114 &-9153929983272656639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3abc3e741d6476e8bd29efeeaba1658, type: 3}
+  m_Name: BlackScreen
+  m_EditorClassIdentifier: 
+  skippible: 0
+  text: Why things have to be done this way...
+--- !u!114 &-7181814260945975248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3abc3e741d6476e8bd29efeeaba1658, type: 3}
+  m_Name: BlackScreen
+  m_EditorClassIdentifier: 
+  skippible: 0
+  text: ... where mistakes do not exist
+--- !u!114 &-5575262274611463207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1837cb7534f640158ab84287fe5ea0c9, type: 3}
+  m_Name: Narrator
+  m_EditorClassIdentifier: 
+  skippible: 1
+  text: (Wait... I'm still... !)
+--- !u!114 &-2222441915137945140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1837cb7534f640158ab84287fe5ea0c9, type: 3}
+  m_Name: Narrator
+  m_EditorClassIdentifier: 
+  skippible: 1
+  text: "(Some faint voices, along with the beepings all around me, slowly waking\r
+    my consciousness)"
+--- !u!114 &-361464712911055246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd8590fa8c84cff8ac21366c7b26b7b, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  skippible: 0
+  name: ???
+--- !u!114 &-289635834984895622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed935186a484f17ba3b0d07bf1e7d45, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  skippible: 1
+  size: 1
+  text: Try harder then!
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d086a98bbdb44d36bd94db62ec9a4cc1, type: 3}
+  m_Name: Introduction
+  m_EditorClassIdentifier: 
+  storyTitle: Introduction
+  timeline:
+  - {fileID: 427098216732097398}
+  - {fileID: -7181814260945975248}
+  - {fileID: -361464712911055246}
+  - {fileID: -9175745663736187443}
+  - {fileID: 5506253854683866831}
+  - {fileID: 679488213909985561}
+  - {fileID: -289635834984895622}
+  - {fileID: -2222441915137945140}
+  - {fileID: 2347877211835988058}
+  - {fileID: -5575262274611463207}
+  - {fileID: 3930126258856563729}
+  - {fileID: -9153929983272656639}
+--- !u!114 &427098216732097398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3abc3e741d6476e8bd29efeeaba1658, type: 3}
+  m_Name: BlackScreen
+  m_EditorClassIdentifier: 
+  skippible: 0
+  text: Imagnie a world...
+--- !u!114 &679488213909985561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed935186a484f17ba3b0d07bf1e7d45, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  skippible: 1
+  size: 1
+  text: Still no response...
+--- !u!114 &2347877211835988058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed935186a484f17ba3b0d07bf1e7d45, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  skippible: 1
+  size: 1
+  text: 'Ugh, nothing works...
+
+    Prepare for another CPR!'
+--- !u!114 &3930126258856563729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1837cb7534f640158ab84287fe5ea0c9, type: 3}
+  m_Name: Narrator
+  m_EditorClassIdentifier: 
+  skippible: 1
+  text: (zap)
+--- !u!114 &5506253854683866831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3abc3e741d6476e8bd29efeeaba1658, type: 3}
+  m_Name: BlackScreen
+  m_EditorClassIdentifier: 
+  skippible: 0
+  text: Perfect, isn't it?
