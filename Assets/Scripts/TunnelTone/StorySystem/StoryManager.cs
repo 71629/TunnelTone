@@ -18,6 +18,9 @@ namespace TunnelTone.StorySystem
         private bool isStoryLoaded;
         private bool isTransitionComplete;
 
+        private bool isAutoPlay;
+        private bool isFastForward;
+
         public void LoadStory(Story story)
         {
             timeline = story.GetEnumerator();
@@ -72,13 +75,14 @@ namespace TunnelTone.StorySystem
             background.sprite = sprite;
         }
 
-        private IEnumerator DisplayLine(IEnumerable<char> text)
+        private IEnumerator DisplayLine(IEnumerable<char> textArr)
         {
             isTransitionComplete = false;
             StringBuilder sb = new();
-            foreach (var t in text)
+            foreach (var t in textArr)
             {
                 if(isTransitionComplete) yield break;
+                if (t is '\n') yield return new WaitForSeconds(0.2f);
                 sb.Append(t);
                 line.text = sb.ToString();
                 yield return new WaitForSeconds(0.05f);
