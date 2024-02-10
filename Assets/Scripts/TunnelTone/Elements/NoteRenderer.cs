@@ -100,11 +100,13 @@ namespace TunnelTone.Elements
         {
             Debug.Log(ScoreManager.totalCombo);
             isPlaying = true;
+            InteractionManager.Instance.Enable();
             while (true)
             {
                 if (transform.childCount == 0)
                 {
                     ChartEventReference.Instance.OnSongEnd.Trigger();
+                    InteractionManager.Instance.Disable();
                     yield break;
                 }
                 yield return transform.localPosition = new Vector3(0, 0, -chartSpeedModifier * (1000 * CurrentTime + offsetTime + StartDelay + universalOffset).TranslateTiming());
