@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Newtonsoft.Json;
 using TunnelTone.Elements;
@@ -10,6 +12,7 @@ using TunnelTone.PlayArea;
 using TunnelTone.ScriptableObjects;
 using UnityEngine.Splines;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 // ReSharper disable InconsistentNaming
 namespace TunnelTone.Charts
@@ -22,10 +25,12 @@ namespace TunnelTone.Charts
 
         private void Start()
         {
-            SystemEvent.OnChartLoad.AddListener(o =>
-            {
-                StartCoroutine(DelayedScan(o));
-            });
+            SystemEvent.ChartLoad += NewScan;
+                
+            // SystemEvent.OnChartLoad.AddListener(o =>
+            // {
+            //     StartCoroutine(DelayedScan(o));
+            // });
             ChartEventReference.Instance.OnRetry.AddListener(delegate
             {
                 StartCoroutine(Retry());
@@ -51,6 +56,32 @@ namespace TunnelTone.Charts
             StartCoroutine(CreateElement(chart));
         }
 
+        private void NewScan(ScriptableObjects.Chart chart, AudioClip audioClip)
+        {
+            var chartObject = JsonConvert.DeserializeObject<Chart>(chart.chart.text);
+            chartCache = chartObject;
+            TimingManager.timingSheet = chart.timingSheet;
+            
+            NoteRenderer.ResetContainer();
+            StartCoroutine(CreateElement(chartObject, audioClip));
+        }
+        
+        private static async Task<bool> LoadAudioData(AudioClip audioClip, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (!audioClip.LoadAudioData())
+                return false;
+
+            while (audioClip.loadState == AudioDataLoadState.Loading)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Task.Yield();
+            }
+
+            return true;
+        }
+
         private IEnumerator Retry()
         {
             yield return new WaitForSecondsRealtime(.5f); 
@@ -58,9 +89,9 @@ namespace TunnelTone.Charts
             StartCoroutine(CreateElement(chartCache));
         }
 
-        private IEnumerator CreateElement(Chart chart)
+        private IEnumerator CreateElement(Chart chart, AudioClip audioClip = null)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(1f);
             var timer = new Stopwatch();
             
             NoteRenderer.TrailList.Clear();
@@ -119,6 +150,17 @@ namespace TunnelTone.Charts
                 {
                     yield return null;
                     timer.Reset();
+                }
+            }
+
+            if (audioClip is not null)
+            {
+                var audioTask = LoadAudioData(audioClip, destroyCancellationToken);
+                yield return new WaitUntil(() => audioTask.IsCompleted);
+                if (!audioTask.Result)
+                {
+                    Debug.Log("Audio clip data failed to load.");
+                    yield break;
                 }
             }
             
