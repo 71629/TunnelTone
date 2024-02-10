@@ -64,6 +64,7 @@ namespace TunnelTone.UI.SongList
         IEnumerator EnableCanvasDelayed()
         {
             SystemEvent.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
+            SystemEvent.InvokeChartLoad(currentlySelected.charts[SongListDifficultyManager.Instance.CurrentlySelected], currentlySelected.music);
             yield return new WaitForSecondsRealtime(0.5f);
             UIElement.musicPlay.enabled = true;
             UIElement.songList.enabled = false;

@@ -56,7 +56,8 @@ namespace TunnelTone.Elements
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.gameObject.TryGetComponent<PlayArea.Touch>(out var touch) || touch.pointerId != trackingPointerId) return;
+            if (!other.gameObject.TryGetComponent<PlayArea.Touch>(out var touch)) return;
+            if (trackingPointerId is not null && touch.pointerId != trackingPointerId) return;
             
             if (touch.direction == Direction.Any || touch.direction == Direction)
             {

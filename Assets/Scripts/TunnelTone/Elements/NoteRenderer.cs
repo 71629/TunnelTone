@@ -178,7 +178,7 @@ namespace TunnelTone.Elements
             //LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
             audioSource.time = 0;
             audioSource.volume = .2f;
-            audioSource.PlayDelayed(StartDelay / 1000f);
+            audioSource.PlayScheduled(AudioSettings.dspTime + StartDelay / 1000);
             StartCoroutine(PlayChart());
         }
     }

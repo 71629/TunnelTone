@@ -1,4 +1,8 @@
-﻿namespace TunnelTone.Events
+﻿using TunnelTone.Charts;
+using TunnelTone.ScriptableObjects;
+using UnityEngine;
+
+namespace TunnelTone.Events
 {
     public static class SystemEvent
     {
@@ -14,5 +18,9 @@
         
         internal static readonly GameEvent OnSettingsChanged = new();
         internal static readonly GameEvent OnAudioSystemReset = new();
+
+        public static event ChartLoadEvent ChartLoad;
+        public delegate void ChartLoadEvent(Chart chart, AudioClip audioClip);
+        public static void InvokeChartLoad(Chart chart, AudioClip audioClip) => ChartLoad?.Invoke(chart, audioClip);
     }
 }
