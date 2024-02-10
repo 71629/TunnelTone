@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
 using UnityEngine;
@@ -34,10 +35,14 @@ namespace TunnelTone.Elements
         [SerializeField] internal LineRenderer lineRenderer;
         [SerializeField] internal MeshRenderer meshRenderer;
         [SerializeField] private MeshFilter meshFilter;
+        
         internal Spline spline;
         internal GameObject trackingTouch;
+        internal int? trackingPointerId;
+        
         private List<GameObject> comboPoint;
         private List<TrailSubsegment> subsegments;
+        
         internal TrailHint trailHint;
         [SerializeField] internal GameObject trailHintObject;
         
@@ -52,12 +57,14 @@ namespace TunnelTone.Elements
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer != LayerMask.NameToLayer("Touch")) return;
-            if ((other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction.Any && allowTrack) || other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction)
+            if (!other.gameObject.TryGetComponent<PlayArea.Touch>(out var touch)) return;
+            if (touch.direction == Direction.Any || touch.direction == Direction)
             {
+                InteractionManager.Instance.inputReader.TouchUp += OnTouchUp;
                 allowTrack = true;
                 isTracking = true;
-                trackingTouch = other.gameObject;
+                // trackingTouch = other.gameObject;
+                touch.direction = Direction;
                 state = new Tracking();
                 onStateChanged.Invoke();
                 return;
@@ -67,18 +74,37 @@ namespace TunnelTone.Elements
             state = new WrongHand();
             onStateChanged.Invoke();
         }
-        
+
+        private void OnTouchUp(int pointerId, double time, Vector2 screenPosition)
+        {
+            if (pointerId != trackingPointerId) return;
+            
+            InteractionManager.Instance.inputReader.TouchUp -= OnTouchUp;
+            trackingPointerId = null;
+            isTracking = false;
+            state = new Idle();
+            onStateChanged.Invoke();
+        }
+
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Touch"))
-            {
-                isTracking = false;
-                state = new Idle();
-                onStateChanged.Invoke();
-            }
+            if (!other.TryGetComponent<PlayArea.Touch>(out var touch) || touch.pointerId != trackingPointerId) return;
+            
+            isTracking = false;
+            state = new Idle();
+            onStateChanged.Invoke();
         }
         
-        public Trail Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
+        public Trail Initialize(
+            float startTime, 
+            float endTime, 
+            Vector2 startCoordinate, 
+            Vector2 endCoordinate, 
+            Direction direction, 
+            EasingMode easing, 
+            float easingRatio, 
+            bool newTrail, 
+            bool virtualTrail)
         {
             meshFilter.mesh = new Mesh();
             
@@ -90,9 +116,10 @@ namespace TunnelTone.Elements
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
             trailContext = virtualTrail ? new VirtualTrail(this) : new RealTrail(this);
-            
-            startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
-            endCoordinate = new Vector2(endCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
+
+            var gameAreaRect = NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect;
+            startCoordinate = new Vector2(startCoordinate.x * gameAreaRect.width * 0.5f, startCoordinate.y * gameAreaRect.height * 0.5f);
+            endCoordinate = new Vector2(endCoordinate.x * gameAreaRect.width * 0.5f, endCoordinate.y * gameAreaRect.height * 0.5f);
             
             var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * NoteRenderer.Instance.chartSpeedModifier);
             var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * NoteRenderer.Instance.chartSpeedModifier);
