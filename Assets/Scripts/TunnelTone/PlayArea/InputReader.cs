@@ -6,7 +6,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 namespace TunnelTone.PlayArea
 {
     [CreateAssetMenu]
-    public class InputReader : ScriptableObject, GameInput.IGameplayActions
+    public class InputReader : ScriptableObject
     {
         private const int MaxTouch = 10;
         
@@ -37,13 +37,10 @@ namespace TunnelTone.PlayArea
         public delegate void GesturePotentialSwipeAction(SwipeGesture potentialSwipe);
         public delegate void GestureSwipeAction(SwipeGesture swipe);
         
-        private GameInput gameInput;
         private Dictionary<int, InputGesture> touchGestures;
         
         private void OnEnable()
         {
-            gameInput ??= new GameInput();
-            gameInput.Gameplay.SetCallbacks(this);
             touchGestures ??= new Dictionary<int, InputGesture>(MaxTouch);
             for (var i = 0; i < MaxTouch; i++) touchGestures.Add(i, new InputGesture(i));
             
@@ -93,23 +90,10 @@ namespace TunnelTone.PlayArea
 
         private void OnDisable()
         {
-            DisableAllInput();
-            
             EnhancedTouch.onFingerDown -= OnFingerDown;
             EnhancedTouch.onFingerMove -= OnFingerMove;
             EnhancedTouch.onFingerUp -= OnFingerUp;
             EnhancedTouchSupport.Disable();
-        }
-
-        public void EnableInput()
-        {
-            DisableAllInput();
-            gameInput.Gameplay.Enable();
-        }
-
-        private void DisableAllInput()
-        {
-            gameInput?.Gameplay.Disable();   
         }
     }
 
