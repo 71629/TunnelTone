@@ -37,6 +37,7 @@ namespace TunnelTone.Elements
         [SerializeField] private MeshFilter meshFilter;
         
         internal Spline spline;
+        internal GameObject trackingTouch;
         internal int? trackingPointerId;
         
         private List<GameObject> comboPoint;
@@ -58,7 +59,6 @@ namespace TunnelTone.Elements
         {
             if (!other.gameObject.TryGetComponent<PlayArea.Touch>(out var touch)) return;
             if (trackingPointerId is not null && touch.pointerId != trackingPointerId) return;
-            
             if (touch.direction == Direction.Any || touch.direction == Direction)
             {
                 InteractionManager.Instance.inputReader.TouchUp += OnTouchUp;
