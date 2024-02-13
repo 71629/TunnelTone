@@ -22,6 +22,8 @@ namespace TunnelTone.UI.rythmcircle
             //line.positionCount = count;
             //line.startWidth = 0.02f;
             //line.endWidth = 0.02f;
+            line = GetComponent<LineRenderer>();
+            line.positionCount = count;
         }
     
         // Update is called once per frame
