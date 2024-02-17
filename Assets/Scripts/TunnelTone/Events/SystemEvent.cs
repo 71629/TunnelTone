@@ -1,5 +1,4 @@
-﻿using TunnelTone.Charts;
-using TunnelTone.ScriptableObjects;
+﻿using TunnelTone.ScriptableObjects;
 using UnityEngine;
 
 namespace TunnelTone.Events
