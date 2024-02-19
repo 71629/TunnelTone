@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteGroup: {fileID: 24300001, guid: 1d9bfcb87d0ba844e9071a1e60825ede, type: 2}
-  isEnabled: 1
+  isEnabled: 0
   sourceType: 1
   audioSource: {fileID: 0}
   sampleChannel: 0
@@ -91,6 +91,6 @@ MonoBehaviour:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   colorAttackDamp: 1
   colorDecayDamp: 0.189
