@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
@@ -13,15 +11,18 @@ using UnityEngine.Splines;
 namespace TunnelTone.Elements
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class Trail : MonoBehaviour
+    public partial class Trail : MonoBehaviour
     {
         // Basic trail properties
-        private float startTime, endTime;
+        internal float startTime, endTime;
+        internal Vector2 startCoordinate, endCoordinate;
         private bool virtualTrail;
         internal Direction Direction { get; private set; }
+        private TrailType trailContext;
         
         // Trail References
-        private Trail next;
+        internal Trail next;
+        internal bool skipSpawnAnimation = false;
         
         // Status Reference
         private bool isHit;
@@ -30,83 +31,96 @@ namespace TunnelTone.Elements
         
         // Coupled Components
         [SerializeField] private SplineContainer splineContainer;
-        [SerializeField] private SphereCollider col;
-        [SerializeField] private LineRenderer lineRenderer;
-        [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] internal SphereCollider col;
+        [SerializeField] internal LineRenderer lineRenderer;
+        [SerializeField] internal MeshRenderer meshRenderer;
         [SerializeField] private MeshFilter meshFilter;
-        private Spline spline;
+        
+        internal Spline spline;
+        internal int? trackingPointerId;
+        
         private List<GameObject> comboPoint;
-        internal GameObject trackingTouch;
         private List<TrailSubsegment> subsegments;
         
-        // Objects
-        [SerializeField] private GameObject trailSubsegmentPrefab;
-        [SerializeField] private Material virtualTrailMaterial;
+        internal TrailHint trailHint;
+        [SerializeField] internal GameObject trailHintObject;
         
-        private Sprite HitRing1 => Resources.Load<Sprite>("Sprites/HitRing1");
-        private Sprite HitRing2 => Resources.Load<Sprite>("Sprites/HitRing2");
+        // Objects
+        [SerializeField] internal GameObject trailSubsegmentPrefab;
+        [SerializeField] internal Material virtualTrailMaterial;
+        [SerializeField] private Sprite outerRing;
+        [SerializeField] private Sprite innerRing;
+        
         internal TrailState state;
-        internal UnityEvent OnStateChanged = new();
-
-        private void Start()
-        {
-            StartCoroutine(UpdateCollider());
-            OnStateChanged.AddListener(() => Debug.Log(state));
-        }
+        internal readonly UnityEvent onStateChanged = new();
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer != LayerMask.NameToLayer("Touch")) return;
-            if ((other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction.Any && allowTrack) || other.gameObject.GetComponent<PlayArea.Touch>().direction == Direction)
+            if (!other.gameObject.TryGetComponent<PlayArea.Touch>(out var touch)) return;
+            if (trackingPointerId is not null && touch.pointerId != trackingPointerId) return;
+            
+            if (touch.direction == Direction.Any || touch.direction == Direction)
             {
+                InteractionManager.Instance.inputReader.TouchUp += OnTouchUp;
                 allowTrack = true;
                 isTracking = true;
-                trackingTouch = other.gameObject;
+                // trackingTouch = other.gameObject;
+                touch.direction = Direction;
                 state = new Tracking();
-                OnStateChanged.Invoke();
+                onStateChanged.Invoke();
                 return;
             }
             isTracking = false;
             allowTrack = false;
             state = new WrongHand();
-            OnStateChanged.Invoke();
-        }
-        
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Touch"))
-            {
-                isTracking = false;
-                state = new Idle();
-                OnStateChanged.Invoke();
-            }
+            onStateChanged.Invoke();
         }
 
-        private IEnumerator UpdateCollider()
+        private void OnTouchUp(int pointerId, double time, Vector2 screenPosition)
         {
-            if (virtualTrail)
-            {
-                col.enabled = false;
-                yield break;
-            }
-            while (spline is not null)
-            {
-                var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000);
-                yield return col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
-            }
+            if (pointerId != trackingPointerId) return;
+            
+            InteractionManager.Instance.inputReader.TouchUp -= OnTouchUp;
+            trackingPointerId = null;
+            isTracking = false;
+            state = new Idle();
+            onStateChanged.Invoke();
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.TryGetComponent<PlayArea.Touch>(out var touch) || touch.pointerId != trackingPointerId) return;
+            
+            isTracking = false;
+            state = new Idle();
+            onStateChanged.Invoke();
         }
         
-        public void Initialize(float startTime, float endTime, Vector2 startCoordinate, Vector2 endCoordinate, Direction direction, EasingMode easing, float easingRatio, bool newTrail, bool virtualTrail)
+        public Trail Initialize(
+            float startTime, 
+            float endTime, 
+            Vector2 startCoordinate, 
+            Vector2 endCoordinate, 
+            Direction direction, 
+            EasingMode easing, 
+            float easingRatio, 
+            bool newTrail, 
+            bool virtualTrail)
         {
+            meshFilter.mesh = new Mesh();
+            
             Direction = direction;
             allowTrack = true;
             
             this.startTime = startTime;
             this.endTime = endTime;
-            this.virtualTrail = virtualTrail;
-            
-            startCoordinate = new Vector2(startCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, startCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
-            endCoordinate = new Vector2(endCoordinate.x * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.width * 0.5f, endCoordinate.y * NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect.height * 0.5f);
+            this.startCoordinate = startCoordinate;
+            this.endCoordinate = endCoordinate;
+            trailContext = virtualTrail ? new VirtualTrail(this) : new RealTrail(this);
+
+            var gameAreaRect = NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect;
+            startCoordinate = new Vector2(startCoordinate.x * gameAreaRect.width * 0.5f, startCoordinate.y * gameAreaRect.height * 0.5f);
+            endCoordinate = new Vector2(endCoordinate.x * gameAreaRect.width * 0.5f, endCoordinate.y * gameAreaRect.height * 0.5f);
             
             var startPosition = new Vector3(startCoordinate.x, startCoordinate.y, startTime * NoteRenderer.Instance.chartSpeedModifier);
             var endPosition = new Vector3(endCoordinate.x, endCoordinate.y, endTime * NoteRenderer.Instance.chartSpeedModifier);
@@ -133,123 +147,27 @@ namespace TunnelTone.Elements
                     spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.HorizontalInVerticalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.VerticalInHorizontalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y * NoteRenderer.Instance.chartSpeedModifier, Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x * NoteRenderer.Instance.chartSpeedModifier, 0, -Mathf.Abs(Mathf.Pow(easingRatio, 2) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);
             }
 
-            if (!virtualTrail)
-            {
-                meshRenderer.material = direction switch
-                {
-                    Direction.Left => UIElementReference.Instance.leftTrail,
-                    Direction.Right => UIElementReference.Instance.rightTrail,
-                    _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, $"Given direction is not valid for Trail type: {direction}")
-                };
-            }
-            else
-            {
-                gameObject.layer = 20;
-                meshRenderer.material = NoteRenderer.Instance.none;
-            }
-            
-            meshFilter.mesh = new Mesh();
-            
-            // Build critical combo points based on bpm
-            if (!virtualTrail)
-            {
-                var bpm = NoteRenderer.Instance.currentBpm;
-                if (newTrail)
-                    BuildHead(spline.EvaluatePosition(0), startTime * NoteRenderer.Instance.chartSpeedModifier, false);
+            trailContext.Initialize();
+            trailContext.ConfigureCollider();
 
-                var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
-                for (var i = 0f; i < 1; i += density * 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-                {
-                    BuildCombo(out var gb, (Vector3)spline.EvaluatePosition(i),
-                        (spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
-                }
-                // Build subsegments
-                float tail = 0;
-                for(var i = 0f; i < 1; i += 1000 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-                {
-                    Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline, 
-                        (Vector3)spline.EvaluatePosition(tail), 
-                        (Vector3)spline.EvaluatePosition(i), 
-                        Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(tail).z)), 
-                        Mathf.Lerp(startTime, endTime, Mathf.InverseLerp(spline.EvaluatePosition(0).z, spline.EvaluatePosition(1).z, spline.EvaluatePosition(i).z))
-                    );
-                    tail = i;
-                }
-                Instantiate(trailSubsegmentPrefab, transform).GetComponent<TrailSubsegment>().Initialize(this, spline,
-                    (Vector3)spline.EvaluatePosition(tail), 
-                    (Vector3)spline.EvaluatePosition(1), 
-                    spline.EvaluatePosition(tail).z, 
-                    spline.EvaluatePosition(1).z
-                );
-            }
-            else
-            {
-                var j = 0;
-                lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
-                for (var i = 0f; i < 1; i += 80 / (spline.ElementAt(1).Position.z - spline.ElementAt(0).Position.z))
-                {
-                    lineRenderer.SetPosition(j, spline.EvaluatePosition(i));
-                    lineRenderer.positionCount++;
-                    j++;
-                }
-                lineRenderer.SetPosition(j, spline.EvaluatePosition(1));
-                lineRenderer.positionCount--;
-                lineRenderer.material = virtualTrailMaterial;
-            }
+            return this;
         }
 
-        private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
-        {
-            gb = new GameObject("Combo")
-            {
-                transform =
-                {
-                    parent = transform,
-                    localPosition = new Vector3
-                    {
-                        x = coordinate.x,
-                        y = coordinate.y,
-                        z = time
-                    },
-                    rotation = Quaternion.identity,
-                    localScale = Vector3.one
-                }
-            };
-            gb.AddComponent<ComboPoint>().time = time;
-            ScoreManager.totalCombo++;
-        }
-        
-        private void BuildHead(Vector3 position, float time, bool virtualTrail)
+        internal void BuildHead(Vector3 position, float time, bool virtualTrail)
         {
 
-            var vertices = !virtualTrail
-                ? new List<Vector3>
-                {
-                    position + new Vector3(0, 0, -25 + time),
-                    position + new Vector3(0, 40, 0 + time),
-                    position + new Vector3(40, 0, 0 + time),
-                    position + new Vector3(0, -40, 0 + time),
-                    position + new Vector3(-40, 0, 0 + time)
-                }
-                : new List<Vector3>
-                {
-                    position + new Vector3(0, 0, -8 + time),
-                    position + new Vector3(0, 8, 0 + time),
-                    position + new Vector3(8, 0, 0 + time),
-                    position + new Vector3(0, -8, 0 + time),
-                    position + new Vector3(-8, 0, 0 + time)
-                };
+            var vertices = trailContext.GetVertices(position, time);
 
             var triangles = new List<int>
             {
@@ -278,6 +196,12 @@ namespace TunnelTone.Elements
             meshFilter.mesh = mesh1;
         }
 
+        internal IEnumerator TrailHint()
+        {
+            yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 >= startTime - 550 && NoteRenderer.isPlaying);
+            trailHint.Enable(Direction);
+        }
+
         private void Update()
         {
             if(NoteRenderer.CurrentTime * 1000 > endTime + 120 && NoteRenderer.isPlaying)
@@ -286,9 +210,7 @@ namespace TunnelTone.Elements
 
         private void OnDestroy()
         {
-            if (trackingTouch is null || virtualTrail) return;
-            var touch = trackingTouch.GetComponent<PlayArea.Touch>();
-            touch.trackingTrail = null;
+            if (trailContext is RealTrail) trailHint.OnParentDestroy.Invoke();
         }
     }
 

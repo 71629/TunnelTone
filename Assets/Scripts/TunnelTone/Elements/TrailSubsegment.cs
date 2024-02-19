@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TunnelTone.Charts;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -36,16 +37,17 @@ namespace TunnelTone.Elements
 
         internal TrailSubsegment Initialize(Trail segmentParent, Spline segmentSpline, Vector2 startCoordinate, Vector2 endCoordinate, float startTime, float endTime)
         {
+            gameObject.layer = 11;
             parent = segmentParent;
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.startTime = startTime.TranslateTiming();
+            this.endTime = endTime.TranslateTiming();
             direction = segmentParent.Direction;
             Spline = segmentSpline;
             
             SetMesh();
-            parent.OnStateChanged.AddListener(() =>
+            parent.onStateChanged.AddListener(() =>
             {
                 Debug.Log("Changing state");
                 parent.state.UpdateMaterial(meshRenderer, gameObject, direction);

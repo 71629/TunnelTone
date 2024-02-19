@@ -2,6 +2,7 @@
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.UI.PlayResult;
+using UnityEditor;
 using UnityEngine;
 
 namespace TunnelTone.ScriptableObjects
@@ -29,6 +30,15 @@ namespace TunnelTone.ScriptableObjects
 
         private Score scoreData;
         private static SongData currentlyPlaying;
+
+        private AnimationCurve defaultTimingData => new()
+        {
+            keys = new[]
+            {
+                new Keyframe(0, 0),
+                new Keyframe(music.length * 1000, music.length * 1000)
+            }
+        };
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InitializeOnLoad()
@@ -44,6 +54,23 @@ namespace TunnelTone.ScriptableObjects
                 ResultScreen.playResult.jacket = currentlyPlaying.jacket;
             });
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Generate timing data")]
+        public void GenerateTimingData()
+        {
+            foreach (var chart in charts)
+            {
+                if(chart is null) continue;
+                if (chart.timingSheet.length > 1) continue;
+                chart.timingSheet = defaultTimingData;
+                AnimationUtility.SetKeyLeftTangentMode(chart.timingSheet, 0, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyRightTangentMode(chart.timingSheet, 0, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyLeftTangentMode(chart.timingSheet, 1, AnimationUtility.TangentMode.Linear);
+                AnimationUtility.SetKeyRightTangentMode(chart.timingSheet, 1, AnimationUtility.TangentMode.Linear);
+            }
+        }
+#endif
 
         private void OnEnable()
         {

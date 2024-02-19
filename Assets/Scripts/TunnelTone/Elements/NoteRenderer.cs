@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
@@ -24,7 +25,6 @@ namespace TunnelTone.Elements
         public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
         public static GameObject TrailReference => TrailList.Last();
-        public static AnimationCurve timingSheet;
         
         #endregion
         
@@ -44,9 +44,16 @@ namespace TunnelTone.Elements
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
+
         
+
         // Debug
         private float _currentTime;
+
+        //Test Song Bar
+        //private GameObject Fill;
+        //public RectTransform FillArea;
+        //public Vector2 fillVector2;
 
         private void Update()
         {
@@ -55,6 +62,8 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
+            //Fill = GameObject.Find("Music Play/UI/Progress/Fill Area/Fill");
+            //fillVector2 = Fill.transform.position;
             transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
             SystemEvent.OnChartLoadFinish.AddListener(delegate
@@ -91,14 +100,16 @@ namespace TunnelTone.Elements
         {
             Debug.Log(ScoreManager.totalCombo);
             isPlaying = true;
+            InteractionManager.Instance.Enable();
             while (true)
             {
                 if (transform.childCount == 0)
                 {
                     ChartEventReference.Instance.OnSongEnd.Trigger();
+                    InteractionManager.Instance.Disable();
                     yield break;
                 }
-                yield return transform.localPosition = new Vector3(0, 0, chartSpeedModifier * (-1000 * CurrentTime + offsetTime + StartDelay + universalOffset));
+                yield return transform.localPosition = new Vector3(0, 0, -chartSpeedModifier * (1000 * CurrentTime + offsetTime + StartDelay + universalOffset).TranslateTiming());
             }
         }
 
@@ -107,6 +118,9 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnPause.Trigger();
             UIElementReference.Instance.pause.SetActive(true);
             AudioListener.pause = true;
+
+            //LeanTween.pause(Fill);
+
             particleSystem.Pause();
         }
         
@@ -114,6 +128,9 @@ namespace TunnelTone.Elements
         {
             ChartEventReference.Instance.OnResume.Trigger();
             UIElementReference.Instance.pause.SetActive(false);
+
+            //LeanTween.resume(Fill);
+
             AudioListener.pause = false;
             particleSystem.Play();
         }
@@ -126,6 +143,9 @@ namespace TunnelTone.Elements
         
         public void Retry()
         {
+            //LeanTween.cancel(Fill);
+            //Fill.transform.position = new Vector2(-86.15f, 47.60f);
+            //LeanTween.move(Fill, fillVector2, 0.1f);
             isPlaying = false;
             StopAllCoroutines();
             transform.position = Vector3.zero;
@@ -134,6 +154,8 @@ namespace TunnelTone.Elements
                 if (gb.gameObject == gameObject) continue;
                 Destroy(gb.gameObject);
             }
+            //Fill.transform.position = new Vector2(0,Fill.transform.position.z);
+
             ChartEventReference.Instance.OnRetry.Trigger();
             SystemEvent.OnChartLoadFinish.AddListener(ResumeForListener);
         }
@@ -141,6 +163,7 @@ namespace TunnelTone.Elements
         public void Quit()
         {
             ChartEventReference.Instance.OnQuit.Trigger();
+            //LeanTween.move(Fill, fillVector2, 0.1f);
         }
 
         public void StartSong()
@@ -151,10 +174,11 @@ namespace TunnelTone.Elements
             dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
             Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
-
+            
+            //LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
             audioSource.time = 0;
             audioSource.volume = .2f;
-            audioSource.PlayDelayed(StartDelay / 1000f);
+            audioSource.PlayScheduled(AudioSettings.dspTime + StartDelay / 1000);
             StartCoroutine(PlayChart());
         }
     }

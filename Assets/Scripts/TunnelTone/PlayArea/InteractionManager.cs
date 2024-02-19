@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using TunnelTone.Elements;
+using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;
@@ -14,20 +15,69 @@ namespace TunnelTone.PlayArea
     {
         private static Touchscreen Touchscreen => Touchscreen.current;
         private static ReadOnlyArray<TouchControl> Touches => Touchscreen.touches;
-        private static Camera MainCamera => UIElementReference.Instance.mainCamera;
+
+        private static Touch[] touches;
+
+        [SerializeField] private RectTransform interactionRectRoot;
+
+        [SerializeField] private Camera canvasCamera;
         [SerializeField] private GameObject touchPrefab;
-
-        [SerializeField] private Material leftTrailHit, rightTrailHit;
-
-        private void Update()
+        [SerializeField] public InputReader inputReader;
+        
+        public void Enable()
         {
-            if (Touchscreen is not { wasUpdatedThisFrame: true } || !NoteRenderer.isPlaying) return;
-            
-            // Tap note interaction
-            foreach (var touch in Touches.Where(touch => touch.phase.value == TouchPhase.Began))
+            touches = new Touch[10];
+            for (var i = 0; i < touches.Length; i++)
             {
-                Instantiate(touchPrefab, transform).GetComponent<Touch>().Initialize(in touch).FindTap();
+                var instance = Instantiate(touchPrefab, interactionRectRoot);
+                instance.gameObject.SetActive(false);
+                touches[i] = instance.GetComponent<Touch>();
+                touches[i].pointerId = i;
             }
+            
+            inputReader.TouchDown += OnTouchDown;
+            inputReader.TouchMove += OnTouchMove;
+            inputReader.TouchUp += OnTouchUp;
         }
+
+        private static void OnTouchUp(int pointerId, double _, Vector2 screenPosition)
+        {
+            touches[pointerId].gameObject.SetActive(false);
+        }
+
+        private void OnTouchMove(int pointerId, double _, Vector2 screenPosition)
+        { 
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(interactionRectRoot, screenPosition, canvasCamera, out var canvasPosition)) return;
+            
+            touches[pointerId].AnchoredPosition = canvasPosition;
+        }
+        
+        private void OnTouchDown(int pointerId, double _, Vector2 screenPosition)
+        {
+            if(!RectTransformUtility.ScreenPointToLocalPointInRectangle(interactionRectRoot, screenPosition, canvasCamera, out var canvasPosition)) return;
+            
+            var touch = touches[pointerId];
+            touch.AnchoredPosition = canvasPosition;
+            touch.gameObject.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            inputReader.TouchDown -= OnTouchDown;
+            inputReader.TouchMove -= OnTouchMove;
+            inputReader.TouchUp -= OnTouchUp;   
+        }
+
+
+        // private void Update()
+        // {
+        //     if (Touchscreen is not { wasUpdatedThisFrame: true } || !NoteRenderer.isPlaying) return;
+        //     
+        //     // Tap note interaction
+        //     foreach (var touch in Touches.Where(touch => touch.phase.value == TouchPhase.Began))
+        //     {
+        //         Instantiate(touchPrefab, transform).GetComponent<Touch>().Initialize(in touch).FindTap();
+        //     }
+        // }
     }
 }

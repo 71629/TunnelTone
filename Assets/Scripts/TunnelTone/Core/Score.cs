@@ -2,13 +2,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using Newtonsoft.Json;
-using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.SongList;
-using UnityEditor;
 using UnityEngine;
 
 namespace TunnelTone.Core

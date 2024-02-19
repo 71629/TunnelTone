@@ -55,9 +55,10 @@ namespace TunnelTone.GameSystem
         private IEnumerator Preview()
         {
             audioSource.volume = .2f;
-            audioSource.Play();
             
             audioSource.time = current.previewStart * 0.001f;
+            audioSource.Play();
+            
             yield return new WaitUntil(() => audioSource.time >= (current.previewStart + current.previewDuration) * 0.001f);
             FadePreview();
         }
