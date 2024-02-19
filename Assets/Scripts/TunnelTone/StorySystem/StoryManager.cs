@@ -20,8 +20,8 @@ namespace TunnelTone.StorySystem
         
         private static IEnumerator<StoryElement> timeline;
         private static StoryElement previous;
-        private static bool isStoryLoaded;
         public static bool isTransitionComplete;
+        private static bool isStoryLoaded;
         
         public static event TransitionStartEvent TransitionStart;
         public static event TransitionCompleteEvent TransitionComplete;
@@ -35,12 +35,11 @@ namespace TunnelTone.StorySystem
         
         [SerializeField] private Image blackScreen;
         [SerializeField] private TMP_Text blackScreenText;
-        
-        [Header("Debug")]
-        [SerializeField] private Story story;
 
-        private void Start() => LoadStory(story);
-
+        /// <summary>
+        /// Use this method to load a story object to StoryManager.
+        /// </summary>
+        /// <param name="story">Story object</param>
         public static void LoadStory(Story story)
         {
             timeline = story.GetEnumerator();
@@ -48,7 +47,10 @@ namespace TunnelTone.StorySystem
             TransitionStart += StartTransition;
             TransitionComplete += CompleteTransition;
         }
-
+        
+        /// <summary>
+        /// Call this method to process the next StoryElement object in the loaded Story object.
+        /// </summary>
         public void Step()
         {
             if (!isTransitionComplete)
@@ -107,8 +109,8 @@ namespace TunnelTone.StorySystem
         
         private static void UnloadStory()
         {
-            timeline.Dispose();
             isStoryLoaded = false;
+            timeline.Dispose();
         }
         
         public void SetSpeakerName(string name)

@@ -36,6 +36,7 @@ namespace TunnelTone.UI.Reference
         public Canvas dialog;
         public Canvas mainMenu;
         public Canvas topView;
+        public Canvas musicPlayDecoration;
 
         [Header("UI Elements")] 
         public GameObject pause;

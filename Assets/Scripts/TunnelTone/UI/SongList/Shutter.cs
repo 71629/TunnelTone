@@ -9,6 +9,8 @@ using UnityEngine.Events;
 
 namespace TunnelTone.UI.SongList
 {
+    //TODO: This class sucks. It needs to be refactored.
+    
     public class Shutter : Singleton<Shutter>
     {
         private Animator shutterAnimator => UIElementReference.Instance.shutterAnimator;
@@ -55,6 +57,18 @@ namespace TunnelTone.UI.SongList
                 onSealedCallback?.Invoke();
             });
         }
+
+        public void ToMainMenu(Action onSealedCallback = null)
+        {
+            CloseShutter(() =>
+            {
+                UIElementReference.Instance.songList.enabled = false;
+                UIElementReference.Instance.topView.enabled = true;
+                UIElementReference.Instance.mainMenu.enabled = true;
+                onSealedCallback?.Invoke();
+                OpenShutter();
+            });
+        }
         
         internal void Retry(Action onSealedCallback = null)
         {
@@ -80,6 +94,7 @@ namespace TunnelTone.UI.SongList
             
             CloseShutter(() =>
             {
+                UIElementReference.Instance.musicPlayDecoration.enabled = false;
                 UIElementReference.Instance.musicPlay.enabled = false;
                 SystemEvent.OnDisplayResult.Trigger();
                 NoteRenderer.OnDestroyChart.Trigger();

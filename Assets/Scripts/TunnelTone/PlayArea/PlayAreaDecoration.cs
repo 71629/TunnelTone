@@ -8,6 +8,7 @@ namespace TunnelTone.PlayArea
     public class PlayAreaDecoration : MonoBehaviour
     {
         [SerializeField] private Image jacket;
+        [SerializeField] private Canvas canvas;
 
         private void Start()
         {
@@ -17,6 +18,7 @@ namespace TunnelTone.PlayArea
                 
                 if (songData.jacket is not null)
                 {
+                    canvas.enabled = true;
                     jacket.sprite = songData.jacket;
                 }
             });
