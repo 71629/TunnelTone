@@ -1,3 +1,15 @@
+/*
+SimpleSpectrum.cs - Part of Simple Spectrum V2.1 by Sam Boyer.
+*/
+
+#if !UNITY_WEBGL
+#define MICROPHONE_AVAILABLE
+#endif
+
+#if UNITY_WEBGL && !UNITY_EDITOR 
+#define WEB_MODE //different to UNITY_WEBGL, as we still want functionality in the Editor!
+#endif
+
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -10,7 +22,7 @@ public class SimpleSpectrum : MonoBehaviour {
     }
 
     [SerializeField]
-    public AudioMixerGroup muteGroup; //the AudioMixerGroup used for silent tracks (microphones).
+    public AudioMixerGroup muteGroup; //the AudioMixerGroup used for silent tracks (microphones). Don't change.
 
     /// <summary>
     /// Enables or disables the processing and display of spectrum data. 
@@ -69,6 +81,21 @@ public class SimpleSpectrum : MonoBehaviour {
     /// </summary>
     [Tooltip("The upper bound of the freuqnecy range to sample from. Leave at 22050 (44100/2) when unused.")]
     public float frequencyLimitHigh = 22050;
+
+    /*
+    /// <summary>
+    /// Determines what percentage of the full frequency range to use (1 being the full range, reducing the value towards 0 cuts off high frequencies).
+    /// This can be useful when using MP3 files or audio with missing high frequencies.
+    /// </summary>
+    [Range(0, 1)]
+    [Tooltip("Determines what percentage of the full frequency range to use (1 being the full range, reducing the value towards 0 cuts off high frequencies).\nThis can be useful when using MP3 files or audio with missing high frequencies.")]
+    public float highFrequencyTrim = 1;
+    /// <summary>
+    /// When useLogarithmicFrequency is false, this value stretches the spectrum data onto the bars.
+    /// </summary>
+    [Tooltip("Stretches the spectrum data when mapping onto the bars. A lower value means the spectrum is populated by lower frequencies.")]
+    public float linearSampleStretch = 1;
+    */
 #endregion
 
 #region BAR PROPERTIES
@@ -164,6 +191,10 @@ public class SimpleSpectrum : MonoBehaviour {
     public float colorDecayDamp = 1;
 #endregion
 
+    /// <summary>
+    /// The raw audio spectrum data. Can be set to custom values if the sourceType is set to Custom.
+    /// (For a 1:1 data to bar mapping, set barAmount equal to numSamples, disable useLogarithmicFrequency and set linearSampleStretch to 1)
+    /// </summary>
     public float[] spectrumInputData
     {
         get
@@ -385,8 +416,12 @@ public class SimpleSpectrum : MonoBehaviour {
             {
                 if (sourceType == SourceType.AudioListener)
                 {
+#if WEB_MODE
+                    SSWebInteract.GetSpectrumData(spectrum); //get the spectrum data from the JS lib
+#else
                     AudioListener.GetSpectrumData(spectrum, sampleChannel, windowUsed); //get the spectrum data
                     //Debug.Log(spectrum[0]);
+#endif
                 }
                 else
                 {
@@ -433,12 +468,22 @@ public class SimpleSpectrum : MonoBehaviour {
 
                     trueSampleIndex = Mathf.Lerp(frequencyLimitLow, freqLim, (highestLogFreq - Mathf.Log(barAmount + 1 - i, 2)) / highestLogFreq) * frequencyScaleFactor;
                     
+                    //'logarithmic frequencies' just means we want to bias to the lower frequencies.
+                    //by doing log2(max(i)) - log2(max(i) - i), we get a flipped log graph
+                    //(make a graph of log2(64)-log2(64-x) to see what I mean)
+                    //this isn't finished though, because that graph doesn't actually map the bar index (x) to the spectrum index (y).
+                    //then we divide by highestLogFreq to make the graph to map 0-barAmount on the x axis to 0-1 in the y axis.
+                    //we then use this to Lerp between frequency limits, and then an index is calculated.
+                    //also 1 gets added to barAmount pretty much everywhere, because without it, the log hits (barAmount-1,max(freq))
 
                 } else {
 					//LINEAR (SCALED) FREQUENCY SAMPLING 
                     //trueSampleIndex = i * linearSampleStretch; //don't like this anymore
 
                     trueSampleIndex = Mathf.Lerp(frequencyLimitLow, freqLim, ((float)i) / barAmount) * frequencyScaleFactor;
+                    //sooooo this one's gotten fancier...
+                    //firstly a lerp is used between frequency limits to get the 'desired frequency', then it's divided by the outputSampleRate (/2, who knows why) to get its location in the array, then multiplied by numSamples to get an index instead of a fraction.
+
                 }
 
                 //the true sample is usually a decimal, so we need to lerp between the floor and ceiling of it.
