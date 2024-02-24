@@ -12,6 +12,8 @@ namespace TunnelTone.Elements
     {
         public Vector2 position;
         public float time;
+        public AudioSource soundEffect;
+        private GameObject _SE;
         private GameObject hitHint;
         private GameObject audioSource;
         private float offset;
@@ -69,6 +71,9 @@ namespace TunnelTone.Elements
             
             IntegrityGauge.OnSuddenDeath.AddListener(AssumeMiss);
             ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
+
+            _SE = GameObject.FindGameObjectWithTag("SE");
+            soundEffect = _SE.GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -135,7 +140,8 @@ namespace TunnelTone.Elements
                 <= 100 => Great,
                 <= 120 => Bad,
             };
-
+            
+            soundEffect.Play();
             GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), hitHint.transform.position, Quaternion.identity, hitHint.transform.parent);
             effect.transform.localScale = Vector3.one * 1.25f;
             var component = effect.GetComponent<Image>();
