@@ -2,6 +2,7 @@
 using System.Collections;
 using TunnelTone.Elements;
 using TunnelTone.Events;
+using TunnelTone.Exceptions;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;
@@ -92,7 +93,8 @@ namespace TunnelTone.UI.SongList
             shutterAnimator.SetTrigger(Close);
             StartCoroutine(CallbackAfterAnimation(onCompleteCallback));
         }
-        private void OpenShutter() => shutterAnimator.SetTrigger(Open);
+
+        public void OpenShutter() => shutterAnimator.SetTrigger(Open);
         
         private static IEnumerator CallbackAfterAnimation(Action callback)
         {

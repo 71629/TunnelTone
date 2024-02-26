@@ -12,6 +12,7 @@ namespace TunnelTone.StorySystem
     public class Story : ScriptableObject
     {
         public string storyTitle;
+        public string storyDescription;
         [HideInInspector] public List<StoryElement> timeline;
         
         public IEnumerator<StoryElement> GetEnumerator()

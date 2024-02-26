@@ -12,21 +12,24 @@ namespace TunnelTone.StorySystem
 {
     public class StoryManager : Singleton<StoryManager>, IPointerUpHandler
     {
-        private static readonly char[] DelayCharacters = {',', '.', '!', '?', ':', ';', '\n'};
         private const float BlackScreenTransitionTime = 1f;
         private const float BlackScreenTextTransitionTime = 1f;
+        private static readonly char[] DelayCharacters = {',', '.', '!', '?', ':', ';', '\n'};
         private static readonly WaitForSeconds RegularInterval = new(.02f);
         private static readonly WaitForSeconds PunctuationDelay = new(.1f);
         
         private static IEnumerator<StoryElement> timeline;
         private static StoryElement previous;
-        private static bool isStoryLoaded;
         public static bool isTransitionComplete;
+        private static bool isStoryLoaded;
         
+        // In-story events
         public static event TransitionStartEvent TransitionStart;
         public static event TransitionCompleteEvent TransitionComplete;
+        public static event StoryBeginEvent StoryBegin;
         public delegate void TransitionStartEvent();
         public delegate void TransitionCompleteEvent();
+        public delegate void StoryBeginEvent();
         
         [Header("Interface Elements")]
         [SerializeField] private TMP_Text speaker;
@@ -35,12 +38,11 @@ namespace TunnelTone.StorySystem
         
         [SerializeField] private Image blackScreen;
         [SerializeField] private TMP_Text blackScreenText;
-        
-        [Header("Debug")]
-        [SerializeField] private Story story;
 
-        private void Start() => LoadStory(story);
-
+        /// <summary>
+        /// Use this method to load a story object to StoryManager.
+        /// </summary>
+        /// <param name="story">Story object</param>
         public static void LoadStory(Story story)
         {
             timeline = story.GetEnumerator();
@@ -48,7 +50,10 @@ namespace TunnelTone.StorySystem
             TransitionStart += StartTransition;
             TransitionComplete += CompleteTransition;
         }
-
+        
+        /// <summary>
+        /// Call this method to process the next StoryElement object in the loaded Story object.
+        /// </summary>
         public void Step()
         {
             if (!isTransitionComplete)
@@ -107,8 +112,8 @@ namespace TunnelTone.StorySystem
         
         private static void UnloadStory()
         {
-            timeline.Dispose();
             isStoryLoaded = false;
+            timeline.Dispose();
         }
         
         public void SetSpeakerName(string name)
