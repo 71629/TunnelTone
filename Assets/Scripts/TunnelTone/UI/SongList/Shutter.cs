@@ -92,7 +92,8 @@ namespace TunnelTone.UI.SongList
             shutterAnimator.SetTrigger(Close);
             StartCoroutine(CallbackAfterAnimation(onCompleteCallback));
         }
-        private void OpenShutter() => shutterAnimator.SetTrigger(Open);
+
+        public void OpenShutter() => shutterAnimator.SetTrigger(Open);
         
         private static IEnumerator CallbackAfterAnimation(Action callback)
         {
