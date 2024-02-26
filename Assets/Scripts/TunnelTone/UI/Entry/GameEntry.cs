@@ -83,7 +83,7 @@ namespace TunnelTone.UI.Entry
         {
             start.interactable = false;
 
-            Shutter.Instance.ToSongList(() => canvas.enabled = false);
+            Shutter.Instance.ToMainMenu(() => canvas.enabled = false);
         }
         private void DisplayNotice(string text)
         {
