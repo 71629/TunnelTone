@@ -46,6 +46,11 @@ namespace TunnelTone.Core
         [SerializeField] private TextMeshProUGUI topDisplayModeText;
         [SerializeField] private Button nextTopDisplayMode;
         [SerializeField] private Button previousTopDisplayMode;
+        [SerializeField] private Image[] tapImage;
+        [SerializeField] private GameObject tapPref;
+        [SerializeField] private Image DisplayImage;
+        [SerializeField] private Button nextTapButton;
+        [SerializeField] private Button backTapButton;
 
         [Header("Display Settings")] 
         [SerializeField] private TextMeshProUGUI fps60;
@@ -80,7 +85,41 @@ namespace TunnelTone.Core
             SystemEvent.OnEnterSettings.AddListener(delegate { FetchSettings(); });
             currentSettings = Settings.instance;
         }
-
+        public void tapImageChange(bool click)
+        {
+            int i = 0;
+            for (; i < tapImage.Length; i++)
+            {
+                if(tapImage[i].sprite == DisplayImage.sprite)
+                {
+                    break;
+                }
+            }
+            if (click)
+            {
+                if(i<tapImage.Length-1)
+                {
+                    DisplayImage.sprite = tapImage[i+1].sprite;
+                }
+                else
+                {
+                    DisplayImage.sprite = tapImage[0].sprite;
+                }
+            }
+            else
+            {
+                if (i  > 0)
+                {
+                    DisplayImage.sprite = tapImage[i - 1].sprite;
+                }
+                else
+                {
+                    DisplayImage.sprite = tapImage[tapImage.Length-1].sprite;
+                }
+            }
+            Debug.Log(i);
+            
+        }
         private void FetchSettings()
         {
             noteSpeedText.text = $"{currentSettings.chartSpeed:0.0}";
@@ -171,6 +210,7 @@ namespace TunnelTone.Core
         public void ApplySettings()
         {
             Settings.ApplySettings(currentSettings);
+            tapPref.GetComponent<Image>().sprite = DisplayImage.sprite;
         }
 
         public void RevertSettings()
