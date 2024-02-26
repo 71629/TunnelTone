@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +23,12 @@ namespace TunnelTone.UI.Menu
 
         public void ToStoryMode()
         {
-            throw new NotImplementedException();
+            Shutter.Instance.CloseShutter(() =>
+            {
+                UIElementReference.Instance.mainMenu.enabled = false;
+                UIElementReference.Instance.storyMap.enabled = true;
+                Shutter.Instance.OpenShutter();
+            });
         }
     }
 }

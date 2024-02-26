@@ -1,5 +1,4 @@
 ﻿using System;
-using TunnelTone.UI.Dialog;
 
 namespace TunnelTone.Exceptions
 {

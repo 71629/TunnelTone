@@ -2,7 +2,6 @@
 using System.Collections;
 using TunnelTone.Elements;
 using TunnelTone.Events;
-using TunnelTone.Exceptions;
 using TunnelTone.Singleton;
 using TunnelTone.UI.Reference;
 using UnityEngine;

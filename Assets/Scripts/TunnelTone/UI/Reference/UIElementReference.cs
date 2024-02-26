@@ -47,20 +47,5 @@ namespace TunnelTone.UI.Reference
         public Material leftTrailHit;
         public Material rightTrail;
         public Material rightTrailHit;
-
-        public void ToSongSelect()
-        {
-            
-        }
-        
-        public void ToMusicPlay()
-        {
-            
-        }
-
-        public void ToMainMenu()
-        {
-            
-        }
     }
 }

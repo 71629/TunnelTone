@@ -68,6 +68,15 @@ namespace TunnelTone.StorySystem
                 Clear();
             });
         }
-
+        
+        public void ToMainMenu()
+        {
+            Shutter.Instance.CloseShutter(() =>
+            {
+                UIElementReference.Instance.storyInterface.enabled = false;
+                UIElementReference.Instance.mainMenu.enabled = true;
+                Shutter.Instance.OpenShutter();
+            });
+        }
     }
 }
