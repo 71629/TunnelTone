@@ -56,6 +56,17 @@ namespace TunnelTone.UI.SongList
             });
         }
         
+        internal void ToMainMenu(Action onSealedCallback = null)
+        {
+            CloseShutter(() =>
+            {
+                UIElementReference.Instance.mainMenu.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                OpenShutter();
+                onSealedCallback?.Invoke();
+            });
+        }
+        
         internal void Retry(Action onSealedCallback = null)
         {
             CloseShutter(() =>
