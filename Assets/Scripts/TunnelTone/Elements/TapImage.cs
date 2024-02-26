@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class TapImage : MonoBehaviour
+namespace TunnelTone.Elements
 {
-    [SerializeField] private Image tapImage;
-    [SerializeField] private GameObject tapPref;
 
-    private void Start()
+    public class TapImage : MonoBehaviour
     {
-        //tapImage = GetComponent<Image>();
-    }
+        [SerializeField] private Image tapImage;
+        [SerializeField] private GameObject tapPref;
 
-    private void Update()
-    {
-        tapPref.GetComponent<Image>().sprite = tapImage.sprite;
+        private void Start()
+        {
+            tapPref.GetComponent<Image>().sprite = tapImage.sprite;
+        }
     }
 }
