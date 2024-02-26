@@ -1,13 +1,8 @@
-﻿using System.Linq;
-using TunnelTone.Elements;
-using TunnelTone.Events;
-using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
+﻿using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace TunnelTone.PlayArea
 {

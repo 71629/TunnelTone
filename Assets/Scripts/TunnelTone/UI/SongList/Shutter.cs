@@ -56,6 +56,17 @@ namespace TunnelTone.UI.SongList
             });
         }
         
+        internal void ToMainMenu(Action onSealedCallback = null)
+        {
+            CloseShutter(() =>
+            {
+                UIElementReference.Instance.mainMenu.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                OpenShutter();
+                onSealedCallback?.Invoke();
+            });
+        }
+        
         internal void Retry(Action onSealedCallback = null)
         {
             CloseShutter(() =>
@@ -92,7 +103,8 @@ namespace TunnelTone.UI.SongList
             shutterAnimator.SetTrigger(Close);
             StartCoroutine(CallbackAfterAnimation(onCompleteCallback));
         }
-        private void OpenShutter() => shutterAnimator.SetTrigger(Open);
+
+        public void OpenShutter() => shutterAnimator.SetTrigger(Open);
         
         private static IEnumerator CallbackAfterAnimation(Action callback)
         {

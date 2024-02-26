@@ -36,6 +36,8 @@ namespace TunnelTone.UI.Reference
         public Canvas dialog;
         public Canvas mainMenu;
         public Canvas topView;
+        public Canvas storyInterface;
+        public Canvas storyMap;
 
         [Header("UI Elements")] 
         public GameObject pause;
@@ -45,20 +47,5 @@ namespace TunnelTone.UI.Reference
         public Material leftTrailHit;
         public Material rightTrail;
         public Material rightTrailHit;
-
-        public void ToSongSelect()
-        {
-            
-        }
-        
-        public void ToMusicPlay()
-        {
-            
-        }
-
-        public void ToMainMenu()
-        {
-            
-        }
     }
 }
