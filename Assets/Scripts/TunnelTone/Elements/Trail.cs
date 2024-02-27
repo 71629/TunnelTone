@@ -13,6 +13,11 @@ namespace TunnelTone.Elements
     [RequireComponent(typeof(SphereCollider))]
     public partial class Trail : MonoBehaviour
     {
+        private static readonly int[] MeshTriangleSequence = { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1 };
+        private static readonly Vector2 DefaultUV = Vector2.one / 2;
+        private static readonly Vector2[] MeshUVSequence = { DefaultUV, DefaultUV, DefaultUV, DefaultUV, DefaultUV };
+        private static readonly float TwistModifier = Mathf.Pow(0.4f, 3);
+        
         // Basic trail properties
         internal float startTime, endTime;
         internal Vector2 startCoordinate, endCoordinate;
@@ -128,6 +133,8 @@ namespace TunnelTone.Elements
             spline = splineContainer.Spline;
             
             // Create curve with respect previewDuration easing and easing ratio
+            var chartSpeedModifier = NoteRenderer.Instance.chartSpeedModifier;
+            var easingModifier = Mathf.Pow(easingRatio, 2) * (endTime - startTime);
             switch (easing)
             {
                 case EasingMode.Straight:
@@ -136,23 +143,23 @@ namespace TunnelTone.Elements
                     break;
                 case EasingMode.EaseIn:
                     spline.Insert(0, new BezierKnot(startPosition, 0, 0, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -easingModifier) * chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.EaseOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, easingModifier) * chartSpeedModifier, quaternion.identity));
                     spline.Insert(1, new BezierKnot(endPosition, 0, 0, quaternion.identity));
                     break;
                 case EasingMode.Bezier:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -Mathf.Pow(easingRatio, 2) * (endTime - startTime)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, 0, easingModifier) * chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, 0, -easingModifier) * chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.HorizontalInVerticalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(TwistModifier * (endPosition - startPosition).x, 0, Mathf.Abs(TwistModifier * (endPosition - startPosition).x)) * chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(0, -TwistModifier * (endPosition - startPosition).y, -Mathf.Abs(TwistModifier * (endPosition - startPosition).y)) * chartSpeedModifier, 0, quaternion.identity));
                     break;
                 case EasingMode.VerticalInHorizontalOut:
-                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y, Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).y)) * NoteRenderer.Instance.chartSpeedModifier, quaternion.identity));
-                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x, 0, -Mathf.Abs(Mathf.Pow(0.4f, 3) * (endPosition - startPosition).x)) * NoteRenderer.Instance.chartSpeedModifier, 0, quaternion.identity));
+                    spline.Insert(0, new BezierKnot(startPosition, 0, new Vector3(0, TwistModifier * (endPosition - startPosition).y, Mathf.Abs(TwistModifier * (endPosition - startPosition).y)) * chartSpeedModifier, quaternion.identity));
+                    spline.Insert(1, new BezierKnot(endPosition, new Vector3(-TwistModifier * (endPosition - startPosition).x, 0, -Mathf.Abs(TwistModifier * (endPosition - startPosition).x)) * chartSpeedModifier, 0, quaternion.identity));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);
@@ -166,34 +173,12 @@ namespace TunnelTone.Elements
 
         internal void BuildHead(Vector3 position, float time, bool virtualTrail)
         {
-
-            var vertices = trailContext.GetVertices(position, time);
-
-            var triangles = new List<int>
+            meshFilter.mesh = new Mesh
             {
-                0, 1, 2, 
-                0, 2, 3, 
-                0, 3, 4,
-                0, 4, 1
+                vertices = trailContext.GetVertices(position, time),
+                triangles = MeshTriangleSequence,
+                uv = MeshUVSequence
             };
-
-            var uv = new List<Vector2>
-            {
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f),
-                new(0.5f, 0.5f)
-            };
-
-            var mesh1 = new Mesh
-            {
-                vertices = vertices.ToArray(),
-                triangles = triangles.ToArray(),
-                uv = uv.ToArray()
-            };
-
-            meshFilter.mesh = mesh1;
         }
 
         internal IEnumerator TrailHint()
