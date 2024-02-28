@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
@@ -18,16 +17,35 @@ namespace TunnelTone.Elements
     {
         protected readonly Trail t;
 
-        internal TrailType(Trail t) => this.t = t;
+        protected readonly float headTailZAxisDelta;
+        protected readonly float3 headPosition;
+        protected readonly float3 tailPosition;
+        protected readonly float headZPosition;
+        protected readonly float tailZPosition;
+
+        protected float trailWidth;
+
+        internal TrailType(Trail t)
+        {
+            this.t = t;
+            headTailZAxisDelta = t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z;
+            headPosition = t.spline.EvaluatePosition(0);
+            tailPosition = t.spline.EvaluatePosition(1);
+            headZPosition = headPosition.z;
+            tailZPosition = tailPosition.z;
+        }
         
         internal abstract void Initialize();
-        internal abstract List<Vector3> GetVertices(Vector3 position, float time);
+        internal abstract Vector3[] GetVertices(Vector3 position, float time);
         internal abstract void ConfigureCollider();
     }
     
     internal class RealTrail : TrailType
     {
-        internal RealTrail(Trail t) : base(t){}
+        internal RealTrail(Trail t) : base(t)
+        {
+            trailWidth = 40;
+        }
 
         internal override void Initialize()
         {
@@ -39,21 +57,21 @@ namespace TunnelTone.Elements
                     $"Given direction is not valid for Trail type: {t.Direction}")
             };
             t.trailHint = Object.Instantiate(t.trailHintObject, GameObject.Find("Hit Zone").transform).GetComponent<TrailHint>();
-            t.trailHint.transform.localPosition = new Vector3(t.spline.EvaluatePosition(0).x, t.spline.EvaluatePosition(0).y, 0);
+            t.trailHint.transform.localPosition = new Vector3(headPosition.x, headPosition.y, 0);
             t.StartCoroutine(t.TrailHint());
             
             var bpm = NoteRenderer.Instance.currentBpm;
-            t.BuildHead(t.spline.EvaluatePosition(0), t.startTime * NoteRenderer.Instance.chartSpeedModifier, false);
+            t.BuildHead(headPosition, t.startTime * NoteRenderer.Instance.chartSpeedModifier, false);
 
             var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
-            for (var i = 0f; i < 1; i += density * 1000 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
+            for (var i = 0f; i < 1; i += density * 1000 / headTailZAxisDelta)
             {
                 BuildCombo(out _, (Vector3)t.spline.EvaluatePosition(i),
                     (t.spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
             }
             // Build subsegments
             float tail = 0;
-            for(var i = 0f; i < 1; i += 350 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
+            for(var i = 0f; i < 1; i += 350 / headTailZAxisDelta)
             {
                 BuildSubsegment(tail, i);
                 tail = i;
@@ -66,20 +84,20 @@ namespace TunnelTone.Elements
             Object.Instantiate(t.trailSubsegmentPrefab, t.transform).GetComponent<TrailSubsegment>().Initialize(t, t.spline, 
                 (Vector3)t.spline.EvaluatePosition(tail), 
                 (Vector3)t.spline.EvaluatePosition(i), 
-                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(tail).z)), 
-                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(t.spline.EvaluatePosition(0).z, t.spline.EvaluatePosition(1).z, t.spline.EvaluatePosition(i).z))
+                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(headZPosition, tailZPosition, t.spline.EvaluatePosition(tail).z)), 
+                Mathf.Lerp(t.startTime, t.endTime, Mathf.InverseLerp(headZPosition, tailZPosition, t.spline.EvaluatePosition(i).z))
             );
         }
 
-        internal override List<Vector3> GetVertices(Vector3 position, float time)
+        internal override Vector3[] GetVertices(Vector3 position, float time)
         {
-            return new List<Vector3>
+            return new[]
             {
-                position + new Vector3(0, 0, -25 + time),
-                position + new Vector3(0, 40, 0 + time),
-                position + new Vector3(40, 0, 0 + time),
-                position + new Vector3(0, -40, 0 + time),
-                position + new Vector3(-40, 0, 0 + time)
+                position + new Vector3(0, 0,  time - 25),
+                position + new Vector3(0, trailWidth, time),
+                position + new Vector3(trailWidth, 0, time),
+                position + new Vector3(0, -trailWidth, time),
+                position + new Vector3(-trailWidth, 0, time)
             };
         }
 
@@ -112,7 +130,10 @@ namespace TunnelTone.Elements
     
     internal class VirtualTrail : TrailType
     {
-        internal VirtualTrail(Trail t) : base(t){}
+        internal VirtualTrail(Trail t) : base(t)
+        {
+            trailWidth = 8;
+        }
 
         internal override void Initialize()
         {
@@ -121,26 +142,26 @@ namespace TunnelTone.Elements
             
             var j = 0;
             t.lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, .5f));
-            for (var i = 0f; i < 1; i += 80 / (t.spline.ElementAt(1).Position.z - t.spline.ElementAt(0).Position.z))
+            for (var i = 0f; i < 1; i += 80 / headTailZAxisDelta)
             {
                 t.lineRenderer.SetPosition(j, t.spline.EvaluatePosition(i));
                 t.lineRenderer.positionCount++;
                 j++;
             }
-            t.lineRenderer.SetPosition(j, t.spline.EvaluatePosition(1));
+            t.lineRenderer.SetPosition(j, tailPosition);
             t.lineRenderer.positionCount--;
             t.lineRenderer.material = t.virtualTrailMaterial;
         }
 
-        internal override List<Vector3> GetVertices(Vector3 position, float time)
+        internal override Vector3[] GetVertices(Vector3 position, float time)
         {
-            return new List<Vector3>
+            return new[]
                 {
-                    position + new Vector3(0, 0, -8 + time),
-                    position + new Vector3(0, 8, 0 + time),
-                    position + new Vector3(8, 0, 0 + time),
-                    position + new Vector3(0, -8, 0 + time),
-                    position + new Vector3(-8, 0, 0 + time)
+                    position + new Vector3(0, 0, time - 8),
+                    position + new Vector3(0, trailWidth, time),
+                    position + new Vector3(trailWidth, 0, time),
+                    position + new Vector3(0, -trailWidth, time),
+                    position + new Vector3(-trailWidth, 0, time)
                 };
         }
 
@@ -152,6 +173,9 @@ namespace TunnelTone.Elements
 
     public partial class Trail
     {
+        // Mask for z axis
+        private static readonly float3 AxisMaskZ = new(1, 1, 0);
+        
         internal IEnumerator UpdateCollider()
         {
             while (spline is not null)
@@ -159,7 +183,7 @@ namespace TunnelTone.Elements
                 var t = Mathf.InverseLerp(startTime, endTime, NoteRenderer.CurrentTime * 1000 + NoteRenderer.Instance.universalOffset);
                 col.center = spline.EvaluatePosition(Mathf.Clamp01(t));
                 
-                trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * new float3(1, 1, 0);
+                trailHint.transform.localPosition = spline.EvaluatePosition(Mathf.Clamp01(t)) * AxisMaskZ;
 
                 yield return null;
             }

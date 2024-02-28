@@ -46,11 +46,14 @@ namespace TunnelTone.Core
         [SerializeField] private TextMeshProUGUI topDisplayModeText;
         [SerializeField] private Button nextTopDisplayMode;
         [SerializeField] private Button previousTopDisplayMode;
-        [SerializeField] private Image[] tapImage;
-        [SerializeField] private GameObject tapPref;
-        [SerializeField] private Image DisplayImage;
-        [SerializeField] private Button nextTapButton;
-        [SerializeField] private Button backTapButton;
+        [Header("Background Effect (Mask) setting")]
+        [SerializeField] private Button disableDBGE;
+        [SerializeField] private Button enableDBGE;
+        [SerializeField] private TextMeshProUGUI disableDBGEText;
+        [SerializeField] private TextMeshProUGUI enableDBGEText;
+        [SerializeField] private GameObject BGMask;
+        [SerializeField] private Image bgLine;
+        private bool applys;
 
         [Header("Display Settings")] 
         [SerializeField] private TextMeshProUGUI fps60;
@@ -85,41 +88,7 @@ namespace TunnelTone.Core
             SystemEvent.OnEnterSettings.AddListener(delegate { FetchSettings(); });
             currentSettings = Settings.instance;
         }
-        public void tapImageChange(bool click)
-        {
-            int i = 0;
-            for (; i < tapImage.Length; i++)
-            {
-                if(tapImage[i].sprite == DisplayImage.sprite)
-                {
-                    break;
-                }
-            }
-            if (click)
-            {
-                if(i<tapImage.Length-1)
-                {
-                    DisplayImage.sprite = tapImage[i+1].sprite;
-                }
-                else
-                {
-                    DisplayImage.sprite = tapImage[0].sprite;
-                }
-            }
-            else
-            {
-                if (i  > 0)
-                {
-                    DisplayImage.sprite = tapImage[i - 1].sprite;
-                }
-                else
-                {
-                    DisplayImage.sprite = tapImage[tapImage.Length-1].sprite;
-                }
-            }
-            Debug.Log(i);
-            
-        }
+
         private void FetchSettings()
         {
             noteSpeedText.text = $"{currentSettings.chartSpeed:0.0}";
@@ -154,6 +123,16 @@ namespace TunnelTone.Core
             fpsInfinity.color = currentSettings.targetFrameRate == FPSInfinity ? Color.white : gray;
         }
         
+        private void ResetBGMask()
+        {
+            Color gray = new(1, 1, 1, .5f);
+            fps60.color = currentSettings.targetFrameRate == FPS60 ? Color.white : gray;
+            fps75.color = currentSettings.targetFrameRate == FPS75 ? Color.white : gray;
+            fps90.color = currentSettings.targetFrameRate == FPS90 ? Color.white : gray;
+            fps120.color = currentSettings.targetFrameRate == FPS120 ? Color.white : gray;
+            fps144.color = currentSettings.targetFrameRate == FPS144 ? Color.white : gray;
+            fpsInfinity.color = currentSettings.targetFrameRate == FPSInfinity ? Color.white : gray;
+        }
         // Gameplay
         public void AdjustNoteSpeed(float value)
         {
@@ -210,7 +189,7 @@ namespace TunnelTone.Core
         public void ApplySettings()
         {
             Settings.ApplySettings(currentSettings);
-            tapPref.GetComponent<Image>().sprite = DisplayImage.sprite;
+            BGMaskSetting(applys);
         }
 
         public void RevertSettings()
@@ -218,6 +197,18 @@ namespace TunnelTone.Core
             currentSettings = Settings.LoadSettings();
         }
         
+        public void BGMaskSetting(bool enable)
+        {
+            BGMask.SetActive(disableDBGEText.color == enableDBGEText.color ? true : enable);
+            bgLine.color = disableDBGEText.color == enableDBGEText.color || enable == true ? new(1, 1, 1, .2f) : new(1, 1, 1, .7f);
+        }
+        public void BGMaskSettingButton(bool click)
+        {
+            applys = click;
+            disableDBGEText.color = click ? new(1, 1, 1, .5f) : Color.white;
+            enableDBGEText.color = click ? Color.white : new(1, 1, 1, .5f);
+        }
+
         // UI
         public void SwitchCategory(int value)
         {
