@@ -12,11 +12,9 @@ namespace TunnelTone.Elements
     {
         public Vector2 position;
         public float time;
-        public AudioSource soundEffect;
-        private GameObject _SE;
         private GameObject hitHint;
-        private GameObject audioSource;
-        private float offset;
+        private AudioSource audioSource;
+        public float offset;
         private bool isHit;
         private SphereCollider Collider => GetComponent<SphereCollider>();
 
@@ -31,6 +29,8 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
+            audioSource.clip = Resources.Load<AudioClip>("Music/TapEffect_1");
             gameObject.layer = 10;
             gameObject.tag = "Note";
             hitHint = new GameObject
@@ -71,9 +71,6 @@ namespace TunnelTone.Elements
             
             IntegrityGauge.OnSuddenDeath.AddListener(AssumeMiss);
             ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
-
-            _SE = GameObject.FindGameObjectWithTag("SE");
-            soundEffect = _SE.GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -133,6 +130,7 @@ namespace TunnelTone.Elements
         public void HitEffect(float hitOffset)
         {
             if (hitOffset >= 120) return;
+            audioSource.Play();
             var sprite = hitOffset switch
             {
                 <= 25 => PerfectCritical,
@@ -141,7 +139,7 @@ namespace TunnelTone.Elements
                 <= 120 => Bad,
             };
             
-            soundEffect.Play();
+            
             GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), hitHint.transform.position, Quaternion.identity, hitHint.transform.parent);
             effect.transform.localScale = Vector3.one * 1.25f;
             var component = effect.GetComponent<Image>();
@@ -183,5 +181,6 @@ namespace TunnelTone.Elements
             IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
             Destroy(hitHint);
         }
+        
     }
 }
