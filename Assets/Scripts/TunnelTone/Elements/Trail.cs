@@ -121,7 +121,6 @@ namespace TunnelTone.Elements
             this.endTime = endTime;
             this.startCoordinate = startCoordinate;
             this.endCoordinate = endCoordinate;
-            trailContext = virtualTrail ? new VirtualTrail(this) : new RealTrail(this);
 
             var gameAreaRect = NoteRenderer.Instance.gameArea.GetComponent<RectTransform>().rect;
             startCoordinate = new Vector2(startCoordinate.x * gameAreaRect.width * 0.5f, startCoordinate.y * gameAreaRect.height * 0.5f);
@@ -165,6 +164,7 @@ namespace TunnelTone.Elements
                     throw new ArgumentOutOfRangeException(nameof(easing), easing, null);
             }
 
+            trailContext = virtualTrail ? new VirtualTrail(this) : new RealTrail(this);
             trailContext.Initialize();
             trailContext.ConfigureCollider();
 
