@@ -272,6 +272,7 @@ namespace TunnelTone.UI.PlayResult
         FullCombo = 3,
         FlawlessPlus = 4,
         FlawlessPlusPlus = 5,
-        Failed = 6
+        Failed = 6,
+        Interrupted = 7
     }
 }

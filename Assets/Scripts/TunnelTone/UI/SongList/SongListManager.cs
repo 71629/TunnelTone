@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
+using TunnelTone.UI.Menu;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,36 +15,49 @@ namespace TunnelTone.UI.SongList
 {
     public class SongListManager : Singleton<SongListManager>
     {
+        public SongData[] songContainer;
+        
         [SerializeField] private GameObject container;
-        [SerializeField] internal SongData[] songContainer;
         [SerializeField] private GameObject currentBackground;
         
         internal static SongData currentlySelected;
 
+        private List<SongListItem> songListItems = new();
+        private MusicPlayDescription musicPlayDescription;
+
         private UIElementReference UIElement => UIElementReference.Instance;
-        private float oldSliderValue = 0.15f;
-        
-        private void Start()
+
+        public delegate void StartSongEvent(MusicPlayDescription mpd);
+
+        public static event StartSongEvent SongStart;
+
+        public static void LoadSongList(MusicPlayMode mode)
         {
-            SongListEvent.OnSelectItem.AddListener(OnSelectItem);
+            if (Instance.songContainer is null) return;
 
-            if (songContainer is not null)
-            {
-                var containerRect = container.GetComponent<RectTransform>();
-                containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, songContainer.Length * 160);
+            SongListItem.SelectItem += SetSong;
+            
+            Instance.musicPlayDescription = new MusicPlayDescription { playMode = mode };
+
+            var containerRect = Instance.container.GetComponent<RectTransform>();
+            containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Instance.songContainer.Length * 160);
                 
-                foreach (var song in songContainer)
-                {
-                    if (song is null) continue;
-                    Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"), container.transform)
-                        .GetComponent<SongListItem>()
-                        .SetData(song);
-                }
-            }
+            foreach (var song in Instance.songContainer)
+            {
+                if (song is null) continue;
 
-            currentlySelected = songContainer?[0];
-            // yield return null;
-            // SongListEvent.Instance.OnEnterSongList.Trigger();
+                var item = Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"),
+                        Instance.container.transform)
+                    .GetComponent<SongListItem>()
+                    .SetData(song);
+                Instance.songListItems.Add(item);
+            }
+            Instance.songListItems[0]?.ItemSelected();
+        }
+
+        private static void SetSong(SongData songData)
+        {
+            Instance.musicPlayDescription.songData = songData;
         }
 
         public void StartSong()

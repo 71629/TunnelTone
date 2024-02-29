@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using TunnelTone.Events;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 
@@ -14,23 +15,14 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEvent.OnSelectItem.AddListener(UpdateInfo);
+            SongListItem.SelectItem += UpdateInfo;
         }
 
-        private void UpdateInfo(params object[] param)
+        private void UpdateInfo(SongData songData)
         {
-            var songListItem = (SongListItem)param[0];
-
-            StartCoroutine(IEUpdateInfo(songListItem));
-        }
-
-        IEnumerator IEUpdateInfo(SongListItem songListItem)
-        {
-            yield return null;
-            
-            title.text = songListItem.songData.songTitle;
-            artist.text = songListItem.songData.artist;
-            bpm.text = $"{songListItem.songData.bpm:BPM: 0}";
+            title.text = songData.songTitle;
+            artist.text = songData.artist;
+            bpm.text = $"{songData.bpm:BPM: 0}";
         }
     }
 }

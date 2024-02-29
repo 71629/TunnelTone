@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
@@ -17,6 +18,12 @@ namespace TunnelTone.UI.SongList
         private static readonly int Open = Animator.StringToHash("Open");
 
         internal static UnityEvent<Action> OnShutterClose = new();
+
+        public delegate void ShutterSealEvent();
+        public static event ShutterSealEvent ShutterSeal;
+        
+        public delegate void ShutterOpenEvent();
+        public static event ShutterOpenEvent ShutterOpen;
 
         private void Start()
         {
@@ -39,6 +46,12 @@ namespace TunnelTone.UI.SongList
                 ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
                 ToSongList();
             });
+        }
+
+        public static void Seal(ShutterSealEvent callback)
+        {
+            ShutterSeal += callback;
+            Instance.CloseShutter();
         }
 
         internal void ToSongList(Action onSealedCallback = null)
@@ -104,11 +117,17 @@ namespace TunnelTone.UI.SongList
             StartCoroutine(CallbackAfterAnimation(onCompleteCallback));
         }
 
-        public void OpenShutter() => shutterAnimator.SetTrigger(Open);
+        public void OpenShutter()
+        {
+            shutterAnimator.SetTrigger(Open);
+            ShutterSeal = null;
+            ShutterOpen?.Invoke();
+        }
         
         private static IEnumerator CallbackAfterAnimation(Action callback)
         {
             yield return new WaitForSecondsRealtime(1f);
+            ShutterSeal?.Invoke();
             callback?.Invoke();
         }
     }

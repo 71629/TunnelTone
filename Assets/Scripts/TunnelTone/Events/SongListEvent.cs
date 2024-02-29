@@ -6,7 +6,6 @@ namespace TunnelTone.Events
     {
         public static readonly GameEvent OnEnterSongList = new GameEvent();
         
-        public static readonly GameEvent OnSelectItem = new GameEvent();
         public static readonly GameEvent OnDifficultyChange = new GameEvent();
         public static readonly GameEvent OnSongStart = new GameEvent();
         

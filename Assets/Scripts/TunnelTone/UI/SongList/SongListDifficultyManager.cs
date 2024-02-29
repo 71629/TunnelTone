@@ -2,6 +2,7 @@
 using TMPro;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,7 +57,7 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            SongListEvent.OnSelectItem.AddListener(UpdateDifficulty);
+            SongListItem.SelectItem += UpdateDifficulty;
             SongListEvent.OnEnterSongList.AddListener(delegate
             {
                 ChangeDifficulty(easy);
@@ -64,18 +65,16 @@ namespace TunnelTone.UI.SongList
             });
         }
 
-        private void UpdateDifficulty(params object[] param)
+        private void UpdateDifficulty(SongData songData)
         {
-            var song = (SongListItem)param[0];
-
             LeanTween.cancel(easy.gameObject);
-            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, song.songData.GetDifficulties()[0], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, songData.GetDifficulties()[0], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(hard.gameObject);
-            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, song.songData.GetDifficulties()[1], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, songData.GetDifficulties()[1], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(intensive.gameObject);
-            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, song.songData.GetDifficulties()[2], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, songData.GetDifficulties()[2], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(insane.gameObject);
-            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, song.songData.GetDifficulties()[3], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, songData.GetDifficulties()[3], .35f).setEase(LeanTweenType.easeOutCubic);
         }
 
         private void UpdateSliderValue(Slider slider, TMP_Text ind, float f)

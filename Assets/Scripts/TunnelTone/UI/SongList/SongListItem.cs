@@ -5,6 +5,7 @@ using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
+using UnityEditor;
 using UnityEngine;
 
 namespace TunnelTone.UI.SongList
@@ -29,12 +30,14 @@ namespace TunnelTone.UI.SongList
         public SongData songData;
         
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
-        private static SongListEvent SongListEvent => SongListEvent.Instance;
         private static UIElementReference UIElement => UIElementReference.Instance;
+
+        public delegate void ItemEvent(SongData songData);
+        public static event ItemEvent SelectItem;
         
-        internal void ItemSelected()
+        public void ItemSelected()
         {
-            SongListEvent.OnSelectItem.Trigger(this);
+            SelectItem?.Invoke(songData);
             
             animator.SetBool(IsSelected, true);
             UIElement.songJacket.sprite = songData.jacket;
@@ -42,11 +45,6 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEvent.OnEnterSongList.AddListener(delegate
-            {
-                ItemSelected();
-            });
-            SongListEvent.OnSelectItem.AddListener(OnSelectItem);
             SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
             previewAudio = songData.music;
             difficultyBackground.color = UIElement.easy;
