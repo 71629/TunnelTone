@@ -22,6 +22,7 @@ namespace TunnelTone.Charts
         private static NoteRenderer NoteRenderer => NoteRenderer.Instance;
         private Chart chartCache;
         [SerializeField] private GameObject trailPrefab;
+        [SerializeField] private GameObject tapPrefab;
 
         private void Start()
         {
@@ -126,22 +127,15 @@ namespace TunnelTone.Charts
                 foreach(var tap in trail.taps)
                 {
                     var spline = NoteRenderer.TrailReference.GetComponent<SplineContainer>().Spline;
-                    var scale = new Vector3(0.6f, 0.6f, 0.6f);
-                    var tgb = new GameObject("Tap")
-                    {
-                        transform =
-                        {
-                            parent = NoteRenderer.TrailReference.transform,
-                            localPosition = spline.EvaluatePosition((tap.time * NoteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
-                            rotation = Quaternion.Euler(0, 0, 45),
-                            localScale = scale
-                        }
-                    };
-                    tgb.AddComponent<Image>();
-                    var noteConfig = tgb.AddComponent<Tap>();
-                    noteConfig.position = tgb.transform.localPosition;
-                    noteConfig.time = tap.time;
-            
+
+                    var tapNote = Instantiate(tapPrefab, NoteRenderer.TrailReference.transform).GetComponent<Tap>();
+                    GameObject tgb;
+                    (tgb = tapNote.gameObject).transform.localPosition = spline.EvaluatePosition(
+                        (tap.time * NoteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z /
+                        (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z));
+                    tapNote.position = tgb.transform.localPosition;
+                    tapNote.time = tap.time;
+                    
                     NoteRenderer.TapList.Add(tgb);
                     ScoreManager.totalCombo++;
                 }
