@@ -44,9 +44,7 @@ namespace TunnelTone.Elements
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
-
         
-
         // Debug
         private float _currentTime;
 
