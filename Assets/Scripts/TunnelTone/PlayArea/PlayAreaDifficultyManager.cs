@@ -1,9 +1,11 @@
 ﻿using TMPro;
+using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.GameSystem;
 using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.Reference;
+using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +21,9 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            SystemEvent.OnChartLoad.AddListener(UpdateDisplay);
+            SongListItem.SelectItem += UpdateDisplay;
+            SongListDifficultyManager.DifficultyChange += UpdateDisplay;
+            
             SystemEvent.OnChartLoadFinish.AddListener(delegate
             {
                 ResultScreen.playResult.difficulty = currentDifficulty;
@@ -27,10 +31,13 @@ namespace TunnelTone.PlayArea
             });
         }
 
-        private void UpdateDisplay(params object[] param)
+        private static void UpdateDisplay(int difficulty)
         {
-            var songData = (SongData)param[0];
-            currentDifficulty = (int)param[1];
+            currentDifficulty = difficulty;
+        }
+
+        private void UpdateDisplay(SongData songData)
+        {
             currentLevel = songData.GetDifficulty(currentDifficulty);
             var level = Dictionaries.Instance.levelDictionary[currentLevel];
             

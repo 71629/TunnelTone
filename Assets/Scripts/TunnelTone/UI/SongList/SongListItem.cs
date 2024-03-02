@@ -45,16 +45,16 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
+            SelectItem += OnSelectItem;
+            SongListDifficultyManager.DifficultyChange += OnDifficultyChange;
             previewAudio = songData.music;
             difficultyBackground.color = UIElement.easy;
         }
         
-        private void OnDifficultyChange(object[] param)
+        private void OnDifficultyChange(int i)
         {
-            var index = (int)param[0];
-            difficulty.text = $"{Dictionaries.Instance.levelDictionary[songData.GetDifficulties()[index]]}";
-            difficultyBackground.color = index switch
+            difficulty.text = $"{Dictionaries.Instance.levelDictionary[songData.GetDifficulties()[i]]}";
+            difficultyBackground.color = i switch
             {
                 0 => UIElement.easy,
                 1 => UIElement.hard,
@@ -64,7 +64,7 @@ namespace TunnelTone.UI.SongList
             };
         }
 
-        private void OnSelectItem(object[] param)
+        private void OnSelectItem(SongData _)
         {
             CancelInvoke();
             animator.SetBool(IsSelected, false);

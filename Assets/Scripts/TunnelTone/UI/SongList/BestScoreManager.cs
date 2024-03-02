@@ -15,12 +15,12 @@ namespace TunnelTone.UI.SongList
         private void Start()
         {
             SongListItem.SelectItem += UpdateScore;
-            SongListEvent.OnDifficultyChange.AddListener(UpdateDifficulty);
+            SongListDifficultyManager.DifficultyChange += UpdateDifficulty;
         }
         
-        private void UpdateDifficulty(params object[] param)
+        private void UpdateDifficulty(int difficulty)
         {
-            var finalScore = SongListManager.currentlySelected.GetScore(SongListDifficultyManager.Instance.CurrentlySelected);
+            var finalScore = SongListManager.currentlySelected.GetScore(difficulty);
             
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, f =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.ScriptableObjects;
@@ -28,6 +29,9 @@ namespace TunnelTone.UI.SongList
         [SerializeField] private Image mainImage;
 
         private Slider currentSelected;
+        
+        public delegate void DifficultyChangeEvent(int difficulty);
+        public static event DifficultyChangeEvent DifficultyChange;
 
         internal int CurrentlySelected 
         {
@@ -58,11 +62,19 @@ namespace TunnelTone.UI.SongList
         private void Start()
         {
             SongListItem.SelectItem += UpdateDifficulty;
-            SongListEvent.OnEnterSongList.AddListener(delegate
-            {
-                ChangeDifficulty(easy);
-                mainImage.color = easy.fillRect.GetComponent<Image>().color;
-            });
+            SongListManager.EnterSongList += SetDefaultDifficulty; 
+            SongListManager.SongStart += OnSongStartCallback; 
+        }
+
+        private void OnSongStartCallback(ref MusicPlayDescription mpd)
+        {
+            mpd.difficulty = CurrentlySelected;
+        }
+
+        private void SetDefaultDifficulty()
+        {
+            ChangeDifficulty(easy);
+            mainImage.color = easy.fillRect.GetComponent<Image>().color;
         }
 
         private void UpdateDifficulty(SongData songData)
@@ -109,13 +121,13 @@ namespace TunnelTone.UI.SongList
         
         public void OnDifficultyChange(int difficulty)
         {
-            SongListEvent.OnDifficultyChange.Trigger(difficulty);
+            DifficultyChange?.Invoke(difficulty);
         }
         
         public void QuickChangeDifficulty()
         {
             CurrentlySelected = (CurrentlySelected + 1) % 4;
-            SongListEvent.OnDifficultyChange.Trigger(CurrentlySelected);
+            OnDifficultyChange(CurrentlySelected);
             ChangeDifficulty(currentSelected);
             FadeSliderColor(currentSelected.fillRect.GetComponent<Image>());
         }

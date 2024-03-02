@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
-using TunnelTone.UI.Menu;
 using TunnelTone.UI.Reference;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,17 +26,26 @@ namespace TunnelTone.UI.SongList
 
         private UIElementReference UIElement => UIElementReference.Instance;
 
-        public delegate void StartSongEvent(MusicPlayDescription mpd);
-
+        public delegate void StartSongEvent(ref MusicPlayDescription mpd);
+        public delegate void EnterSongListEvent();
         public static event StartSongEvent SongStart;
+        public static event StartSongEvent MusicPlayInitialize;
+        public static event EnterSongListEvent EnterSongList;
 
         public static void LoadSongList(MusicPlayMode mode)
         {
             if (Instance.songContainer is null) return;
 
+            EnterSongList?.Invoke();
             SongListItem.SelectItem += SetSong;
+            SongListItem.SelectItem += Instance.OnSelectItem;
+            SongListDifficultyManager.DifficultyChange += UpdateChartObject;
             
-            Instance.musicPlayDescription = new MusicPlayDescription { playMode = mode };
+            Instance.musicPlayDescription = new MusicPlayDescription
+            {
+                playMode = mode,
+                playResult = new Core.PlayResult()
+            };
 
             var containerRect = Instance.container.GetComponent<RectTransform>();
             containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Instance.songContainer.Length * 160);
@@ -55,9 +63,15 @@ namespace TunnelTone.UI.SongList
             Instance.songListItems[0]?.ItemSelected();
         }
 
+        private static void UpdateChartObject(int difficulty)
+        {
+            Instance.musicPlayDescription.chart = currentlySelected.charts[difficulty];
+        }
+
         private static void SetSong(SongData songData)
         {
-            Instance.musicPlayDescription.songData = songData;
+            Instance.musicPlayDescription.music = songData.music;
+            Instance.musicPlayDescription.chart = songData.charts[SongListDifficultyManager.Instance.CurrentlySelected];
         }
 
         public void StartSong()
@@ -72,30 +86,37 @@ namespace TunnelTone.UI.SongList
                         }}, Dialog.Dialog.Severity.Error);
                 return;
             }
-            SongListEvent.OnSongStart.Trigger(currentlySelected);
+            
+            SongStart?.Invoke(ref musicPlayDescription);
+            LoadBestScore(ref musicPlayDescription);
+            MusicPlayInitialize?.Invoke(ref musicPlayDescription);
+            
             NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
-            StartCoroutine(EnableCanvasDelayed());
+            Shutter.Seal(() =>
+            {
+                UIElement.musicPlay.enabled = true;
+                UIElement.songList.enabled = false;
+                UIElement.topView.enabled = false;
+            });
         }
 
-        IEnumerator EnableCanvasDelayed()
+        private static void LoadBestScore(ref MusicPlayDescription mpd)
         {
-            SystemEvent.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
-            SystemEvent.InvokeChartLoad(currentlySelected.charts[SongListDifficultyManager.Instance.CurrentlySelected], currentlySelected.music);
-            yield return new WaitForSecondsRealtime(0.5f);
-            UIElement.musicPlay.enabled = true;
-            UIElement.songList.enabled = false;
-            UIElement.topView.enabled = false;
+            mpd.playResult.title = currentlySelected.songTitle;
+            mpd.playResult.artist = currentlySelected.artist;
+            mpd.playResult.bestScore = currentlySelected.GetScore(mpd.difficulty);
+            mpd.jacket = currentlySelected.jacket;
+            mpd.playResult.level = currentlySelected.GetDifficulty(mpd.difficulty);
         }
 
-        private void OnSelectItem(params object[] param)
+        private void OnSelectItem(SongData songData)
         {
-            var item = (SongListItem)param[0];
-            currentlySelected = item.songData;
+            currentlySelected = songData;
             
             var newBackground = Instantiate(currentBackground, transform.parent).GetComponent<Image>();
             newBackground.gameObject.name = "Background";
             newBackground.transform.SetSiblingIndex(1);
-            newBackground.sprite = item.songData.jacket;
+            newBackground.sprite = songData.jacket;
             LeanTween.value(newBackground.gameObject, f =>
                 {
                     newBackground.color = new Color(1, 1, 1, f);

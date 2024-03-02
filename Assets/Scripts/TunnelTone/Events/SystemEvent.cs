@@ -6,7 +6,6 @@ namespace TunnelTone.Events
 {
     public static class SystemEvent
     {
-        internal static readonly GameEvent OnChartLoad = new();
         internal static readonly GameEvent OnChartLoadFinish = new();
 
         internal static readonly GameEvent OnDisplayResult = new();
@@ -18,9 +17,5 @@ namespace TunnelTone.Events
         
         internal static readonly GameEvent OnSettingsChanged = new();
         internal static readonly GameEvent OnAudioSystemReset = new();
-
-        public static event ChartLoadEvent ChartLoad;
-        public delegate void ChartLoadEvent(Chart chart, AudioClip audioClip);
-        public static void InvokeChartLoad(Chart chart, AudioClip audioClip) => ChartLoad?.Invoke(chart, audioClip);
     }
 }

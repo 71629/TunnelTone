@@ -1,7 +1,9 @@
-﻿using TunnelTone.Elements;
+﻿using TunnelTone.Core;
+using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
+using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,15 +20,12 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            SystemEvent.OnChartLoad.AddListener(SetProgressBarColor);
+            SongListDifficultyManager.DifficultyChange += SetProgressBarColor;
         }
 
-        private void SetProgressBarColor(object[] param)
+        private void SetProgressBarColor(int i)
         {
-            var songData = (SongData)param[0];
-            var difficulty = (int)param[1];
-            
-            Slider.fillRect.GetComponent<Image>().color = difficulty switch
+            Slider.fillRect.GetComponent<Image>().color = i switch
             {
                 0 => UIElementReference.Instance.easy,
                 1 => UIElementReference.Instance.hard,

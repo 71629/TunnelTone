@@ -5,6 +5,7 @@ using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -83,11 +84,12 @@ namespace TunnelTone.UI.PlayResult
             {
                 DisplayResult();
             });
-            SystemEvent.OnChartLoad.AddListener(o =>
-            {
-                playResult = new Core.PlayResult();
-                OnPlayResultCreated.Trigger(o);
-            });
+            SongListManager.SongStart += InsertInstance;
+        }
+
+        private void InsertInstance(ref MusicPlayDescription mpd)
+        {
+            mpd.playResult.difficulty = SongListDifficultyManager.Instance.CurrentlySelected;
         }
         
         private void DisplayResult()
@@ -237,8 +239,11 @@ namespace TunnelTone.UI.PlayResult
 
         public void ToSongList()
         {
-            Shutter.Instance.ToSongList(() => {
+            Shutter.Seal(() => {
                 canvas.enabled = false;
+                UIElementReference.Instance.songList.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                SongListManager.LoadSongList(new FreePlay());
                 Grade.OnLeave.Invoke();
             });
         }

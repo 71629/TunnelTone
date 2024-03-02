@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
@@ -28,11 +29,9 @@ namespace TunnelTone.UI.SongList
         private void Start()
         {
             OnShutterClose.AddListener(CloseShutter);
-            SongListEvent.OnSongStart.AddListener(delegate
-            {
-                ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
-                CloseShutter();
-            });
+            
+            SongListManager.SongStart += OnSongStart;
+            
             SystemEvent.OnChartLoadFinish.AddListener(delegate
             {
                 OpenShutter();
@@ -44,30 +43,30 @@ namespace TunnelTone.UI.SongList
             ChartEventReference.Instance.OnQuit.AddListener(delegate
             {
                 ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
-                ToSongList();
+                SongListManager.LoadSongList(new FreePlay());
             });
         }
 
         public static void Seal(ShutterSealEvent callback)
         {
             ShutterSeal += callback;
+            ShutterSeal += Instance.OpenShutter;
             Instance.CloseShutter();
         }
 
-        internal void ToSongList(Action onSealedCallback = null)
-        {
-            CloseShutter(() =>
-            {
-                UIElementReference.Instance.songList.enabled = true;
-                UIElementReference.Instance.topView.enabled = true;
-                UIElementReference.Instance.musicPlay.enabled = false;
-                OpenShutter();
-                AudioListener.pause = false;
-                SongListEvent.OnEnterSongList.Trigger();
-                NoteRenderer.OnDestroyChart.Trigger();
-                onSealedCallback?.Invoke();
-            });
-        }
+        // internal void ToSongList(Action onSealedCallback = null)
+        // {
+        //     CloseShutter(() =>
+        //     {
+        //         UIElementReference.Instance.songList.enabled = true;
+        //         UIElementReference.Instance.topView.enabled = true;
+        //         UIElementReference.Instance.musicPlay.enabled = false;
+        //         OpenShutter();
+        //         AudioListener.pause = false;
+        //         NoteRenderer.OnDestroyChart.Trigger();
+        //         onSealedCallback?.Invoke();
+        //     });
+        // }
         
         internal void ToMainMenu(Action onSealedCallback = null)
         {
@@ -78,6 +77,12 @@ namespace TunnelTone.UI.SongList
                 OpenShutter();
                 onSealedCallback?.Invoke();
             });
+        }
+
+        private void OnSongStart(ref MusicPlayDescription _)
+        {
+            ChartEventReference.Instance.OnSongEnd.AddListener(OnSongEnd);
+            CloseShutter();
         }
         
         internal void Retry(Action onSealedCallback = null)

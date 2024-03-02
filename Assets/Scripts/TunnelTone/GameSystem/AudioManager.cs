@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
@@ -24,8 +25,7 @@ namespace TunnelTone.GameSystem
             });
             
             SongListItem.SelectItem += SongListItemOnSelectCallback;
-            
-            SongListEvent.OnSongStart.AddListener(StopPreview);
+            SongListManager.SongStart += StopPreview;
             
             // Fade out the audio when the the chart ends
             ChartEvent.OnSongEnd.AddListener(delegate
@@ -68,7 +68,7 @@ namespace TunnelTone.GameSystem
             FadePreview();
         }
         
-        private void StopPreview(params object[] param)
+        private void StopPreview(ref MusicPlayDescription _)
         {
             LeanTween.value(gameObject, f =>
                 {

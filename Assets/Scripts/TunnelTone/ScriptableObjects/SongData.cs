@@ -2,6 +2,7 @@
 using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.UI.PlayResult;
+using TunnelTone.UI.SongList;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace TunnelTone.ScriptableObjects
         internal Chart[] charts = { null, null, null, null };
 
         private Score scoreData;
-        private static SongData currentlyPlaying;
+        private static SongData selected;
 
         private AnimationCurve defaultTimingData => new()
         {
@@ -40,19 +41,32 @@ namespace TunnelTone.ScriptableObjects
             }
         };
         
+        internal TextAsset this[int index]
+        {
+            get
+            {
+                if (charts[index] is null)
+                    Debug.LogWarning(
+                        $"The chart of difficultyData {index} is null.\nThe chart will not render anything.");
+                return charts[index].chart;
+            }
+        }
+        
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void InitializeOnLoad()
         {
-            SystemEvent.OnChartLoad.AddListener(o =>
-            {
-                currentlyPlaying = (SongData)o[0];
-            });
+            SongListItem.SelectItem += SongListItemOnSelectCallback;
             SystemEvent.OnChartLoadFinish.AddListener(o =>
             {
-                ResultScreen.playResult.title = currentlyPlaying.songTitle;
-                ResultScreen.playResult.artist = currentlyPlaying.artist;
-                ResultScreen.playResult.jacket = currentlyPlaying.jacket;
+                ResultScreen.playResult.title = selected.songTitle;
+                ResultScreen.playResult.artist = selected.artist;
+                ResultScreen.playResult.jacket = selected.jacket;
             });
+        }
+
+        private static void SongListItemOnSelectCallback(SongData songData)
+        {
+            selected = songData;
         }
 
 #if UNITY_EDITOR
@@ -75,10 +89,7 @@ namespace TunnelTone.ScriptableObjects
         private void OnEnable()
         {
             RefreshScoreData();
-            SongListEvent.OnEnterSongList.AddListener(delegate
-            {
-                RefreshScoreData();
-            });
+            SongListManager.EnterSongList += RefreshScoreData;
         }
         
         private void RefreshScoreData()
@@ -97,13 +108,7 @@ namespace TunnelTone.ScriptableObjects
         {
             return charts[index].difficulty;
         }
-        
-        internal TextAsset GetChart(int index)
-        {
-            if (charts[index] is null) Debug.LogWarning($"The chart of difficultyData {index} is null.\nThe chart will not render anything.");
-            return charts[index].chart;
-        }
-        
+
         internal int SetScore(int difficulty, int score)
         {
             scoreData.score[difficulty] = score;

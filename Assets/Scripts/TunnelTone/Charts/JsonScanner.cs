@@ -4,13 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
-using Newtonsoft.Json;
 using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
-using TunnelTone.ScriptableObjects;
+using TunnelTone.UI.SongList;
+using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -26,45 +26,23 @@ namespace TunnelTone.Charts
 
         private void Start()
         {
-            SystemEvent.ChartLoad += NewScan;
-                
-            // SystemEvent.OnChartLoad.AddListener(o =>
-            // {
-            //     StartCoroutine(DelayedScan(o));
-            // });
+            SongListManager.MusicPlayInitialize += ScanChart;
+            
             ChartEventReference.Instance.OnRetry.AddListener(delegate
             {
                 StartCoroutine(Retry());
             });
             ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
         }
-        
-        private IEnumerator DelayedScan(params object[] param)
-        {
-            yield return new WaitForSeconds(.5f);
-            Scan(param);
-        }
 
-        private void Scan(params object[] param)
+        private void ScanChart(ref MusicPlayDescription mpd)
         {
-            var songData = (SongData)param[0];
-            var difficulty = (int)param[1];
-            var chart = JsonConvert.DeserializeObject<Chart>(songData.GetChart(difficulty).text);
+            var chart = JsonConvert.DeserializeObject<Chart>(mpd.chart.chart.text);
             chartCache = chart;
-            TimingManager.timingSheet = songData.charts[difficulty].timingSheet;
+            TimingManager.timingSheet = mpd.chart.timingSheet;
             
             NoteRenderer.ResetContainer();
             StartCoroutine(CreateElement(chart));
-        }
-
-        private void NewScan(ScriptableObjects.Chart chart, AudioClip audioClip)
-        {
-            var chartObject = JsonConvert.DeserializeObject<Chart>(chart.chart.text);
-            chartCache = chartObject;
-            TimingManager.timingSheet = chart.timingSheet;
-            
-            NoteRenderer.ResetContainer();
-            StartCoroutine(CreateElement(chartObject, audioClip));
         }
         
         private static async Task<bool> LoadAudioData(AudioClip audioClip, CancellationToken cancellationToken)
@@ -117,6 +95,7 @@ namespace TunnelTone.Charts
                     true, 
                     trail.virtualTrail);
 
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
                 foreach (var c in NoteRenderer.TrailList.Select(q => q.GetComponent<Trail>()).Where(c => component.startTime == c.endTime && component.startCoordinate == c.endCoordinate))
                 {
                     component.next = c;
@@ -164,7 +143,8 @@ namespace TunnelTone.Charts
                     yield break;
                 }
             }
-            
+
+            yield return new WaitForSecondsRealtime(0.5f);
             SystemEvent.OnChartLoadFinish.Trigger();
             Invoke(nameof(StartSong), 1f);
         }
@@ -190,9 +170,12 @@ namespace TunnelTone.Charts
             { 1, Direction.Right }
         };
         
-        // Local class for deserialization
+
+        // ReSharper disable ClassNeverInstantiated.Global
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public class Chart
         {
+            // ReSharper disable once CollectionNeverUpdated.Global
             public List<Trail> trails { get; set; }
             
             public class Trail
@@ -209,6 +192,7 @@ namespace TunnelTone.Charts
                 public float easingRatio { get; set; }
                 public bool virtualTrail { get; set; }
 
+                // ReSharper disable once CollectionNeverUpdated.Global
                 public List<Tap> taps { get; set; }
                 public class Tap
                 {
