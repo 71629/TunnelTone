@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TunnelTone.Charts;
+using TunnelTone.Core;
 using TunnelTone.UI.Entry;
 using TunnelTone.UI.Menu;
+using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +16,7 @@ namespace TunnelTone.UI.Transition
     public class Transitioner : MonoBehaviour
     {
 #if UNITY_EDITOR
-        public static bool isNightMode;
+        public bool isNightMode;
 #endif
         
         [SerializeField] private Canvas canvas;
@@ -31,6 +34,9 @@ namespace TunnelTone.UI.Transition
         [SerializeField] private GameObject musicPlay;
         [SerializeField] private Graphic[] toMusicPlay;
 
+        [Header("Music Play Extras")] 
+        [SerializeField] private Image jacket;
+
         private float transitionTime;
 
         private IEnumerator coroutine;
@@ -45,7 +51,48 @@ namespace TunnelTone.UI.Transition
             MainMenu.ToSongList += c => StartTransition(toSongList, songList, false, c);
             SongListManager.EnterSongList +=  () => EndTransition(toSongList, songList);
 
+            SongListManager.SongStart += ToMusicPlay;
+            JsonScanner.ChartLoadFinish += () => EndTransition(toMusicPlay, musicPlay);
+
             SetTheme(IsNightModeEnabled());
+        }
+
+        private void ToMusicPlay(ref MusicPlayDescription mpd)
+        {
+            jacket.enabled = true;
+            jacket.sprite = mpd.jacket;
+            jacket.color = Color.white;
+
+            var jacketTransform = jacket.rectTransform;
+            jacketTransform.localScale = Vector3.one;
+            jacketTransform.position = UIElementReference.Instance.songJacket.transform.position;
+
+            LeanTween.value(jacket.gameObject, v2 =>
+            {
+                jacketTransform.anchoredPosition = v2;
+            }, jacketTransform.anchoredPosition, Vector2.zero, 0.5f).setEase(LeanTweenType.easeOutCubic);
+            
+            StartTransition(toMusicPlay, musicPlay, false, Callback);
+            return;
+
+            void Callback()
+            {
+                UIElementReference.Instance.musicPlay.enabled = true;
+                UIElementReference.Instance.songList.enabled = false;
+                UIElementReference.Instance.topView.enabled = false;
+                JsonScanner.ChartLoadFinish += JsonScannerOnChartLoadFinish;
+                return;
+
+                void JsonScannerOnChartLoadFinish()
+                {
+                    JsonScanner.ChartLoadFinish -= JsonScannerOnChartLoadFinish;
+                    LeanTween.value(jacket.gameObject, f =>
+                    {
+                        jacket.color = new Color(1, 1, 1,1 - f);
+                        jacket.transform.localScale = Vector3.one * (1 + 0.2f * f);
+                    }, 0, 1f, .5f);
+                }
+            }
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR        
@@ -59,7 +106,7 @@ namespace TunnelTone.UI.Transition
                 .Call<int>("getNightMode") == 2;
         }
 #else
-        private static bool IsNightModeEnabled()
+        private bool IsNightModeEnabled()
         {
             return isNightMode;
         }
@@ -75,11 +122,11 @@ namespace TunnelTone.UI.Transition
             void SetWireframeColor(Color color)
             {
                 foreach (var image in toMainMenu)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toSongList)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toMusicPlay)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
             }
         }
 #else        
@@ -92,11 +139,11 @@ namespace TunnelTone.UI.Transition
             void SetWireframeColor(Color color)
             {
                 foreach (var image in toMainMenu)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toSongList)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toMusicPlay)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
             }
         }
 #endif        
@@ -188,9 +235,10 @@ namespace TunnelTone.UI.Transition
                     graphic.enabled = Random.Range(0f, 1f) <= transitionTime;
                 }
 
-                for(int i = 0; i < 8; i++)
+                for(var i = 0; i < 8; i++)
                     yield return null;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
     }
 }
