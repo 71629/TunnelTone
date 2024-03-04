@@ -16,7 +16,7 @@ namespace TunnelTone.UI.Transition
     public class Transitioner : MonoBehaviour
     {
 #if UNITY_EDITOR
-        public static bool isNightMode;
+        public bool isNightMode;
 #endif
         
         [SerializeField] private Canvas canvas;
@@ -106,7 +106,7 @@ namespace TunnelTone.UI.Transition
                 .Call<int>("getNightMode") == 2;
         }
 #else
-        private static bool IsNightModeEnabled()
+        private bool IsNightModeEnabled()
         {
             return isNightMode;
         }
@@ -122,11 +122,11 @@ namespace TunnelTone.UI.Transition
             void SetWireframeColor(Color color)
             {
                 foreach (var image in toMainMenu)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toSongList)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toMusicPlay)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
             }
         }
 #else        
@@ -139,11 +139,11 @@ namespace TunnelTone.UI.Transition
             void SetWireframeColor(Color color)
             {
                 foreach (var image in toMainMenu)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toSongList)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
                 foreach (var image in toMusicPlay)
-                    image.color = color;
+                    image.color = new Color(1, 1, 1, image.color.a) * color;
             }
         }
 #endif        
@@ -235,9 +235,10 @@ namespace TunnelTone.UI.Transition
                     graphic.enabled = Random.Range(0f, 1f) <= transitionTime;
                 }
 
-                for(int i = 0; i < 8; i++)
+                for(var i = 0; i < 8; i++)
                     yield return null;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
     }
 }
