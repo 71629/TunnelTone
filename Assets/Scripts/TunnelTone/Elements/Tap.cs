@@ -29,8 +29,8 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            audioSource = GetComponent<AudioSource>();
-            audioSource.clip = Resources.Load<AudioClip>("Music/TapEffect_1");
+            audioSource = Resources.Load<AudioSource>("Musics/Tap_Effect1");
+            //audioSource.clip = Resources.Load<AudioClip>("Musics/Tap_Effect1");
             gameObject.layer = 10;
             gameObject.tag = "Note";
             hitHint = new GameObject
@@ -77,6 +77,7 @@ namespace TunnelTone.Elements
         {
             if (!(NoteRenderer.CurrentTime * 1000 > time + 120) || !NoteRenderer.isPlaying) return;
             ChartEventReference.Instance.OnNoteMiss.Trigger();
+            SoundEffect();
             Destroy();
         }
 
@@ -180,6 +181,11 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
             IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
             Destroy(hitHint);
+        }
+        
+        private void SoundEffect()
+        {
+            audioSource.Play();
         }
         
     }
