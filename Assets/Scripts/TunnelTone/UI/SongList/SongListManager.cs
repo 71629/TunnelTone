@@ -47,7 +47,10 @@ namespace TunnelTone.UI.SongList
 
             var containerRect = Instance.container.GetComponent<RectTransform>();
             containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Instance.songContainer.Length * 160);
-                
+            
+            foreach(var songListItem in Instance.container.GetComponentsInChildren<SongListItem>())
+                Destroy(songListItem.gameObject);
+            
             foreach (var song in Instance.songContainer)
             {
                 if (song is null) continue;
