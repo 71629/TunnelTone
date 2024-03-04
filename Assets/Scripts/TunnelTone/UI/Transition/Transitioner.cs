@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TunnelTone.UI.Entry;
 using TunnelTone.UI.Menu;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -11,6 +12,10 @@ namespace TunnelTone.UI.Transition
 {
     public class Transitioner : MonoBehaviour
     {
+#if UNITY_EDITOR
+        public static bool isNightMode;
+#endif
+        
         [SerializeField] private Canvas canvas;
         [SerializeField] private Image cover;
         
@@ -35,15 +40,15 @@ namespace TunnelTone.UI.Transition
         
         private void Start()
         {
-            MainMenu.ToSongList += c => StartTransition(toSongList, songList, c);
+            GameEntry.ToMainMenu += c => StartTransition(toMainMenu, mainMenu, true, c);
+            
+            MainMenu.ToSongList += c => StartTransition(toSongList, songList, false, c);
             SongListManager.EnterSongList +=  () => EndTransition(toSongList, songList);
 
-#if UNITY_ANDROID
             SetTheme(IsNightModeEnabled());
-#endif
         }
 
-#if UNITY_ANDROID        
+#if UNITY_ANDROID && !UNITY_EDITOR        
         private static bool IsNightModeEnabled()
         {
             using var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -53,9 +58,31 @@ namespace TunnelTone.UI.Transition
                 .Call<AndroidJavaObject>("getSystemService", "uimode")
                 .Call<int>("getNightMode") == 2;
         }
-#endif        
+#else
+        private static bool IsNightModeEnabled()
+        {
+            return isNightMode;
+        }
+#endif
 
-#if UNITY_ANDROID        
+#if UNITY_ANDROID && !UNITY_EDITOR        
+        private void SetTheme(bool isNight)
+        {
+            cover.sprite = isNight ? nighttimeCover : daytimeCover;
+            SetWireframeColor(isNight ? Color.white : Color.black);
+            return;
+
+            void SetWireframeColor(Color color)
+            {
+                foreach (var image in toMainMenu)
+                    image.color = color;
+                foreach (var image in toSongList)
+                    image.color = color;
+                foreach (var image in toMusicPlay)
+                    image.color = color;
+            }
+        }
+#else        
         private void SetTheme(bool isNight)
         {
             cover.sprite = isNight ? nighttimeCover : daytimeCover;
@@ -76,19 +103,19 @@ namespace TunnelTone.UI.Transition
 
         private void OnApplicationFocus(bool hasFocus)
         {
-#if  UNITY_ANDROID
             SetTheme(IsNightModeEnabled());
-#endif
         }
 
         private void OnApplicationPause(bool pauseStatus)
-        {
-#if UNITY_ANDROID            
+        {   
             SetTheme(IsNightModeEnabled());
-#endif            
         }
 
-        private void StartTransition(IReadOnlyList<Graphic> target, GameObject targetParent, Action callback = null)
+        private void StartTransition(
+            IReadOnlyList<Graphic> target, 
+            GameObject targetParent, 
+            bool autoExit,
+            Action callback = null)
         {
             coroutine = Flash(target);
             StartCoroutine(coroutine);
@@ -118,6 +145,8 @@ namespace TunnelTone.UI.Transition
                     callback?.Invoke();
                     TransitionBreak?.Invoke(coroutine);
                     TransitionBreak = null;
+                    if (autoExit)
+                        EndTransition(target, targetParent);
                 });
         }
         

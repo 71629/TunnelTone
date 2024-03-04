@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using TunnelTone.Core;
+using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 
 namespace TunnelTone.UI.Entry
@@ -27,6 +29,11 @@ namespace TunnelTone.UI.Entry
 
         private string[] address = { "www.google.com", "www.hashtag071629.com", "one.one.one.one", "4.2.2.2", "208.67.222.222", "www.opendns.com" };
         //4.2.2.2 = Verizon Public DNS
+
+        public delegate void ToMainMenuHandler(Action callback);
+
+        public static event ToMainMenuHandler ToMainMenu;
+        
         private IEnumerator PingCheck(System.Action<bool> onResult)
         {
             bool result = false;
@@ -83,7 +90,13 @@ namespace TunnelTone.UI.Entry
         {
             start.interactable = false;
 
-            Shutter.Instance.ToMainMenu(() => canvas.enabled = false);
+            ToMainMenu?.Invoke(() =>
+            {
+                canvas.enabled = false;
+                UIElementReference.Instance.mainMenu.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+            });
+            // Shutter.Instance.ToMainMenu(() => canvas.enabled = false);
         }
         private void DisplayNotice(string text)
         {
