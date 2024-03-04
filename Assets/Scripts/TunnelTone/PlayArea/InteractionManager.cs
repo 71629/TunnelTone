@@ -18,8 +18,8 @@ namespace TunnelTone.PlayArea
         [SerializeField] private Camera canvasCamera;
         [SerializeField] private GameObject touchPrefab;
         [SerializeField] public InputReader inputReader;
-        
-        public void Enable()
+
+        public void Start()
         {
             touches = new Touch[10];
             for (var i = 0; i < touches.Length; i++)
@@ -29,7 +29,10 @@ namespace TunnelTone.PlayArea
                 touches[i] = instance.GetComponent<Touch>();
                 touches[i].pointerId = i;
             }
-            
+        }
+        
+        public void Enable()
+        {
             inputReader.TouchDown += OnTouchDown;
             inputReader.TouchMove += OnTouchMove;
             inputReader.TouchUp += OnTouchUp;
