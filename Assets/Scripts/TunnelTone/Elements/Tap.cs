@@ -13,7 +13,7 @@ namespace TunnelTone.Elements
         public Vector2 position;
         public float time;
         private GameObject hitHint;
-        private AudioSource audioSource;
+        public AudioSource audioSource;
         public float offset;
         private bool isHit;
         private SphereCollider Collider => GetComponent<SphereCollider>();
@@ -29,8 +29,8 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            audioSource = Resources.Load<AudioSource>("Musics/Tap_Effect1");
-            //audioSource.clip = Resources.Load<AudioClip>("Musics/Tap_Effect1");
+            audioSource = gameObject.GetComponent<AudioSource>();
+            audioSource.clip = Resources.Load<AudioClip>("Musics/Tap_Effect1.mp3");
             gameObject.layer = 10;
             gameObject.tag = "Note";
             hitHint = new GameObject
