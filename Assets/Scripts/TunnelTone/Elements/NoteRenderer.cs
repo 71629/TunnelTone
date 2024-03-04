@@ -44,6 +44,10 @@ namespace TunnelTone.Elements
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
+
+        public delegate void RetryHandler();
+
+        public static event RetryHandler Retry;
         
         // Debug
         private float _currentTime;
@@ -64,10 +68,7 @@ namespace TunnelTone.Elements
             //fillVector2 = Fill.transform.position;
             transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                Resume();
-            });
+            JsonScanner.ChartLoadFinish += Resume;
             SystemEvent.OnSettingsChanged.AddListener(delegate
             {
                 var settings = Settings.instance;
@@ -113,7 +114,6 @@ namespace TunnelTone.Elements
 
         public void Pause()
         {
-            ChartEventReference.Instance.OnPause.Trigger();
             UIElementReference.Instance.pause.SetActive(true);
             AudioListener.pause = true;
 
@@ -124,7 +124,6 @@ namespace TunnelTone.Elements
         
         public void Resume()
         {
-            ChartEventReference.Instance.OnResume.Trigger();
             UIElementReference.Instance.pause.SetActive(false);
 
             //LeanTween.resume(Fill);
@@ -133,13 +132,13 @@ namespace TunnelTone.Elements
             particleSystem.Play();
         }
 
-        private void ResumeForListener(object param)
+        private void ResumeForListener()
         {
             Resume();
-            SystemEvent.OnChartLoadFinish.RemoveListener(ResumeForListener);
+            JsonScanner.ChartLoadFinish -= ResumeForListener;
         }
         
-        public void Retry()
+        public void RetryCallback()
         {
             //LeanTween.cancel(Fill);
             //Fill.transform.position = new Vector2(-86.15f, 47.60f);
@@ -154,8 +153,8 @@ namespace TunnelTone.Elements
             }
             //Fill.transform.position = new Vector2(0,Fill.transform.position.z);
 
-            ChartEventReference.Instance.OnRetry.Trigger();
-            SystemEvent.OnChartLoadFinish.AddListener(ResumeForListener);
+            Retry?.Invoke();
+            JsonScanner.ChartLoadFinish += ResumeForListener;
         }
         
         public void Quit()

@@ -66,7 +66,7 @@ namespace TunnelTone.Elements
             var density = 60 / (bpm * 2) * NoteRenderer.Instance.chartSpeedModifier;
             for (var i = 0f; i < 1; i += density * 1000 / headTailZAxisDelta)
             {
-                BuildCombo(out _, (Vector3)t.spline.EvaluatePosition(i),
+                BuildCombo((Vector3)t.spline.EvaluatePosition(i),
                     (t.spline.EvaluatePosition(i).z - NoteRenderer.Instance.universalOffset) / NoteRenderer.Instance.chartSpeedModifier);
             }
             // Build subsegments
@@ -106,9 +106,10 @@ namespace TunnelTone.Elements
             t.StartCoroutine(t.UpdateCollider());
         }
         
-        private void BuildCombo(out GameObject gb, Vector2 coordinate, float time)
+        private void BuildCombo(Vector2 coordinate, float time)
         {
-            gb = new GameObject("Combo")
+            // TODO: Replace with prefab
+            var gb = new GameObject("Combo")
             {
                 transform =
                 {

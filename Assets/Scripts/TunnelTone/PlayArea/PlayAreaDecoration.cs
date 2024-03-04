@@ -1,5 +1,5 @@
-﻿using TunnelTone.Events;
-using TunnelTone.ScriptableObjects;
+﻿using TunnelTone.Core;
+using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,15 +11,14 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            SystemEvent.OnChartLoad.AddListener(o =>
-            {
-                var songData = (SongData)o[0];
-                
-                if (songData.jacket is not null)
-                {
-                    jacket.sprite = songData.jacket;
-                }
-            });
+            SongListManager.SongStart += SetBackground;
+        }
+
+        private void SetBackground(ref MusicPlayDescription mpd)
+        {
+            // Throw IncompleteMusicPlayDescriptionException
+            if (mpd.jacket is null) return;
+            jacket.sprite = mpd.jacket;
         }
     }
 }

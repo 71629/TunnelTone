@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using TunnelTone.Charts;
 using TunnelTone.Events;
 using TunnelTone.UI.PlayResult;
 using UnityEngine;
@@ -14,11 +15,7 @@ namespace TunnelTone.PlayArea
 
         private void Start()
         {
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                CurrentCombo = 0;
-                Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
-            });
+            JsonScanner.ChartLoadFinish += ResetCombo;
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateCombo);
             ChartEventReference.Instance.OnNoteMiss.AddListener(delegate
             {
@@ -29,6 +26,12 @@ namespace TunnelTone.PlayArea
             {
                 ResultScreen.playResult.maxCombo = MaxCombo;
             });
+        }
+
+        private void ResetCombo()
+        {
+            CurrentCombo = 0;
+            Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
         }
         
         public void UpdateCombo(params object[] param)

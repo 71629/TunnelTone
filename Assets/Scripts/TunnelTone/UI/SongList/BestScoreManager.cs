@@ -1,5 +1,5 @@
 ﻿using TMPro;
-using TunnelTone.Events;
+using TunnelTone.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +13,13 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEvent.OnSelectItem.AddListener(UpdateScore);
-            SongListEvent.OnDifficultyChange.AddListener(UpdateDifficulty);
+            SongListItem.SelectItem += UpdateScore;
+            SongListDifficultyManager.DifficultyChange += UpdateDifficulty;
         }
         
-        private void UpdateDifficulty(params object[] param)
+        private void UpdateDifficulty(int difficulty)
         {
-            var finalScore = SongListManager.currentlySelected.GetScore(SongListDifficultyManager.Instance.CurrentlySelected);
+            var finalScore = SongListManager.currentlySelected.GetScore(difficulty);
             
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, f =>
@@ -38,11 +38,8 @@ namespace TunnelTone.UI.SongList
                 .setEase(LeanTweenType.easeOutSine);
         }
 
-        private void UpdateScore(params object[] param)
+        private void UpdateScore(SongData songData)
         {
-            var song = (SongListItem)param[0];
-            var songData = song.songData;
-            
             var finalScore = songData.GetScore(SongListDifficultyManager.Instance.CurrentlySelected);
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, f =>

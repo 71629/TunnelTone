@@ -1,7 +1,8 @@
 ﻿using System;
 using TMPro;
-using TunnelTone.Events;
+using TunnelTone.Core;
 using TunnelTone.GameSystem;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,9 @@ namespace TunnelTone.UI.SongList
         [SerializeField] private Image mainImage;
 
         private Slider currentSelected;
+        
+        public delegate void DifficultyChangeEvent(int difficulty);
+        public static event DifficultyChangeEvent DifficultyChange;
 
         internal int CurrentlySelected 
         {
@@ -56,26 +60,32 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            SongListEvent.OnSelectItem.AddListener(UpdateDifficulty);
-            SongListEvent.OnEnterSongList.AddListener(delegate
-            {
-                ChangeDifficulty(easy);
-                mainImage.color = easy.fillRect.GetComponent<Image>().color;
-            });
+            SongListItem.SelectItem += UpdateDifficulty;
+            SongListManager.EnterSongList += SetDefaultDifficulty; 
+            SongListManager.SongStart += OnSongStartCallback; 
         }
 
-        private void UpdateDifficulty(params object[] param)
+        private void OnSongStartCallback(ref MusicPlayDescription mpd)
         {
-            var song = (SongListItem)param[0];
+            mpd.difficulty = CurrentlySelected;
+        }
 
+        private void SetDefaultDifficulty()
+        {
+            ChangeDifficulty(easy);
+            mainImage.color = easy.fillRect.GetComponent<Image>().color;
+        }
+
+        private void UpdateDifficulty(SongData songData)
+        {
             LeanTween.cancel(easy.gameObject);
-            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, song.songData.GetDifficulties()[0], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(easy.gameObject, f => { UpdateSliderValue(easy, easyText, f); }, easy.value, songData.GetDifficulties()[0], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(hard.gameObject);
-            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, song.songData.GetDifficulties()[1], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(hard.gameObject, f => { UpdateSliderValue(hard, hardText, f); }, hard.value, songData.GetDifficulties()[1], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(intensive.gameObject);
-            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, song.songData.GetDifficulties()[2], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(intensive.gameObject, f => { UpdateSliderValue(intensive, intensiveText, f); }, intensive.value, songData.GetDifficulties()[2], .35f).setEase(LeanTweenType.easeOutCubic);
             LeanTween.cancel(insane.gameObject);
-            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, song.songData.GetDifficulties()[3], .35f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.value(insane.gameObject, f => { UpdateSliderValue(insane, insaneText, f); }, insane.value, songData.GetDifficulties()[3], .35f).setEase(LeanTweenType.easeOutCubic);
         }
 
         private void UpdateSliderValue(Slider slider, TMP_Text ind, float f)
@@ -110,13 +120,13 @@ namespace TunnelTone.UI.SongList
         
         public void OnDifficultyChange(int difficulty)
         {
-            SongListEvent.OnDifficultyChange.Trigger(difficulty);
+            DifficultyChange?.Invoke(difficulty);
         }
         
         public void QuickChangeDifficulty()
         {
             CurrentlySelected = (CurrentlySelected + 1) % 4;
-            SongListEvent.OnDifficultyChange.Trigger(CurrentlySelected);
+            OnDifficultyChange(CurrentlySelected);
             ChangeDifficulty(currentSelected);
             FadeSliderColor(currentSelected.fillRect.GetComponent<Image>());
         }

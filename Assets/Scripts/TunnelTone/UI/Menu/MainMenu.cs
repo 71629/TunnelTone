@@ -1,4 +1,6 @@
-﻿using TunnelTone.UI.Reference;
+﻿using System;
+using TunnelTone.Core;
+using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +13,9 @@ namespace TunnelTone.UI.Menu
         
         [SerializeField] private Image menuCharacter;
 
+        public delegate void ToSongListTransitionHandler(Action callback);
+        public static event ToSongListTransitionHandler ToSongList;
+
         private void Awake()
         {
             canvas = GetComponent<Canvas>();
@@ -18,7 +23,21 @@ namespace TunnelTone.UI.Menu
 
         public void ToSongSelect()
         {
-            Shutter.Instance.ToSongList(() => canvas.enabled = false);
+            // Shutter.Seal(() =>
+            // {
+            //     canvas.enabled = false;
+            //     UIElementReference.Instance.songList.enabled = true;
+            //     UIElementReference.Instance.topView.enabled = true;
+            //     SongListManager.LoadSongList(new FreePlay());
+            // });
+            ToSongList?.Invoke(() =>
+            {
+                canvas.enabled = false;
+                UIElementReference.Instance.songList.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                SongListManager.LoadSongList(new FreePlay());
+            });
+            // Shutter.Instance.ToSongList(() => canvas.enabled = false);
         }
 
         public void ToStoryMode()
