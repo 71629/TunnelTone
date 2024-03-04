@@ -29,8 +29,7 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            audioSource = gameObject.GetComponent<AudioSource>();
-            audioSource.clip = Resources.Load<AudioClip>("Musics/Tap_Effect1.mp3");
+            audioSource = this.gameObject.GetComponent<AudioSource>();
             gameObject.layer = 10;
             gameObject.tag = "Note";
             hitHint = new GameObject
@@ -131,7 +130,6 @@ namespace TunnelTone.Elements
         public void HitEffect(float hitOffset)
         {
             if (hitOffset >= 120) return;
-            audioSource.Play();
             var sprite = hitOffset switch
             {
                 <= 25 => PerfectCritical,
