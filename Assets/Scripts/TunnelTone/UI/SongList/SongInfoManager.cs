@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using TMPro;
-using TunnelTone.Events;
+﻿using TMPro;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
 using UnityEngine;

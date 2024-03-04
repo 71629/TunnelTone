@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Data;
+using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
@@ -31,15 +31,9 @@ namespace TunnelTone.UI.SongList
             OnShutterClose.AddListener(CloseShutter);
             
             SongListManager.SongStart += OnSongStart;
-            
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                OpenShutter();
-            });
-            ChartEventReference.Instance.OnRetry.AddListener(delegate
-            {
-                CloseShutter();
-            });
+            JsonScanner.ChartLoadFinish += OpenShutter;
+            SongListManager.EnterSongList += OpenShutter;
+            NoteRenderer.Retry += () => Seal(null);
             ChartEventReference.Instance.OnQuit.AddListener(delegate
             {
                 ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
@@ -50,23 +44,8 @@ namespace TunnelTone.UI.SongList
         public static void Seal(ShutterSealEvent callback)
         {
             ShutterSeal += callback;
-            ShutterSeal += Instance.OpenShutter;
             Instance.CloseShutter();
         }
-
-        // internal void ToSongList(Action onSealedCallback = null)
-        // {
-        //     CloseShutter(() =>
-        //     {
-        //         UIElementReference.Instance.songList.enabled = true;
-        //         UIElementReference.Instance.topView.enabled = true;
-        //         UIElementReference.Instance.musicPlay.enabled = false;
-        //         OpenShutter();
-        //         AudioListener.pause = false;
-        //         NoteRenderer.OnDestroyChart.Trigger();
-        //         onSealedCallback?.Invoke();
-        //     });
-        // }
         
         internal void ToMainMenu(Action onSealedCallback = null)
         {

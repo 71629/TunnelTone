@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
-using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

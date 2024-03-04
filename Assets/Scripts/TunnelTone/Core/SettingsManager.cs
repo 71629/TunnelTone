@@ -60,11 +60,6 @@ namespace TunnelTone.Core
         [SerializeField] private GameObject BGMask;
         [SerializeField] private Image bgLine;
         private bool applys;
-        [SerializeField] private Image[] tapImage;
-        [SerializeField] private GameObject tapPref;
-        [SerializeField] private Image DisplayImage;
-        [SerializeField] private Button nextTapButton;
-        [SerializeField] private Button backTapButton;
 
         [Header("Display Settings")] 
         [SerializeField] private TextMeshProUGUI fps60;

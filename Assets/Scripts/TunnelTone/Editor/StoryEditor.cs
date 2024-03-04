@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR    
+using System.IO;
 using System.Reflection;
 using TunnelTone.StorySystem;
 using UnityEditor;
@@ -173,3 +174,4 @@ namespace TunnelTone.Editor
         }
     }
 }
+#endif

@@ -1,5 +1,4 @@
 ﻿using TMPro;
-using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;

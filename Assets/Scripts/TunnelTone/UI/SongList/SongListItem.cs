@@ -1,11 +1,9 @@
 ﻿using System;
 using UnityEngine.UI;
 using TMPro;
-using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
-using UnityEditor;
 using UnityEngine;
 
 namespace TunnelTone.UI.SongList

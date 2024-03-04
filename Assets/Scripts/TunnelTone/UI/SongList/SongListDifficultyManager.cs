@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using TunnelTone.Core;
-using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;

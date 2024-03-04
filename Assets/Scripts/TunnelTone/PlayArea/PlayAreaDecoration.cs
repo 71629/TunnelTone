@@ -1,6 +1,4 @@
 ﻿using TunnelTone.Core;
-using TunnelTone.Events;
-using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.SongList;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TunnelTone.Charts;
 using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
@@ -36,7 +35,6 @@ namespace TunnelTone.UI.SongList
         {
             if (Instance.songContainer is null) return;
 
-            EnterSongList?.Invoke();
             SongListItem.SelectItem += SetSong;
             SongListItem.SelectItem += Instance.OnSelectItem;
             SongListDifficultyManager.DifficultyChange += UpdateChartObject;
@@ -60,6 +58,7 @@ namespace TunnelTone.UI.SongList
                     .SetData(song);
                 Instance.songListItems.Add(item);
             }
+            EnterSongList?.Invoke();
             Instance.songListItems[0]?.ItemSelected();
         }
 

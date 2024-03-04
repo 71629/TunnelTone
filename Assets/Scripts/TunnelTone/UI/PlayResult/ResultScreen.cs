@@ -5,7 +5,6 @@ using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.GameSystem;
-using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -250,7 +249,7 @@ namespace TunnelTone.UI.PlayResult
 
         public void Retry()
         {
-            NoteRenderer.Instance.Retry();
+            NoteRenderer.Instance.RetryCallback();
             Invoke(nameof(SwitchCanvas), 0.6f);
         }
 

@@ -1,6 +1,6 @@
 ﻿using TMPro;
+using TunnelTone.Charts;
 using TunnelTone.Core;
-using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using UnityEngine;
@@ -23,11 +23,7 @@ namespace TunnelTone.UI.SongList
         {
             SongListItem.SelectItem += UpdateInfo;
             SongListManager.SongStart += ShowInfo;
-            
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                FadeSongInfo();
-            });
+            JsonScanner.ChartLoadFinish += FadeSongInfo;
         }
 
         private void UpdateInfo(SongData songData)

@@ -1,12 +1,7 @@
-﻿using TunnelTone.Core;
-using TunnelTone.ScriptableObjects;
-using UnityEngine;
-
-namespace TunnelTone.Events
+﻿namespace TunnelTone.Events
 {
     public static class SystemEvent
     {
-        internal static readonly GameEvent OnChartLoadFinish = new();
 
         internal static readonly GameEvent OnDisplayResult = new();
         

@@ -1,6 +1,5 @@
 ﻿using TMPro;
-using TunnelTone.Core;
-using TunnelTone.Events;
+using TunnelTone.Charts;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.GameSystem;
 using TunnelTone.UI.PlayResult;
@@ -23,12 +22,13 @@ namespace TunnelTone.PlayArea
         {
             SongListItem.SelectItem += UpdateDisplay;
             SongListDifficultyManager.DifficultyChange += UpdateDisplay;
-            
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                ResultScreen.playResult.difficulty = currentDifficulty;
-                ResultScreen.playResult.level = currentLevel;
-            });
+            JsonScanner.ChartLoadFinish += SetPlayResultDifficulty;
+        }
+
+        private void SetPlayResultDifficulty()
+        {
+            ResultScreen.playResult.difficulty = currentDifficulty;
+            ResultScreen.playResult.level = currentLevel;
         }
 
         private static void UpdateDisplay(int difficulty)

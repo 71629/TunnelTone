@@ -12,7 +12,6 @@ using TunnelTone.UI.SongList;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 // ReSharper disable InconsistentNaming
@@ -25,14 +24,14 @@ namespace TunnelTone.Charts
         [SerializeField] private GameObject trailPrefab;
         [SerializeField] private GameObject tapPrefab;
 
+        public delegate void ChartLoadHandler();
+        public static event ChartLoadHandler ChartLoadFinish;
+
         private void Start()
         {
             SongListManager.MusicPlayInitialize += ScanChart;
+            NoteRenderer.Retry += () => StartCoroutine(Retry());
             
-            ChartEventReference.Instance.OnRetry.AddListener(delegate
-            {
-                StartCoroutine(Retry());
-            });
             ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
         }
 
@@ -129,6 +128,7 @@ namespace TunnelTone.Charts
 
             if (audioClip is not null)
             {
+                Debug.Log("Loading audio data");
                 var audioTask = LoadAudioData(audioClip, destroyCancellationToken);
                 yield return new WaitUntil(() => audioTask.IsCompleted);
                 if (!audioTask.Result)
@@ -136,10 +136,11 @@ namespace TunnelTone.Charts
                     Debug.Log("Audio clip data failed to load.");
                     yield break;
                 }
+                Debug.Log("Audio data loaded");
             }
 
             yield return new WaitForSecondsRealtime(0.5f);
-            SystemEvent.OnChartLoadFinish.Trigger();
+            ChartLoadFinish?.Invoke();
             Invoke(nameof(StartSong), 1f);
         }
 

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
+using TunnelTone.Charts;
 using TunnelTone.Core;
-using TunnelTone.Events;
 using TunnelTone.UI.PlayResult;
 using TunnelTone.UI.SongList;
 using UnityEditor;
@@ -56,12 +56,14 @@ namespace TunnelTone.ScriptableObjects
         private static void InitializeOnLoad()
         {
             SongListItem.SelectItem += SongListItemOnSelectCallback;
-            SystemEvent.OnChartLoadFinish.AddListener(o =>
-            {
-                ResultScreen.playResult.title = selected.songTitle;
-                ResultScreen.playResult.artist = selected.artist;
-                ResultScreen.playResult.jacket = selected.jacket;
-            });
+            JsonScanner.ChartLoadFinish += SetResultScreenInformation;
+        }
+
+        private static void SetResultScreenInformation()
+        {
+            ResultScreen.playResult.title = selected.songTitle;
+            ResultScreen.playResult.artist = selected.artist;
+            ResultScreen.playResult.jacket = selected.jacket;
         }
 
         private static void SongListItemOnSelectCallback(SongData songData)
