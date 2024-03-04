@@ -21,8 +21,6 @@ namespace TunnelTone.UI.SongList
 
         private void Start()
         {
-            jacket.enabled = false;
-            
             SongListItem.SelectItem += UpdateInfo;
             SongListManager.SongStart += ShowInfo;
             JsonScanner.ChartLoadFinish += FadeSongInfo;

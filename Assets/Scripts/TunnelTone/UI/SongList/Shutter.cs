@@ -30,8 +30,8 @@ namespace TunnelTone.UI.SongList
         {
             OnShutterClose.AddListener(CloseShutter);
             
-            // SongListManager.SongStart += OnSongStart;
-            // JsonScanner.ChartLoadFinish += OpenShutter;
+            SongListManager.SongStart += OnSongStart;
+            JsonScanner.ChartLoadFinish += OpenShutter;
             SongListManager.EnterSongList += OpenShutter;
             NoteRenderer.Retry += () => Seal(null);
             ChartEventReference.Instance.OnQuit.AddListener(delegate

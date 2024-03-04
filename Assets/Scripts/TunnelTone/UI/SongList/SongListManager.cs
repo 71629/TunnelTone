@@ -61,7 +61,6 @@ namespace TunnelTone.UI.SongList
                     .SetData(song);
                 Instance.songListItems.Add(item);
             }
-            UIElementReference.Instance.songJacket.enabled = true;
             EnterSongList?.Invoke();
             Instance.songListItems[0]?.ItemSelected();
         }
@@ -90,18 +89,17 @@ namespace TunnelTone.UI.SongList
                 return;
             }
             
-            UIElementReference.Instance.songJacket.enabled = false;
             SongStart?.Invoke(ref musicPlayDescription);
             LoadBestScore(ref musicPlayDescription);
             MusicPlayInitialize?.Invoke(ref musicPlayDescription);
             
-            // NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
-            // Shutter.Seal(() =>
-            // {
-            //     UIElement.musicPlay.enabled = true;
-            //     UIElement.songList.enabled = false;
-            //     UIElement.topView.enabled = false;
-            // });
+            NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
+            Shutter.Seal(() =>
+            {
+                UIElement.musicPlay.enabled = true;
+                UIElement.songList.enabled = false;
+                UIElement.topView.enabled = false;
+            });
         }
 
         private static void LoadBestScore(ref MusicPlayDescription mpd)
@@ -116,7 +114,6 @@ namespace TunnelTone.UI.SongList
         private void OnSelectItem(SongData songData)
         {
             currentlySelected = songData;
-            musicPlayDescription.jacket = songData.jacket;
             
             var newBackground = Instantiate(currentBackground, transform.parent).GetComponent<Image>();
             newBackground.gameObject.name = "Background";
