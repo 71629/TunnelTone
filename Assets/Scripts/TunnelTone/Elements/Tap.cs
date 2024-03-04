@@ -13,7 +13,7 @@ namespace TunnelTone.Elements
         public Vector2 position;
         public float time;
         private GameObject hitHint;
-        public AudioSource audioSource;
+        public GameObject audioSource;
         public float offset;
         private bool isHit;
         private SphereCollider Collider => GetComponent<SphereCollider>();
@@ -29,7 +29,7 @@ namespace TunnelTone.Elements
         
         private void Start()
         {
-            audioSource = this.gameObject.GetComponent<AudioSource>();
+            //audioSource = this.gameObject.GetComponent<AudioSource>();
             gameObject.layer = 10;
             gameObject.tag = "Note";
             hitHint = new GameObject
@@ -76,7 +76,7 @@ namespace TunnelTone.Elements
         {
             if (!(NoteRenderer.CurrentTime * 1000 > time + 120) || !NoteRenderer.isPlaying) return;
             ChartEventReference.Instance.OnNoteMiss.Trigger();
-            SoundEffect();
+            //SoundEffect();
             Destroy();
         }
 
@@ -143,6 +143,8 @@ namespace TunnelTone.Elements
             effect.transform.localScale = Vector3.one * 1.25f;
             var component = effect.GetComponent<Image>();
             component.sprite = sprite;
+            audioSource = GameObject.Find("tapSound2");
+            audioSource.GetComponent<AudioSource>().Play();
             Destroy(effect, 0.34f);
             Destroy();
         }
@@ -183,7 +185,7 @@ namespace TunnelTone.Elements
         
         private void SoundEffect()
         {
-            audioSource.Play();
+            //audioSource.Play();
         }
         
     }
