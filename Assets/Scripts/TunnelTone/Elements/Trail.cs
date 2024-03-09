@@ -58,6 +58,9 @@ namespace TunnelTone.Elements
         
         internal TrailState state;
         internal readonly UnityEvent onStateChanged = new();
+        
+        //SoundEffect (reference by Kinglingmk1)
+        public GameObject audioSource;
 
         private void OnTriggerEnter(Collider other)
         {
