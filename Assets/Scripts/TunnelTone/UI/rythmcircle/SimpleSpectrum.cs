@@ -465,7 +465,7 @@ public class SimpleSpectrum : MonoBehaviour {
 				} else {
                     newYScale = Mathf.Lerp(oldYScale, Mathf.Max(value * barYScale, barMinYScale), decayDamp);
 				}
-
+                
                 bar.localScale = new Vector3(barXScale,newYScale,1);
 
                 oldYScales[i] = newYScale;
