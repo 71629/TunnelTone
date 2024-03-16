@@ -68,19 +68,26 @@ namespace TunnelTone.UI.Entry
                 start.interactable = true;
                 OnInitializeComplete.RemoveAllListeners();
             });
-            if (!online)
+            switch (online)
             {
-                DisplayNotice($"Offline Mode");
-                status.text = "Touch to start";
-                start.interactable = true;
-                OnInitializeComplete.RemoveAllListeners();
-            }
-            else
-            {
-                NetworkManager.OnStatusChanged.AddListener(delegate
-                {
-                    DisplayNotice($"Logged in as {NetworkManager.username}");
-                });
+                case true:
+                    NetworkManager.OnStatusChanged.AddListener(delegate
+                    {
+                        if (!NetworkManager.username.Equals(""))
+                        {
+                            DisplayNotice($"Logged in as {NetworkManager.username}");
+                        }
+                    });
+                    break;
+                case false:
+                    DisplayNotice($"Offline Mode");
+                    status.text = "Touch to start";
+                    start.interactable = true;
+                    OnInitializeComplete.RemoveAllListeners();
+                    break;
+                default:
+                    DisplayNotice($"How you enter this either nor true and nor false mode");
+                    break;
             }
             NetworkManager.AutoLoginJson();
             LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
