@@ -73,10 +73,17 @@ namespace TunnelTone.UI.Entry
                 case true:
                     NetworkManager.OnStatusChanged.AddListener(delegate
                     {
-                        if (!NetworkManager.username.Equals(""))
+                        try
                         {
-                            DisplayNotice($"Logged in as {NetworkManager.username}");
+                            if (NetworkManager.username.Length>0)
+                            {
+                                DisplayNotice($"Logged in as {NetworkManager.username}");
+                            }
+                        } catch (Exception e)
+                        {
+                            DisplayNotice($"Online mode");
                         }
+                        
                     });
                     break;
                 case false:
@@ -86,7 +93,7 @@ namespace TunnelTone.UI.Entry
                     OnInitializeComplete.RemoveAllListeners();
                     break;
                 default:
-                    DisplayNotice($"How you enter this either nor true and nor false mode");
+                    DisplayNotice($"Online mode");
                     break;
             }
             NetworkManager.AutoLoginJson();

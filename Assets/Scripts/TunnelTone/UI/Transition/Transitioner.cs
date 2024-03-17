@@ -95,7 +95,7 @@ namespace TunnelTone.UI.Transition
             }
         }
 
-#if UNITY_ANDROID && !UNITY_EDITOR        
+#if UNITY_ANDROID && !UNITY_EDITOR || UNITY_STANDALONE_WIN && !UNITY_EDITOR        
         private static bool IsNightModeEnabled()
         {
             using var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -112,7 +112,7 @@ namespace TunnelTone.UI.Transition
         }
 #endif
 
-#if UNITY_ANDROID && !UNITY_EDITOR        
+#if UNITY_ANDROID && !UNITY_EDITOR || UNITY_STANDALONE_WIN && !UNITY_EDITOR           
         private void SetTheme(bool isNight)
         {
             cover.sprite = isNight ? nighttimeCover : daytimeCover;
