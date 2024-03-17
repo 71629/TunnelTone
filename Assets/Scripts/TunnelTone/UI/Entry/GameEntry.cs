@@ -68,37 +68,41 @@ namespace TunnelTone.UI.Entry
                 start.interactable = true;
                 OnInitializeComplete.RemoveAllListeners();
             });
+            
             switch (online)
             {
                 case true:
-                    NetworkManager.OnStatusChanged.AddListener(delegate
-                    {
-                        try
-                        {
-                            if (NetworkManager.username.Length>0)
+                            NetworkManager.OnStatusChanged.AddListener(delegate
                             {
-                                DisplayNotice($"Logged in as {NetworkManager.username}");
-                            }
-                        } catch (Exception e)
-                        {
-                            DisplayNotice($"Online mode");
-                        }
-                        
-                    });
+                                try
+                                {
+                                    if (NetworkManager.username.Length <= 0)
+                                    {
+                                        throw new Exception("1");
+                                    }
+                                    if (NetworkManager.username.Length>0)
+                                    {
+                                        DisplayNotice($"Logged in as {NetworkManager.username}");
+                                    }
+                                }   catch (Exception e) {
+                                    inOfflineMode();
+                                }  
+                            });
                     break;
                 case false:
-                    DisplayNotice($"Offline Mode");
-                    status.text = "Touch to start";
-                    start.interactable = true;
-                    OnInitializeComplete.RemoveAllListeners();
-                    break;
-                default:
-                    DisplayNotice($"Online mode");
+                    inOfflineMode();
                     break;
             }
             NetworkManager.AutoLoginJson();
             LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
     .setLoopPingPong(); //Tap to start pingpong display
+        }
+        public void inOfflineMode()
+        {
+            DisplayNotice($"Offline Mode");
+            status.text = "Touch to start";
+            start.interactable = true;
+            OnInitializeComplete.RemoveAllListeners();
         }
         public void StartGame()
         {
