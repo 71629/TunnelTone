@@ -4141,7 +4141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357215086556076, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3447
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 4357215086556076, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4149,7 +4149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357215086556076, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 34.39
+      value: 34.97
       objectReference: {fileID: 0}
     - target: {fileID: 4357215086556076, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4189,7 +4189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114899210952648334, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: barYScale
-      value: 50
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114899210952648334, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: muteGroup
@@ -4203,6 +4203,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1852588494}
+    - target: {fileID: 114899210952648334, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
+      propertyPath: barXSpacing
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 114899210952648334, guid: 3dbec1e87667bc8488d123ebdd3d045c, type: 3}
       propertyPath: barXRotation
       value: 0
@@ -19836,7 +19840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 16409.805}
+  m_AnchoredPosition: {x: 340, y: 17302.459}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -29566,7 +29570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -587947.56}
+  m_AnchoredPosition: {x: 0, y: -589957.56}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
