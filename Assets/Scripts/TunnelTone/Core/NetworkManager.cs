@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using TunnelTone.UI.Entry;
 using UnityEngine;
 using UnityEngine.Events;
+using TextEncoding = System.Text.Encoding;
 
 namespace TunnelTone.Core
 {
@@ -66,12 +67,12 @@ namespace TunnelTone.Core
         {
             var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, $"{ApiAddress}{index}");
-            req.Content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj)));
+            req.Content = new ByteArrayContent(TextEncoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj)));
             
             var response = await client.SendAsync(req);
             var result = await response.Content.ReadAsByteArrayAsync();
 
-            return JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(result));
+            return JsonConvert.DeserializeObject<T>(TextEncoding.UTF8.GetString(result));
         }
 
         internal static async Task<T> SendRequest<T>(this T obj, Action onCompleteCallback = null) where T : TunnelTonePackage

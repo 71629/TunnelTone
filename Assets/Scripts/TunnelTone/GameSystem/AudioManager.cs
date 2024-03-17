@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using TunnelTone.Core;
 using TunnelTone.Events;
+using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -8,7 +10,7 @@ namespace TunnelTone.GameSystem
 {
     public class AudioManager : Singleton<AudioManager>
     {
-        private SongListItem current;
+        private SongData loadedSongData;
         
         [SerializeField] internal AudioSource audioSource;
         
@@ -21,14 +23,9 @@ namespace TunnelTone.GameSystem
             {
                 StartCoroutine(ResetAudioSystem((AudioConfiguration)o[0]));
             });
-            SongListEvent.OnSelectItem.AddListener(o =>
-            {
-                LeanTween.cancel(gameObject);
-                current = (SongListItem)o[0];
-                audioSource.clip = current.previewAudio;
-                StartCoroutine(Preview());
-            });
-            SongListEvent.OnSongStart.AddListener(StopPreview);
+            
+            SongListItem.SelectItem += SongListItemOnSelectCallback;
+            SongListManager.SongStart += StopPreview;
             
             // Fade out the audio when the the chart ends
             ChartEvent.OnSongEnd.AddListener(delegate
@@ -36,6 +33,14 @@ namespace TunnelTone.GameSystem
                 LeanTween.value(audioSource.gameObject,
                     f => { audioSource.volume = f; }, audioSource.volume, 0, 1.5f);
             });
+        }
+
+        private void SongListItemOnSelectCallback(SongData songData)
+        {
+            LeanTween.cancel(gameObject);
+            loadedSongData = songData;
+            audioSource.clip = loadedSongData.music;
+            StartCoroutine(Preview());
         }
 
         private void FadePreview()
@@ -56,14 +61,14 @@ namespace TunnelTone.GameSystem
         {
             audioSource.volume = .2f;
             
-            audioSource.time = current.previewStart * 0.001f;
+            audioSource.time = loadedSongData.previewStart * 0.001f;
             audioSource.Play();
             
-            yield return new WaitUntil(() => audioSource.time >= (current.previewStart + current.previewDuration) * 0.001f);
+            yield return new WaitUntil(() => audioSource.time >= (loadedSongData.previewStart + loadedSongData.previewDuration) * 0.001f);
             FadePreview();
         }
         
-        private void StopPreview(params object[] param)
+        private void StopPreview(ref MusicPlayDescription _)
         {
             LeanTween.value(gameObject, f =>
                 {

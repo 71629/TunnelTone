@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using TunnelTone.Charts;
 using TunnelTone.Events;
 using TunnelTone.Singleton;
 using TunnelTone.UI.PlayResult;
@@ -18,12 +19,7 @@ namespace TunnelTone.PlayArea
         private void Start()
         {
             ChartEventReference.Instance.OnNoteHit.AddListener(UpdateScore);
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                CurrentScore = 0;
-                DisplayScore = 0;
-                Score.text = $"{DisplayScore:00000000}";
-            });
+            JsonScanner.ChartLoadFinish += ResetScore;
             ChartEventReference.Instance.OnSongEnd.AddListener(delegate
             {
                 ResultScreen.playResult.score = (int)CurrentScore;
@@ -32,6 +28,13 @@ namespace TunnelTone.PlayArea
             {
                 ResultScreen.playResult.miss++;
             });
+        }
+
+        private void ResetScore()
+        {
+            CurrentScore = 0;
+            DisplayScore = 0;
+            Score.text = $"{DisplayScore:00000000}";
         }
 
         public void UpdateScore(params object[] param)

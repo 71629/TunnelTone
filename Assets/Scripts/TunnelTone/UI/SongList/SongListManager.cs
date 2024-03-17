@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
@@ -12,36 +13,68 @@ namespace TunnelTone.UI.SongList
 {
     public class SongListManager : Singleton<SongListManager>
     {
+        public SongData[] songContainer;
+        
         [SerializeField] private GameObject container;
-        [SerializeField] internal SongData[] songContainer;
         [SerializeField] private GameObject currentBackground;
         
         internal static SongData currentlySelected;
 
+        private List<SongListItem> songListItems = new();
+        private MusicPlayDescription musicPlayDescription;
+
         private UIElementReference UIElement => UIElementReference.Instance;
-        private float oldSliderValue = 0.15f;
-        
-        private void Start()
+
+        public delegate void StartSongEvent(ref MusicPlayDescription mpd);
+        public delegate void EnterSongListEvent();
+        public static event StartSongEvent SongStart;
+        public static event StartSongEvent MusicPlayInitialize;
+        public static event EnterSongListEvent EnterSongList;
+
+        public static void LoadSongList(MusicPlayMode mode)
         {
-            SongListEvent.OnSelectItem.AddListener(OnSelectItem);
+            if (Instance.songContainer is null) return;
 
-            if (songContainer is not null)
+            SongListItem.SelectItem += SetSong;
+            SongListItem.SelectItem += Instance.OnSelectItem;
+            SongListDifficultyManager.DifficultyChange += UpdateChartObject;
+            
+            Instance.musicPlayDescription = new MusicPlayDescription
             {
-                var containerRect = container.GetComponent<RectTransform>();
-                containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, songContainer.Length * 160);
-                
-                foreach (var song in songContainer)
-                {
-                    if (song is null) continue;
-                    Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"), container.transform)
-                        .GetComponent<SongListItem>()
-                        .SetData(song);
-                }
-            }
+                playMode = mode,
+                playResult = new Core.PlayResult()
+            };
 
-            currentlySelected = songContainer?[0];
-            // yield return null;
-            // SongListEvent.Instance.OnEnterSongList.Trigger();
+            var containerRect = Instance.container.GetComponent<RectTransform>();
+            containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Instance.songContainer.Length * 160);
+            
+            foreach(var songListItem in Instance.container.GetComponentsInChildren<SongListItem>())
+                Destroy(songListItem.gameObject);
+            
+            foreach (var song in Instance.songContainer)
+            {
+                if (song is null) continue;
+
+                var item = Instantiate(Resources.Load<GameObject>("Prefabs/SongListItem/SongListItem"),
+                        Instance.container.transform)
+                    .GetComponent<SongListItem>()
+                    .SetData(song);
+                Instance.songListItems.Add(item);
+            }
+            UIElementReference.Instance.songJacket.enabled = true;
+            EnterSongList?.Invoke();
+            Instance.songListItems[0]?.ItemSelected();
+        }
+
+        private static void UpdateChartObject(int difficulty)
+        {
+            Instance.musicPlayDescription.chart = currentlySelected.charts[difficulty];
+        }
+
+        private static void SetSong(SongData songData)
+        {
+            Instance.musicPlayDescription.music = songData.music;
+            Instance.musicPlayDescription.chart = songData.charts[SongListDifficultyManager.Instance.CurrentlySelected];
         }
 
         public void StartSong()
@@ -56,30 +89,39 @@ namespace TunnelTone.UI.SongList
                         }}, Dialog.Dialog.Severity.Error);
                 return;
             }
-            SongListEvent.OnSongStart.Trigger(currentlySelected);
-            NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
-            StartCoroutine(EnableCanvasDelayed());
+            
+            UIElementReference.Instance.songJacket.enabled = false;
+            SongStart?.Invoke(ref musicPlayDescription);
+            LoadBestScore(ref musicPlayDescription);
+            MusicPlayInitialize?.Invoke(ref musicPlayDescription);
+            
+            // NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
+            // Shutter.Seal(() =>
+            // {
+            //     UIElement.musicPlay.enabled = true;
+            //     UIElement.songList.enabled = false;
+            //     UIElement.topView.enabled = false;
+            // });
         }
 
-        IEnumerator EnableCanvasDelayed()
+        private static void LoadBestScore(ref MusicPlayDescription mpd)
         {
-            SystemEvent.OnChartLoad.Trigger(currentlySelected, SongListDifficultyManager.Instance.CurrentlySelected);
-            SystemEvent.InvokeChartLoad(currentlySelected.charts[SongListDifficultyManager.Instance.CurrentlySelected], currentlySelected.music);
-            yield return new WaitForSecondsRealtime(0.5f);
-            UIElement.musicPlay.enabled = true;
-            UIElement.songList.enabled = false;
-            UIElement.topView.enabled = false;
+            mpd.playResult.title = currentlySelected.songTitle;
+            mpd.playResult.artist = currentlySelected.artist;
+            mpd.playResult.bestScore = currentlySelected.GetScore(mpd.difficulty);
+            mpd.jacket = currentlySelected.jacket;
+            mpd.playResult.level = currentlySelected.GetDifficulty(mpd.difficulty);
         }
 
-        private void OnSelectItem(params object[] param)
+        private void OnSelectItem(SongData songData)
         {
-            var item = (SongListItem)param[0];
-            currentlySelected = item.songData;
+            currentlySelected = songData;
+            musicPlayDescription.jacket = songData.jacket;
             
             var newBackground = Instantiate(currentBackground, transform.parent).GetComponent<Image>();
             newBackground.gameObject.name = "Background";
             newBackground.transform.SetSiblingIndex(1);
-            newBackground.sprite = item.songData.jacket;
+            newBackground.sprite = songData.jacket;
             LeanTween.value(newBackground.gameObject, f =>
                 {
                     newBackground.color = new Color(1, 1, 1, f);

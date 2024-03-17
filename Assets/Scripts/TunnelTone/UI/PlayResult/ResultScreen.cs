@@ -83,11 +83,12 @@ namespace TunnelTone.UI.PlayResult
             {
                 DisplayResult();
             });
-            SystemEvent.OnChartLoad.AddListener(o =>
-            {
-                playResult = new Core.PlayResult();
-                OnPlayResultCreated.Trigger(o);
-            });
+            SongListManager.SongStart += InsertInstance;
+        }
+
+        private void InsertInstance(ref MusicPlayDescription mpd)
+        {
+            mpd.playResult.difficulty = SongListDifficultyManager.Instance.CurrentlySelected;
         }
         
         private void DisplayResult()
@@ -237,15 +238,18 @@ namespace TunnelTone.UI.PlayResult
 
         public void ToSongList()
         {
-            Shutter.Instance.ToSongList(() => {
+            Shutter.Seal(() => {
                 canvas.enabled = false;
+                UIElementReference.Instance.songList.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                SongListManager.LoadSongList(new FreePlay());
                 Grade.OnLeave.Invoke();
             });
         }
 
         public void Retry()
         {
-            NoteRenderer.Instance.Retry();
+            NoteRenderer.Instance.RetryCallback();
             Invoke(nameof(SwitchCanvas), 0.6f);
         }
 
@@ -272,6 +276,7 @@ namespace TunnelTone.UI.PlayResult
         FullCombo = 3,
         FlawlessPlus = 4,
         FlawlessPlusPlus = 5,
-        Failed = 6
+        Failed = 6,
+        Interrupted = 7
     }
 }

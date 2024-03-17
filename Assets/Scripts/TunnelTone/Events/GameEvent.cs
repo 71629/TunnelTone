@@ -31,7 +31,7 @@ namespace TunnelTone.Events
             if (InvocationList == null) return;
             foreach (var invocation in InvocationList)
             {
-                if (invocation.Target.GetType() == typeof(T))
+                if (invocation.Target is T)
                 {
                     m_onGameEvent -= (GameEventHandler) invocation;
                 }

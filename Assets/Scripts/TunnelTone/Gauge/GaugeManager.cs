@@ -1,5 +1,5 @@
-﻿using TunnelTone.Core;
-using TunnelTone.Events;
+﻿using TunnelTone.Charts;
+using TunnelTone.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,15 +14,12 @@ namespace TunnelTone.Gauge
 
         private void Start()
         {
-            SystemEvent.OnChartLoadFinish.AddListener(delegate
-            {
-                Initialize(Settings.Gauge);
-            });
+            JsonScanner.ChartLoadFinish += Initialize;
         }
         
-        internal void Initialize(Gauge newGauge)
+        internal void Initialize()
         {
-            gauge = newGauge.Initialize(musicPlayGauge, resultScreenGauge);
+            gauge = Settings.Gauge.Initialize(musicPlayGauge, resultScreenGauge);
         }
     }
 }

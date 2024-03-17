@@ -1,7 +1,5 @@
-using System.Linq;
 using TunnelTone.Elements;
 using TunnelTone.UI.Reference;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Splines;

@@ -7,7 +7,7 @@ namespace TunnelTone.Core
 {
     public class CustomButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
-        [SerializeField] private UnityEvent onPointerDown;
+        public UnityEvent onPointerDown;
         
         public void OnPointerUp(PointerEventData eventData)
         {

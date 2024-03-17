@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine.UI;
 using TMPro;
-using TunnelTone.Events;
 using TunnelTone.GameSystem;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.UI.Reference;
@@ -31,12 +28,14 @@ namespace TunnelTone.UI.SongList
         public SongData songData;
         
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
-        private static SongListEvent SongListEvent => SongListEvent.Instance;
         private static UIElementReference UIElement => UIElementReference.Instance;
+
+        public delegate void ItemEvent(SongData songData);
+        public static event ItemEvent SelectItem;
         
-        internal void ItemSelected()
+        public void ItemSelected()
         {
-            SongListEvent.OnSelectItem.Trigger(this);
+            SelectItem?.Invoke(songData);
             
             animator.SetBool(IsSelected, true);
             UIElement.songJacket.sprite = songData.jacket;
@@ -44,21 +43,16 @@ namespace TunnelTone.UI.SongList
         
         private void Start()
         {
-            SongListEvent.OnEnterSongList.AddListener(delegate
-            {
-                ItemSelected();
-            });
-            SongListEvent.OnSelectItem.AddListener(OnSelectItem);
-            SongListEvent.OnDifficultyChange.AddListener(OnDifficultyChange);
+            SelectItem += OnSelectItem;
+            SongListDifficultyManager.DifficultyChange += OnDifficultyChange;
             previewAudio = songData.music;
             difficultyBackground.color = UIElement.easy;
         }
         
-        private void OnDifficultyChange(object[] param)
+        private void OnDifficultyChange(int i)
         {
-            var index = (int)param[0];
-            difficulty.text = $"{Dictionaries.Instance.levelDictionary[songData.GetDifficulties()[index]]}";
-            difficultyBackground.color = index switch
+            difficulty.text = $"{Dictionaries.Instance.levelDictionary[songData.GetDifficulties()[i]]}";
+            difficultyBackground.color = i switch
             {
                 0 => UIElement.easy,
                 1 => UIElement.hard,
@@ -68,7 +62,7 @@ namespace TunnelTone.UI.SongList
             };
         }
 
-        private void OnSelectItem(object[] param)
+        private void OnSelectItem(SongData _)
         {
             CancelInvoke();
             animator.SetBool(IsSelected, false);

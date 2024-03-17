@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
-using Newtonsoft.Json;
+using TunnelTone.Core;
 using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
-using TunnelTone.ScriptableObjects;
+using TunnelTone.UI.SongList;
+using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.Splines;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 // ReSharper disable InconsistentNaming
@@ -22,48 +22,27 @@ namespace TunnelTone.Charts
         private static NoteRenderer NoteRenderer => NoteRenderer.Instance;
         private Chart chartCache;
         [SerializeField] private GameObject trailPrefab;
+        [SerializeField] private GameObject tapPrefab;
+
+        public delegate void ChartLoadHandler();
+        public static event ChartLoadHandler ChartLoadFinish;
 
         private void Start()
         {
-            SystemEvent.ChartLoad += NewScan;
-                
-            // SystemEvent.OnChartLoad.AddListener(o =>
-            // {
-            //     StartCoroutine(DelayedScan(o));
-            // });
-            ChartEventReference.Instance.OnRetry.AddListener(delegate
-            {
-                StartCoroutine(Retry());
-            });
+            SongListManager.MusicPlayInitialize += ScanChart;
+            NoteRenderer.Retry += () => StartCoroutine(Retry());
+            
             ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
         }
-        
-        private IEnumerator DelayedScan(params object[] param)
-        {
-            yield return new WaitForSeconds(.5f);
-            Scan(param);
-        }
 
-        private void Scan(params object[] param)
+        private void ScanChart(ref MusicPlayDescription mpd)
         {
-            var songData = (SongData)param[0];
-            var difficulty = (int)param[1];
-            var chart = JsonConvert.DeserializeObject<Chart>(songData.GetChart(difficulty).text);
+            var chart = JsonConvert.DeserializeObject<Chart>(mpd.chart.chart.text);
             chartCache = chart;
-            TimingManager.timingSheet = songData.charts[difficulty].timingSheet;
+            TimingManager.timingSheet = mpd.chart.timingSheet;
             
             NoteRenderer.ResetContainer();
             StartCoroutine(CreateElement(chart));
-        }
-
-        private void NewScan(ScriptableObjects.Chart chart, AudioClip audioClip)
-        {
-            var chartObject = JsonConvert.DeserializeObject<Chart>(chart.chart.text);
-            chartCache = chartObject;
-            TimingManager.timingSheet = chart.timingSheet;
-            
-            NoteRenderer.ResetContainer();
-            StartCoroutine(CreateElement(chartObject, audioClip));
         }
         
         private static async Task<bool> LoadAudioData(AudioClip audioClip, CancellationToken cancellationToken)
@@ -116,6 +95,7 @@ namespace TunnelTone.Charts
                     true, 
                     trail.virtualTrail);
 
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
                 foreach (var c in NoteRenderer.TrailList.Select(q => q.GetComponent<Trail>()).Where(c => component.startTime == c.endTime && component.startCoordinate == c.endCoordinate))
                 {
                     component.next = c;
@@ -126,22 +106,15 @@ namespace TunnelTone.Charts
                 foreach(var tap in trail.taps)
                 {
                     var spline = NoteRenderer.TrailReference.GetComponent<SplineContainer>().Spline;
-                    var scale = new Vector3(0.6f, 0.6f, 0.6f);
-                    var tgb = new GameObject("Tap")
-                    {
-                        transform =
-                        {
-                            parent = NoteRenderer.TrailReference.transform,
-                            localPosition = spline.EvaluatePosition((tap.time * NoteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z / (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z)),
-                            rotation = Quaternion.Euler(0, 0, 45),
-                            localScale = scale
-                        }
-                    };
-                    tgb.AddComponent<Image>();
-                    var noteConfig = tgb.AddComponent<Tap>();
-                    noteConfig.position = tgb.transform.localPosition;
-                    noteConfig.time = tap.time;
-            
+
+                    var tapNote = Instantiate(tapPrefab, NoteRenderer.TrailReference.transform).GetComponent<Tap>();
+                    GameObject tgb;
+                    (tgb = tapNote.gameObject).transform.localPosition = spline.EvaluatePosition(
+                        (tap.time * NoteRenderer.chartSpeedModifier - spline.EvaluatePosition(0)).z /
+                        (spline.EvaluatePosition(1).z - spline.EvaluatePosition(0).z));
+                    tapNote.position = tgb.transform.localPosition;
+                    tapNote.time = tap.time;
+                    
                     NoteRenderer.TapList.Add(tgb);
                     ScoreManager.totalCombo++;
                 }
@@ -155,6 +128,7 @@ namespace TunnelTone.Charts
 
             if (audioClip is not null)
             {
+                Debug.Log("Loading audio data");
                 var audioTask = LoadAudioData(audioClip, destroyCancellationToken);
                 yield return new WaitUntil(() => audioTask.IsCompleted);
                 if (!audioTask.Result)
@@ -162,9 +136,11 @@ namespace TunnelTone.Charts
                     Debug.Log("Audio clip data failed to load.");
                     yield break;
                 }
+                Debug.Log("Audio data loaded");
             }
-            
-            SystemEvent.OnChartLoadFinish.Trigger();
+
+            yield return new WaitForSecondsRealtime(0.5f);
+            ChartLoadFinish?.Invoke();
             Invoke(nameof(StartSong), 1f);
         }
 
@@ -189,9 +165,12 @@ namespace TunnelTone.Charts
             { 1, Direction.Right }
         };
         
-        // Local class for deserialization
+
+        // ReSharper disable ClassNeverInstantiated.Global
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public class Chart
         {
+            // ReSharper disable once CollectionNeverUpdated.Global
             public List<Trail> trails { get; set; }
             
             public class Trail
@@ -208,6 +187,7 @@ namespace TunnelTone.Charts
                 public float easingRatio { get; set; }
                 public bool virtualTrail { get; set; }
 
+                // ReSharper disable once CollectionNeverUpdated.Global
                 public List<Tap> taps { get; set; }
                 public class Tap
                 {

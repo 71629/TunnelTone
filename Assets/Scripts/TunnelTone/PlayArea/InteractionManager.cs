@@ -1,13 +1,8 @@
-﻿using System.Linq;
-using TunnelTone.Elements;
-using TunnelTone.Events;
-using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
+﻿using TunnelTone.Singleton;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace TunnelTone.PlayArea
 {
@@ -23,8 +18,8 @@ namespace TunnelTone.PlayArea
         [SerializeField] private Camera canvasCamera;
         [SerializeField] private GameObject touchPrefab;
         [SerializeField] public InputReader inputReader;
-        
-        public void Enable()
+
+        public void Start()
         {
             touches = new Touch[10];
             for (var i = 0; i < touches.Length; i++)
@@ -34,7 +29,10 @@ namespace TunnelTone.PlayArea
                 touches[i] = instance.GetComponent<Touch>();
                 touches[i].pointerId = i;
             }
-            
+        }
+        
+        public void Enable()
+        {
             inputReader.TouchDown += OnTouchDown;
             inputReader.TouchMove += OnTouchMove;
             inputReader.TouchUp += OnTouchUp;
