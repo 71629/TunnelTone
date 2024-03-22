@@ -85,19 +85,19 @@ namespace TunnelTone.UI.Entry
                                         DisplayNotice($"Logged in as {NetworkManager.username}");
                                     }
                                 }   catch (Exception e) {
-                                    inOfflineMode();
+                                    OfflineMode();
                                 }  
                             });
                     break;
                 case false:
-                    inOfflineMode();
+                    OfflineMode();
                     break;
             }
             NetworkManager.AutoLoginJson();
             LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
     .setLoopPingPong(); //Tap to start pingpong display
         }
-        public void inOfflineMode()
+        public void OfflineMode()
         {
             DisplayNotice($"Offline Mode");
             status.text = "Touch to start";
