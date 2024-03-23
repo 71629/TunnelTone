@@ -25095,7 +25095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 1072.4242}
+  m_AnchoredPosition: {x: 340, y: 6347.168}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -38744,7 +38744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -745290.06}
+  m_AnchoredPosition: {x: 0, y: -749625.06}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -67830,6 +67830,7 @@ GameObject:
   - component: {fileID: 2134286324}
   - component: {fileID: 2134286327}
   - component: {fileID: 2134286329}
+  - component: {fileID: 2134286330}
   m_Layer: 5
   m_Name: Note Container
   m_TagString: Untagged
@@ -67979,6 +67980,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trailPrefab: {fileID: 6636806119296684219, guid: dff45bd1852f78d43837785c156c981c, type: 3}
   tapPrefab: {fileID: 4915805370631870131, guid: 8c7f443f35d7e6642866948d9405b1d0, type: 3}
+--- !u!114 &2134286330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134286322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25f7f978ad3b854e863568ed297cc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoteRender: {fileID: 2134286323}
+  isEnd: 0
+  Taps: []
+  pairObjects: []
+  isPair: 0
 --- !u!222 &29650314285066703
 CanvasRenderer:
   m_ObjectHideFlags: 0
