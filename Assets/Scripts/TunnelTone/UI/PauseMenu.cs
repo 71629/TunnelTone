@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿using TunnelTone.Core;
+using TunnelTone.Elements;
+using TunnelTone.UI.Reference;
+using TunnelTone.UI.SongList;
+using TunnelTone.UI.Transition;
+using UnityEngine;
 
 namespace TunnelTone.UI
 {
@@ -39,6 +44,17 @@ namespace TunnelTone.UI
         public void Quit()
         {
             GameQuit?.Invoke();
+            Transitioner.Instance.QuitMusicPlay(Callback);
+            return;
+            
+            void Callback()
+            {
+                NoteRenderer.ResetContainer();
+                AudioListener.pause = false;
+                UIElementReference.Instance.musicPlay.enabled = false;
+                instance.pauseMenuInterface.SetActive(false);
+                MusicPlayDescription.instance.module.Quit();
+            }
         }
     }
 }

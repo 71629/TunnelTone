@@ -368,7 +368,7 @@ public class SimpleSpectrum : MonoBehaviour {
 #else
         if (sourceType == SourceType.MicrophoneInput || sourceType == SourceType.StereoMix || sourceType == SourceType.AudioSource)
         {
-            Debug.LogError("Error from SimpleSpectrum: Microphone, Stereo Mix or AudioSource cannot be used in WebGL!");
+            // Debug.LogError("Error from SimpleSpectrum: Microphone, Stereo Mix or AudioSource cannot be used in WebGL!");
         }
 #endif
     }

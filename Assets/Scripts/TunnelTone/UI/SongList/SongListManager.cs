@@ -22,11 +22,11 @@ namespace TunnelTone.UI.SongList
         private List<SongListItem> songListItems = new();
         private MusicPlayDescription musicPlayDescription;
 
-        public delegate void StartSongEvent();
-        public delegate void EnterSongListEvent();
-        public static event StartSongEvent SongStart;
-        public static event StartSongEvent MusicPlayInitialize;
-        public static event EnterSongListEvent EnterSongList;
+        public delegate void StartSongHandler();
+        public delegate void EnterSongListHandler();
+        public static event StartSongHandler SongStart;
+        public static event StartSongHandler MusicPlayInitialize;
+        public static event EnterSongListHandler EnterSongList;
 
         public static void LoadSongList(MusicPlayMode mode)
         {
@@ -45,6 +45,7 @@ namespace TunnelTone.UI.SongList
             
             foreach(var songListItem in Instance.container.GetComponentsInChildren<SongListItem>())
                 Destroy(songListItem.gameObject);
+            Instance.songListItems.Clear();
             
             foreach (var song in Instance.songContainer)
             {

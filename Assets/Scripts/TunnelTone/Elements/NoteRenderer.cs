@@ -39,12 +39,12 @@ namespace TunnelTone.Elements
 
         public float universalOffset;
         public float offsetTime;
-        public const float StartDelay = 2500f;
+        private const float StartDelay = 2500f;
         public static float dspSongStartTime, dspSongEndTime;
 
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
-        public static bool isPlaying = false;
+        public static bool isPlaying;
         
         public delegate void RetryHandler();
         public delegate void OnBeginHandler();
@@ -75,14 +75,14 @@ namespace TunnelTone.Elements
             });
         }
 
-        internal void ResetContainer()
+        internal static void ResetContainer()
         {
             isPlaying = false;
-            transform.localPosition = Vector3.zero;
-            foreach (var gb in GetComponentsInChildren<Transform>())
+            Instance.transform.localPosition = Vector3.zero;
+            foreach (var gb in Instance.GetComponentsInChildren<Transform>().Select(gb => gb.gameObject))
             {
-                if (gb.gameObject == gameObject) continue;
-                Destroy(gb.gameObject);
+                if (gb == Instance.gameObject) continue;
+                Destroy(gb);
             }
         }
         
@@ -161,8 +161,6 @@ namespace TunnelTone.Elements
             PauseMenu.GameResume -= Resume;
             PauseMenu.GameQuit -= Quit;
             PauseMenu.GameRetry -= RetryCallback;
-            
-            MusicPlayDescription.instance.module.Quit();
             
             ChartEventReference.Instance.OnQuit.Trigger();
         }

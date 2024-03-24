@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
+using TunnelTone.UI;
 using TunnelTone.UI.SongList;
 using UnityEngine;
 
@@ -11,10 +11,8 @@ namespace TunnelTone.GameSystem
     public class AudioManager : Singleton<AudioManager>
     {
         private SongData loadedSongData;
-        
+
         [SerializeField] internal AudioSource audioSource;
-        
-        private static SongListEvent SongListEvent => SongListEvent.Instance;
         private static ChartEventReference ChartEvent => ChartEventReference.Instance;
         
         private void Start()

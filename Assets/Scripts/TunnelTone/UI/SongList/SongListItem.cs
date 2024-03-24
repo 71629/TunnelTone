@@ -30,8 +30,8 @@ namespace TunnelTone.UI.SongList
         private static readonly int IsSelected = Animator.StringToHash("isSelected");
         private static UIElementReference UIElement => UIElementReference.Instance;
 
-        public delegate void ItemEvent(SongData songData);
-        public static event ItemEvent SelectItem;
+        public delegate void SongDataChangeHandler(SongData songData);
+        public static event SongDataChangeHandler SelectItem;
         
         public void ItemSelected()
         {
@@ -85,6 +85,12 @@ namespace TunnelTone.UI.SongList
                 title.fontSize = 40;
             }
             return this;
+        }
+
+        private void OnDestroy()
+        {
+            SelectItem -= OnSelectItem;
+            SongListDifficultyManager.DifficultyChange -= OnDifficultyChange;
         }
     }
 }

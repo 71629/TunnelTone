@@ -8,11 +8,17 @@ namespace TunnelTone.PlayArea
 {
     public class ComboManager : MonoBehaviour
     {
-        private TextMeshProUGUI Combo => GetComponent<TextMeshProUGUI>();
+        private const string ComboTextPrefix = "<size=20>combo</size>\n";
+        private TextMeshProUGUI combo;
 
         private static short CurrentCombo { get; set; }
         private static short MaxCombo { get; set; }
 
+        private void Awake()
+        {
+            combo = GetComponent<TextMeshProUGUI>();
+        }
+        
         private void Start()
         {
             JsonScanner.ChartLoadFinish += ResetCombo;
@@ -20,7 +26,7 @@ namespace TunnelTone.PlayArea
             ChartEventReference.Instance.OnNoteMiss.AddListener(delegate
             {
                 CurrentCombo = 0;
-                Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+                combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
             });
             ChartEventReference.Instance.OnSongEnd.AddListener(delegate
             {
@@ -31,7 +37,7 @@ namespace TunnelTone.PlayArea
         private void ResetCombo()
         {
             CurrentCombo = 0;
-            Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            combo.text = $"{ComboTextPrefix}{CurrentCombo}";
         }
         
         public void UpdateCombo(params object[] param)
@@ -53,7 +59,7 @@ namespace TunnelTone.PlayArea
                     break;
             }
             // Update Combo text
-            Combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
+            combo.text = $"<size=20>combo</size>\n{CurrentCombo}";
             MaxCombo = CurrentCombo > MaxCombo ? CurrentCombo : MaxCombo;
         }
     }

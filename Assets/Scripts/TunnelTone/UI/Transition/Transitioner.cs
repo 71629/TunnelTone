@@ -74,6 +74,19 @@ namespace TunnelTone.UI.Transition
             }
         }
 
+        public void QuitMusicPlay(Action c)
+        {
+            c += Callback;
+            StartTransition(toSongList, songList, false, c);
+            return;
+            
+            void Callback()
+            {
+                UIElementReference.Instance.songList.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+            }
+        }
+
         public void ToMusicPlay()
         {
             jacket.enabled = true;
