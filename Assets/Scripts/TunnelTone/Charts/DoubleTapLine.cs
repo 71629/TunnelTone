@@ -24,15 +24,14 @@ namespace TunnelTone.Charts
         [SerializeField] private GameObject [] Taps;
         [SerializeField] private GameObject[] pairObjects;
         [SerializeField] private bool isPair;
+        private Vector3[] position;
         private Color c;
         LineRenderer lineRenderer;
         // Start is called before the first frame update
         void Start()
         {
-            lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.startColor = c;
-            lineRenderer.endColor = c;
-            c = Color.red;
+            position = new Vector3[2];
+        c = Color.red;
             isStart = false;
             isPair = false;
         }
@@ -45,24 +44,41 @@ namespace TunnelTone.Charts
                 Taps = new GameObject[countTap()];
                 insertTap();
                 pairTaps();
+                pairTapsLineDraw();
                 isStart = true;
             }
             if (isStart)
             {
-                pairTapsLineDraw();
+                pairTapsLineUpdate();
             }
         }
-        private void pairTapsLineDraw()
+        private void pairTapsLineUpdate()
         {
-            lineRenderer.positionCount = pairObjects.Length;
-
             for (int i = 0; i < pairObjects.Length; i++)
             {
                 if (pairObjects[i] != null && pairObjects[i + 1] != null)
                 {
-                    lineRenderer.SetPosition(i, pairObjects[i].transform.position);
+                    position[0] = pairObjects[i].transform.position;
+                    lineRenderer = pairObjects[i].GetComponent<LineRenderer>();
+                    i++;
+                    position[1] = pairObjects[i].transform.position;
+                    lineRenderer.SetPositions(position);
                 }
-                
+            }
+        }
+        private void pairTapsLineDraw()
+        {
+            for (int i = 0; i < pairObjects.Length; i++)
+            {
+                if (pairObjects[i] != null && pairObjects[i + 1] != null)
+                {
+                    pairObjects[i].AddComponent<LineRenderer>();
+                    lineRenderer = pairObjects[i].GetComponent<LineRenderer>();
+                    position[0] = pairObjects[i].transform.position;
+                    i++;
+                    position[1] = pairObjects[i].transform.position;
+                    lineRenderer.SetPositions(position);
+                }
             }
         }
         private void pairTaps() // pair Taps array that have the same time
@@ -85,12 +101,11 @@ namespace TunnelTone.Charts
                         }
                         if (isPair)
                         {
-                            
                             pairObjects[count] = Taps[i];
-                            //pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red
+                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red //VERY USEFUL TO DEBUG MAP
                             count++;
                             pairObjects[count] = Taps[j];
-                            //pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red
+                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red //VERY USEFUL TO DEBUG MAP
                             count++;
                         }
                     }

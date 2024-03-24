@@ -350,23 +350,6 @@
       "taps": []
     },
     {
-      "startX": -0.17,
-      "startY": 0.4,
-      "endX": -0.2,
-      "endY": 0.5,
-      "startTime": 13064,
-      "endTime": 13306,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": [
-        {
-          "time": 13306
-        }
-      ]
-    },
-    {
       "startX": 1.13,
       "startY": 0.4,
       "endX": 1.2,
@@ -384,17 +367,21 @@
       ]
     },
     {
-      "startX": -0.2,
-      "startY": 0.5,
-      "endX": -0.25,
-      "endY": 0.2,
-      "startTime": 13306,
-      "endTime": 13629,
+      "startX": -0.17,
+      "startY": 0.4,
+      "endX": -0.2,
+      "endY": 0.5,
+      "startTime": 13064,
+      "endTime": 13306,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
       "virtualTrail": true,
-      "taps": []
+      "taps": [
+        {
+          "time": 13306
+        }
+      ]
     },
     {
       "startX": 1.2,
@@ -412,6 +399,19 @@
           "time": 14439
         }
       ]
+    },
+    {
+      "startX": -0.2,
+      "startY": 0.5,
+      "endX": -0.25,
+      "endY": 0.2,
+      "startTime": 13306,
+      "endTime": 13629,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": []
     },
     {
       "startX": -0.25,
@@ -539,23 +539,6 @@
       ]
     },
     {
-      "startX": -0.25,
-      "startY": 0.2,
-      "endX": -0.25,
-      "endY": 0.5,
-      "startTime": 16532,
-      "endTime": 17338,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": [
-        {
-          "time": 17016
-        }
-      ]
-    },
-    {
       "startX": 0.92,
       "startY": 0.9,
       "endX": 1.25,
@@ -569,6 +552,23 @@
       "taps": [
         {
           "time": 16693
+        }
+      ]
+    },
+    {
+      "startX": -0.25,
+      "startY": 0.2,
+      "endX": -0.25,
+      "endY": 0.5,
+      "startTime": 16532,
+      "endTime": 17338,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": [
+        {
+          "time": 17016
         }
       ]
     },
@@ -599,10 +599,10 @@
       "taps": []
     },
     {
-      "startX": -0.22,
+      "startX": 1.25,
       "startY": 0.5,
-      "endX": 0.1,
-      "endY": 0.33,
+      "endX": 1.39,
+      "endY": 0.35,
       "startTime": 18548,
       "endTime": 18790,
       "color": 0,
@@ -612,10 +612,10 @@
       "taps": []
     },
     {
-      "startX": 1.25,
+      "startX": -0.22,
       "startY": 0.5,
-      "endX": 1.39,
-      "endY": 0.35,
+      "endX": 0.1,
+      "endY": 0.33,
       "startTime": 18548,
       "endTime": 18790,
       "color": 0,
@@ -808,10 +808,10 @@
       ]
     },
     {
-      "startX": -0.2,
-      "startY": 0.3,
-      "endX": -0.2,
-      "endY": 0.3,
+      "startX": 0.8,
+      "startY": 0.2,
+      "endX": 0.8,
+      "endY": 0.2,
       "startTime": 21854,
       "endTime": 22500,
       "color": 0,
@@ -825,10 +825,10 @@
       ]
     },
     {
-      "startX": 0.8,
-      "startY": 0.2,
-      "endX": 0.8,
-      "endY": 0.2,
+      "startX": -0.2,
+      "startY": 0.3,
+      "endX": -0.2,
+      "endY": 0.3,
       "startTime": 21854,
       "endTime": 22500,
       "color": 0,
@@ -1406,9 +1406,6 @@
       "taps": [
         {
           "time": 39919
-        },
-        {
-          "time": 39919
         }
       ]
     },
@@ -1906,12 +1903,12 @@
       ]
     },
     {
-      "startX": 0.48,
-      "startY": 0.4,
-      "endX": 1.24,
-      "endY": 0.51,
+      "startX": 1.06,
+      "startY": 0.93,
+      "endX": 0.02,
+      "endY": 0.55,
       "startTime": 50080,
-      "endTime": 50403,
+      "endTime": 50241,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -1919,12 +1916,12 @@
       "taps": []
     },
     {
-      "startX": 1.06,
-      "startY": 0.93,
-      "endX": 0.02,
-      "endY": 0.55,
+      "startX": 0.48,
+      "startY": 0.4,
+      "endX": 1.24,
+      "endY": 0.51,
       "startTime": 50080,
-      "endTime": 50241,
+      "endTime": 50403,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2095,12 +2092,12 @@
       "taps": []
     },
     {
-      "startX": 0.05,
-      "startY": 0.7,
-      "endX": 0.05,
-      "endY": 0.7,
+      "startX": 1.17,
+      "startY": 0.1,
+      "endX": 1.17,
+      "endY": 0.1,
       "startTime": 51935,
-      "endTime": 52258,
+      "endTime": 52016,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2108,12 +2105,12 @@
       "taps": []
     },
     {
-      "startX": 1.17,
-      "startY": 0.1,
-      "endX": 1.17,
-      "endY": 0.1,
+      "startX": 0.05,
+      "startY": 0.7,
+      "endX": 0.05,
+      "endY": 0.7,
       "startTime": 51935,
-      "endTime": 52016,
+      "endTime": 52258,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2327,12 +2324,12 @@
       ]
     },
     {
-      "startX": 1.15,
-      "startY": 0.7,
-      "endX": 1.15,
-      "endY": 0.7,
+      "startX": 0.32,
+      "startY": 0.27,
+      "endX": 0.32,
+      "endY": 0.27,
       "startTime": 54919,
-      "endTime": 55241,
+      "endTime": 55080,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2340,12 +2337,12 @@
       "taps": []
     },
     {
-      "startX": 0.32,
-      "startY": 0.27,
-      "endX": 0.32,
-      "endY": 0.27,
+      "startX": 1.15,
+      "startY": 0.7,
+      "endX": 1.15,
+      "endY": 0.7,
       "startTime": 54919,
-      "endTime": 55080,
+      "endTime": 55241,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2536,6 +2533,19 @@
       ]
     },
     {
+      "startX": 1.3,
+      "startY": 0.3,
+      "endX": 0.75,
+      "endY": 0.3,
+      "startTime": 58145,
+      "endTime": 58387,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": []
+    },
+    {
       "startX": -0.2,
       "startY": 0.27,
       "endX": -0.2,
@@ -2551,19 +2561,6 @@
           "time": 58790
         }
       ]
-    },
-    {
-      "startX": 1.3,
-      "startY": 0.3,
-      "endX": 0.75,
-      "endY": 0.3,
-      "startTime": 58145,
-      "endTime": 58387,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": []
     },
     {
       "startX": 0.75,
@@ -2744,12 +2741,12 @@
       "taps": []
     },
     {
-      "startX": -0.2,
-      "startY": 0.27,
-      "endX": -0.2,
-      "endY": 0.27,
+      "startX": 1.3,
+      "startY": 0.3,
+      "endX": 1.3,
+      "endY": 0.3,
       "startTime": 61048,
-      "endTime": 62016,
+      "endTime": 61370,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2757,12 +2754,12 @@
       "taps": []
     },
     {
-      "startX": 1.3,
-      "startY": 0.3,
-      "endX": 1.3,
-      "endY": 0.3,
+      "startX": -0.2,
+      "startY": 0.27,
+      "endX": -0.2,
+      "endY": 0.27,
       "startTime": 61048,
-      "endTime": 61370,
+      "endTime": 62016,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2913,12 +2910,12 @@
       "taps": []
     },
     {
-      "startX": 1.3,
-      "startY": 0.3,
-      "endX": 1.3,
-      "endY": 0.3,
+      "startX": -0.2,
+      "startY": 0.27,
+      "endX": -0.2,
+      "endY": 0.27,
       "startTime": 65080,
-      "endTime": 65241,
+      "endTime": 66532,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -2926,12 +2923,12 @@
       "taps": []
     },
     {
-      "startX": -0.2,
-      "startY": 0.27,
-      "endX": -0.2,
-      "endY": 0.27,
+      "startX": 1.3,
+      "startY": 0.3,
+      "endX": 1.3,
+      "endY": 0.3,
       "startTime": 65080,
-      "endTime": 66532,
+      "endTime": 65241,
       "color": 0,
       "easing": 0,
       "easingRatio": 0.65,
@@ -3160,6 +3157,19 @@
       ]
     },
     {
+      "startX": 0.95,
+      "startY": 0.3,
+      "endX": 0.97,
+      "endY": 0.3,
+      "startTime": 71209,
+      "endTime": 72096,
+      "color": 0,
+      "easing": 0,
+      "easingRatio": 0.65,
+      "virtualTrail": true,
+      "taps": []
+    },
+    {
       "startX": 0,
       "startY": 0.3,
       "endX": 0,
@@ -3175,19 +3185,6 @@
           "time": 71854
         }
       ]
-    },
-    {
-      "startX": 0.95,
-      "startY": 0.3,
-      "endX": 0.97,
-      "endY": 0.3,
-      "startTime": 71209,
-      "endTime": 72096,
-      "color": 0,
-      "easing": 0,
-      "easingRatio": 0.65,
-      "virtualTrail": true,
-      "taps": []
     },
     {
       "startX": 0,
