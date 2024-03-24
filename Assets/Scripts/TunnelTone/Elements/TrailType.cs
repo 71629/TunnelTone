@@ -13,7 +13,7 @@ namespace TunnelTone.Elements
     /// <summary>
     /// State machine for trail
     /// </summary>
-    internal abstract class TrailType
+    public abstract class TrailType
     {
         protected readonly Trail t;
 

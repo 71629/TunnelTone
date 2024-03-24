@@ -1,6 +1,7 @@
 using System.Collections;
 using TunnelTone.Events;
 using TunnelTone.Gauge;
+using TunnelTone.PlayArea;
 using TunnelTone.UI.PlayResult;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,9 @@ using UnityEngine.UI;
 namespace TunnelTone.Elements
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class Tap : MonoBehaviour
+    public class Tap : PlayAreaElements
     {
         public Vector2 position;
-        public float time;
         private GameObject hitHint;
         private GameObject audioSource;
         private float offset;

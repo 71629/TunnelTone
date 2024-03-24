@@ -14,10 +14,11 @@ namespace TunnelTone.PlayArea
             SongListManager.SongStart += SetBackground;
         }
 
-        private void SetBackground(ref MusicPlayDescription mpd)
+        private void SetBackground()
         {
-            // Throw IncompleteMusicPlayDescriptionException
-            if (mpd.jacket is null) return;
+            var mpd = MusicPlayDescription.instance;
+            if (mpd.jacket is null) 
+                return;
             jacket.sprite = mpd.jacket;
         }
     }

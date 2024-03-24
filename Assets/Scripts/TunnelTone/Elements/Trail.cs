@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TunnelTone.Charts;
 using TunnelTone.PlayArea;
 using TunnelTone.UI.Reference;
 using Unity.Mathematics;
@@ -11,7 +13,7 @@ using UnityEngine.Splines;
 namespace TunnelTone.Elements
 {
     [RequireComponent(typeof(SphereCollider))]
-    public partial class Trail : MonoBehaviour
+    public partial class Trail : PlayAreaElements
     {
         private static readonly int[] MeshTriangleSequence = { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1 };
         private static readonly Vector2 DefaultUV = Vector2.one / 2;
@@ -19,11 +21,17 @@ namespace TunnelTone.Elements
         private static readonly float TwistModifier = Mathf.Pow(0.4f, 3);
         
         // Basic trail properties
-        internal float startTime, endTime;
+        internal float startTime
+        {
+            get => time;
+            private set => time = value;
+        }
+
+        internal float endTime;
         internal Vector2 startCoordinate, endCoordinate;
         private bool virtualTrail;
         internal Direction Direction { get; private set; }
-        private TrailType trailContext;
+        public TrailType trailContext;
         
         // Trail References
         internal Trail next;
@@ -184,7 +192,40 @@ namespace TunnelTone.Elements
         internal IEnumerator TrailHint()
         {
             yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 >= startTime - 550 && NoteRenderer.isPlaying);
-            trailHint.Enable(Direction);
+            trailHint.Enable(Direction, skipSpawnAnimation);
+            
+            if (!skipSpawnAnimation) yield break;
+            
+            yield return new WaitUntil(() => NoteRenderer.CurrentTime * 1000 >= startTime && NoteRenderer.isPlaying);
+            trailHint.EnableImage();
+        }
+
+        private void Start()
+        {
+            if(trailContext is RealTrail)
+                JsonScanner.ChartLoadFinish += ConfigureSkip;
+            return;
+            
+            void ConfigureSkip()
+            {
+                JsonScanner.ChartLoadFinish -= ConfigureSkip;
+                foreach (var c in NoteRenderer.TrailList.Where(ComparePositionTiming))
+                {
+                    c.next = this;
+                    skipSpawnAnimation = true;
+                    break;
+                }
+                return;
+                
+                bool ComparePositionTiming(Trail t)
+                {
+                    // ReSharper disable once CompareOfFloatsByEqualityOperator
+                    return startTime == t.endTime &&
+                           startCoordinate == t.endCoordinate &&
+                           trailContext is RealTrail &&
+                           t.trailContext is RealTrail;
+                }
+            }
         }
 
         private void Update()

@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TunnelTone.Charts;
 using TunnelTone.Core;
+using TunnelTone.Singleton;
 using TunnelTone.UI.Entry;
-using TunnelTone.UI.Menu;
 using TunnelTone.UI.Reference;
 using TunnelTone.UI.SongList;
 using UnityEngine;
@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 
 namespace TunnelTone.UI.Transition
 {
-    public class Transitioner : MonoBehaviour
+    public class Transitioner : Singleton<Transitioner>
     {
 #if UNITY_EDITOR
         public bool isNightMode;
@@ -46,10 +46,8 @@ namespace TunnelTone.UI.Transition
         
         private void Start()
         {
-            GameEntry.ToMainMenu += c => StartTransition(toMainMenu, mainMenu, true, c);
-            
-            MainMenu.ToSongList += c => StartTransition(toSongList, songList, false, c);
-            SongListManager.EnterSongList +=  () => EndTransition(toSongList, songList);
+            GameEntry.ToMainMenu += ToMainMenu;
+            SongListManager.EnterSongList += () => EndTransition(toSongList, songList);
 
             SongListManager.SongStart += ToMusicPlay;
             JsonScanner.ChartLoadFinish += () => EndTransition(toMusicPlay, musicPlay);
@@ -57,10 +55,29 @@ namespace TunnelTone.UI.Transition
             SetTheme(IsNightModeEnabled());
         }
 
-        private void ToMusicPlay(ref MusicPlayDescription mpd)
+        public void ToMainMenu(Action c)
+        {
+            StartTransition(toMainMenu, mainMenu, true, c);
+        }
+        
+        public void ToSongList(Action c)
+        {
+            c += Callback;
+            StartTransition(toSongList, songList, false, c);
+            return;
+
+            void Callback()
+            {
+                UIElementReference.Instance.songList.enabled = true;
+                UIElementReference.Instance.topView.enabled = true;
+                SongListManager.LoadSongList(new FreePlay());
+            }
+        }
+
+        public void ToMusicPlay()
         {
             jacket.enabled = true;
-            jacket.sprite = mpd.jacket;
+            jacket.sprite = MusicPlayDescription.instance.jacket;
             jacket.color = Color.white;
 
             var jacketTransform = jacket.rectTransform;
@@ -129,7 +146,7 @@ namespace TunnelTone.UI.Transition
                     image.color = new Color(1, 1, 1, image.color.a) * color;
             }
         }
-#else        
+#else
         private void SetTheme(bool isNight)
         {
             cover.sprite = isNight ? nighttimeCover : daytimeCover;

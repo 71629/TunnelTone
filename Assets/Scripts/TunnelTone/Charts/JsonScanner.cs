@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,6 +24,7 @@ namespace TunnelTone.Charts
         private Chart chartCache;
         [SerializeField] private GameObject trailPrefab;
         [SerializeField] private GameObject tapPrefab;
+        [SerializeField] private GameObject barIndicatorPrefab;
 
         public delegate void ChartLoadHandler();
         public static event ChartLoadHandler ChartLoadFinish;
@@ -35,8 +37,9 @@ namespace TunnelTone.Charts
             ChartEventReference.Instance.OnQuit.AddListener(delegate { chartCache = new Chart(); });
         }
 
-        private void ScanChart(ref MusicPlayDescription mpd)
+        private void ScanChart()
         {
+            var mpd = MusicPlayDescription.instance;
             var chart = JsonConvert.DeserializeObject<Chart>(mpd.chart.chart.text);
             chartCache = chart;
             TimingManager.timingSheet = mpd.chart.timingSheet;
@@ -94,15 +97,8 @@ namespace TunnelTone.Charts
                     trail.easingRatio, 
                     true, 
                     trail.virtualTrail);
-
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                foreach (var c in NoteRenderer.TrailList.Select(q => q.GetComponent<Trail>()).Where(c => component.startTime == c.endTime && component.startCoordinate == c.endCoordinate))
-                {
-                    component.next = c;
-                    c.skipSpawnAnimation = false;
-                }
                 
-                NoteRenderer.TrailList.Add(gb);
+                NoteRenderer.TrailList.Add(component);
                 foreach(var tap in trail.taps)
                 {
                     var spline = NoteRenderer.TrailReference.GetComponent<SplineContainer>().Spline;
@@ -125,27 +121,24 @@ namespace TunnelTone.Charts
                     timer.Reset();
                 }
             }
-
-            if (audioClip is not null)
-            {
-                Debug.Log("Loading audio data");
-                var audioTask = LoadAudioData(audioClip, destroyCancellationToken);
-                yield return new WaitUntil(() => audioTask.IsCompleted);
-                if (!audioTask.Result)
-                {
-                    Debug.Log("Audio clip data failed to load.");
-                    yield break;
-                }
-                Debug.Log("Audio data loaded");
+            
+            // Spawn bar indicators according to BPM and timing sheet
+            for 
+            (
+                var i = 0f;
+                i < MusicPlayDescription.instance.music.length * 1000;
+                i += 240000 / MusicPlayDescription.instance.songData.bpm
+            ){
+                var barIndicator = Instantiate(barIndicatorPrefab, transform);
+                barIndicator.GetComponent<BarIndicator>().time = i;
             }
+            
+            var audioTask = LoadAudioData(MusicPlayDescription.instance.music, destroyCancellationToken);
+            yield return new WaitUntil(() => audioTask.IsCompleted);
+            if (!audioTask.Result) yield break;
 
             yield return new WaitForSecondsRealtime(0.5f);
             ChartLoadFinish?.Invoke();
-            Invoke(nameof(StartSong), 1f);
-        }
-
-        private void StartSong()
-        {
             NoteRenderer.StartSong();
         }
 

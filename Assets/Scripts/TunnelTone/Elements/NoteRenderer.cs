@@ -6,10 +6,9 @@ using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.PlayArea;
 using TunnelTone.Singleton;
-using TunnelTone.UI.Reference;
+using TunnelTone.UI;
 using UnityEngine;
-
-// TODO: Refactor
+using UnityEngine.Serialization;
 
 namespace TunnelTone.Elements
 {
@@ -17,14 +16,16 @@ namespace TunnelTone.Elements
     {
         internal static readonly GameEvent OnDestroyChart = new();
         
-        [SerializeField] private ParticleSystem particleSystem;
+        [FormerlySerializedAs("particleSystem")] 
+        [SerializeField] private ParticleSystem musicPlayParticleSystem;
+        
         [SerializeField] private Transform noteContainer;
         #region Element Container
         
-        public static readonly List<GameObject> TrailList = new();
+        public static readonly List<Trail> TrailList = new();
         public static readonly List<GameObject> TapList = new();
         public static List<GameObject> FlickList = new();
-        public static GameObject TrailReference => TrailList.Last();
+        public static Trail TrailReference => TrailList.Last();
         
         #endregion
         
@@ -44,23 +45,12 @@ namespace TunnelTone.Elements
         public float currentBpm;
         public static float CurrentTime => (float)AudioSettings.dspTime - dspSongStartTime;
         public static bool isPlaying = false;
-
-        public delegate void RetryHandler();
-
-        public static event RetryHandler Retry;
         
-        // Debug
-        private float _currentTime;
-
-        //Test Song Bar
-        //private GameObject Fill;
-        //public RectTransform FillArea;
-        //public Vector2 fillVector2;
-
-        private void Update()
-        {
-            _currentTime = CurrentTime;
-        }
+        public delegate void RetryHandler();
+        public delegate void OnBeginHandler();
+        public static event RetryHandler Retry;
+        public static event OnBeginHandler BeginSong;
+        
         
         private void Start()
         {
@@ -69,12 +59,13 @@ namespace TunnelTone.Elements
             transform.localPosition = Vector3.zero;
             ChartEventReference.Instance.OnQuit.AddListener(delegate { StopCoroutine(PlayChart()); });
             JsonScanner.ChartLoadFinish += Resume;
+            PauseMenu.GamePause += PauseAudioAndEffect;
             SystemEvent.OnSettingsChanged.AddListener(delegate
             {
                 var settings = Settings.instance;
                 chartSpeedModifier = settings.chartSpeed;
                 universalOffset = settings.universalOffset;
-                var main = particleSystem.main;
+                var main = musicPlayParticleSystem.main;
                 main.startSpeed = new ParticleSystem.MinMaxCurve(1000 * (chartSpeedModifier / 6.5f), 2500 * (chartSpeedModifier / 6.5f));
             });
             OnDestroyChart.AddListener(delegate
@@ -99,6 +90,7 @@ namespace TunnelTone.Elements
         {
             Debug.Log(ScoreManager.totalCombo);
             isPlaying = true;
+            BeginSong?.Invoke();
             InteractionManager.Instance.Enable();
             while (true)
             {
@@ -108,28 +100,35 @@ namespace TunnelTone.Elements
                     InteractionManager.Instance.Disable();
                     yield break;
                 }
-                yield return transform.localPosition = new Vector3(0, 0, -chartSpeedModifier * (1000 * CurrentTime + offsetTime + StartDelay + universalOffset).TranslateTiming());
+
+                var timestamp = 1000 * CurrentTime + offsetTime + StartDelay + universalOffset;
+                timestamp = timestamp.TranslateTiming();
+                yield return transform.localPosition = new Vector3(0, 0, -chartSpeedModifier * timestamp);
             }
         }
 
         public void Pause()
         {
-            UIElementReference.Instance.pause.SetActive(true);
+            PauseMenu.Pause();
+            PauseMenu.GameResume += Resume;
+            PauseMenu.GameQuit += Quit;
+            PauseMenu.GameRetry += RetryCallback;
+        }
+
+        private void PauseAudioAndEffect()
+        {
             AudioListener.pause = true;
-
-            //LeanTween.pause(Fill);
-
-            particleSystem.Pause();
+            musicPlayParticleSystem.Pause();
         }
         
         public void Resume()
         {
-            UIElementReference.Instance.pause.SetActive(false);
-
-            //LeanTween.resume(Fill);
-
+            PauseMenu.GameResume -= Resume;
+            PauseMenu.GameQuit -= Quit;
+            PauseMenu.GameRetry -= RetryCallback;
+            
             AudioListener.pause = false;
-            particleSystem.Play();
+            musicPlayParticleSystem.Play();
         }
 
         private void ResumeForListener()
@@ -140,9 +139,10 @@ namespace TunnelTone.Elements
         
         public void RetryCallback()
         {
-            //LeanTween.cancel(Fill);
-            //Fill.transform.position = new Vector2(-86.15f, 47.60f);
-            //LeanTween.move(Fill, fillVector2, 0.1f);
+            PauseMenu.GameResume -= Resume;
+            PauseMenu.GameQuit -= Quit;
+            PauseMenu.GameRetry -= RetryCallback;
+            
             isPlaying = false;
             StopAllCoroutines();
             transform.position = Vector3.zero;
@@ -151,7 +151,6 @@ namespace TunnelTone.Elements
                 if (gb.gameObject == gameObject) continue;
                 Destroy(gb.gameObject);
             }
-            //Fill.transform.position = new Vector2(0,Fill.transform.position.z);
 
             Retry?.Invoke();
             JsonScanner.ChartLoadFinish += ResumeForListener;
@@ -159,20 +158,21 @@ namespace TunnelTone.Elements
         
         public void Quit()
         {
+            PauseMenu.GameResume -= Resume;
+            PauseMenu.GameQuit -= Quit;
+            PauseMenu.GameRetry -= RetryCallback;
+            
+            MusicPlayDescription.instance.module.Quit();
+            
             ChartEventReference.Instance.OnQuit.Trigger();
-            //LeanTween.move(Fill, fillVector2, 0.1f);
         }
 
         public void StartSong()
         {
-            Debug.Log(AudioSettings.dspTime);
-            
             // Set up song start and end times
             dspSongStartTime = (float)AudioSettings.dspTime + StartDelay / 1000f;
             dspSongEndTime = (float)AudioSettings.dspTime + audioSource.clip.length * 1000;
-            Debug.Log($"Start time: {dspSongStartTime}\nEnd time: {dspSongEndTime}");
             
-            //LeanTween.moveX(Fill, 85.5f , (dspSongEndTime / 1000) + 2.8f);
             audioSource.time = 0;
             audioSource.volume = .2f;
             audioSource.PlayScheduled(AudioSettings.dspTime + StartDelay / 1000);

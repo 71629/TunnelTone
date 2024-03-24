@@ -17,7 +17,7 @@ namespace TunnelTone.UI.Dialog
         [SerializeField] private TextMeshProUGUI message;
         [SerializeField] private Object dialogOptionPrefab;
         [SerializeField] private Transform foot;
-
+        
         [SerializeField] private Sprite info;
         [SerializeField] private Sprite warning;
         [SerializeField] private Sprite error;
@@ -40,6 +40,10 @@ namespace TunnelTone.UI.Dialog
         {
             CancelInvoke();
             PurgeOptions();
+            
+            this.title.text = title;
+            this.message.text = message;
+            
             foreach (var option in options)
             {
                 var gb = (GameObject)Instantiate(dialogOptionPrefab, foot);
@@ -117,7 +121,13 @@ namespace TunnelTone.UI.Dialog
 
     internal class DialogOption
     {
-        internal string text;
-        internal Action action;
+        internal readonly string text;
+        internal readonly Action action;
+        
+        internal DialogOption(string text, Action action)
+        {
+            this.text = text;
+            this.action = action;
+        }
     }
 }

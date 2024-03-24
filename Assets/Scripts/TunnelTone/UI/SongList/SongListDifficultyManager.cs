@@ -65,9 +65,9 @@ namespace TunnelTone.UI.SongList
             SongListManager.SongStart += OnSongStartCallback; 
         }
 
-        private void OnSongStartCallback(ref MusicPlayDescription mpd)
+        private void OnSongStartCallback()
         {
-            mpd.difficulty = CurrentlySelected;
+            MusicPlayDescription.instance.difficulty = CurrentlySelected;
         }
 
         private void SetDefaultDifficulty()

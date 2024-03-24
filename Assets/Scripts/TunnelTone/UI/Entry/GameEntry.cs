@@ -6,8 +6,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using TunnelTone.Core;
+using TunnelTone.Exceptions;
 using TunnelTone.UI.Reference;
-using TunnelTone.UI.SongList;
 
 namespace TunnelTone.UI.Entry
 {

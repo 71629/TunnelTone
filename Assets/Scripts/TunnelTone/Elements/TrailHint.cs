@@ -20,7 +20,7 @@ namespace TunnelTone.Elements
         internal UnityEvent OnWrongHand = new UnityEvent();
         internal UnityEvent OnParentDestroy = new UnityEvent();
 
-        internal void Enable(Direction direction)
+        internal void Enable(Direction direction, bool skipSpawn)
         {
             OnParentDestroy.AddListener(OnParentDestroyed);
             
@@ -41,6 +41,16 @@ namespace TunnelTone.Elements
                     throw new Exception();
             }
 
+            if (skipSpawn)
+            {
+                back.enabled = false;
+                front.enabled = false;
+                back.color = backColor;
+                front.color = frontColor;
+
+                return;
+            }
+
             LeanTween.value(gameObject, f =>
             {
                 var c = 1.5f - f * 0.5f;
@@ -52,6 +62,12 @@ namespace TunnelTone.Elements
                 back.color = backColor * mask;
                 front.color = frontColor * mask;
             }, 0, 1, .55f);
+        }
+
+        internal void EnableImage()
+        {
+            back.enabled = true;
+            front.enabled = true;
         }
 
         private void OnParentDestroyed()

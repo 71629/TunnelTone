@@ -86,9 +86,9 @@ namespace TunnelTone.UI.PlayResult
             SongListManager.SongStart += InsertInstance;
         }
 
-        private void InsertInstance(ref MusicPlayDescription mpd)
+        private void InsertInstance()
         {
-            mpd.playResult.difficulty = SongListDifficultyManager.Instance.CurrentlySelected;
+            MusicPlayDescription.instance.result.difficulty = SongListDifficultyManager.Instance.CurrentlySelected;
         }
         
         private void DisplayResult()

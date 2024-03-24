@@ -6,6 +6,7 @@ namespace TunnelTone.Charts
     {
         internal static AnimationCurve timingSheet;
         
+        // Modifies caller according to timingSheet
         internal static float TranslateTiming(this float timestamp) => timingSheet.Evaluate(timestamp);
     }
 }

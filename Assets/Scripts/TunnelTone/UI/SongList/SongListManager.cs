@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TunnelTone.Core;
-using TunnelTone.Elements;
 using TunnelTone.Events;
 using TunnelTone.ScriptableObjects;
 using TunnelTone.Singleton;
@@ -23,9 +22,7 @@ namespace TunnelTone.UI.SongList
         private List<SongListItem> songListItems = new();
         private MusicPlayDescription musicPlayDescription;
 
-        private UIElementReference UIElement => UIElementReference.Instance;
-
-        public delegate void StartSongEvent(ref MusicPlayDescription mpd);
+        public delegate void StartSongEvent();
         public delegate void EnterSongListEvent();
         public static event StartSongEvent SongStart;
         public static event StartSongEvent MusicPlayInitialize;
@@ -38,12 +35,10 @@ namespace TunnelTone.UI.SongList
             SongListItem.SelectItem += SetSong;
             SongListItem.SelectItem += Instance.OnSelectItem;
             SongListDifficultyManager.DifficultyChange += UpdateChartObject;
-            
-            Instance.musicPlayDescription = new MusicPlayDescription
-            {
-                playMode = mode,
-                playResult = new Core.PlayResult()
-            };
+
+            MusicPlayDescription.CreateInstance();
+            MusicPlayDescription.instance.module = mode;
+            MusicPlayDescription.instance.result = new Core.PlayResult();
 
             var containerRect = Instance.container.GetComponent<RectTransform>();
             containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, Instance.songContainer.Length * 160);
@@ -68,13 +63,14 @@ namespace TunnelTone.UI.SongList
 
         private static void UpdateChartObject(int difficulty)
         {
-            Instance.musicPlayDescription.chart = currentlySelected.charts[difficulty];
+            MusicPlayDescription.instance.chart = currentlySelected.charts[difficulty];
         }
 
         private static void SetSong(SongData songData)
         {
-            Instance.musicPlayDescription.music = songData.music;
-            Instance.musicPlayDescription.chart = songData.charts[SongListDifficultyManager.Instance.CurrentlySelected];
+            MusicPlayDescription.instance.songData = songData;
+            MusicPlayDescription.instance.music = songData.music;
+            MusicPlayDescription.instance.chart = songData.charts[SongListDifficultyManager.Instance.CurrentlySelected];
         }
 
         public void StartSong()
@@ -91,9 +87,9 @@ namespace TunnelTone.UI.SongList
             }
             
             UIElementReference.Instance.songJacket.enabled = false;
-            SongStart?.Invoke(ref musicPlayDescription);
-            LoadBestScore(ref musicPlayDescription);
-            MusicPlayInitialize?.Invoke(ref musicPlayDescription);
+            SongStart?.Invoke();
+            LoadBestScore();
+            MusicPlayInitialize?.Invoke();
             
             // NoteRenderer.Instance.currentBpm = currentlySelected.bpm;
             // Shutter.Seal(() =>
@@ -104,19 +100,21 @@ namespace TunnelTone.UI.SongList
             // });
         }
 
-        private static void LoadBestScore(ref MusicPlayDescription mpd)
+        private static void LoadBestScore()
         {
-            mpd.playResult.title = currentlySelected.songTitle;
-            mpd.playResult.artist = currentlySelected.artist;
-            mpd.playResult.bestScore = currentlySelected.GetScore(mpd.difficulty);
+            var mpd = MusicPlayDescription.instance;
+            
+            mpd.result.title = currentlySelected.songTitle;
+            mpd.result.artist = currentlySelected.artist;
+            mpd.result.bestScore = currentlySelected.GetScore(mpd.difficulty);
             mpd.jacket = currentlySelected.jacket;
-            mpd.playResult.level = currentlySelected.GetDifficulty(mpd.difficulty);
+            mpd.result.level = currentlySelected.GetDifficulty(mpd.difficulty);
         }
 
         private void OnSelectItem(SongData songData)
         {
             currentlySelected = songData;
-            musicPlayDescription.jacket = songData.jacket;
+            MusicPlayDescription.instance.jacket = songData.jacket;
             
             var newBackground = Instantiate(currentBackground, transform.parent).GetComponent<Image>();
             newBackground.gameObject.name = "Background";

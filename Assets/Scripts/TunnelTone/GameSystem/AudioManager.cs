@@ -68,7 +68,7 @@ namespace TunnelTone.GameSystem
             FadePreview();
         }
         
-        private void StopPreview(ref MusicPlayDescription _)
+        private void StopPreview()
         {
             LeanTween.value(gameObject, f =>
                 {

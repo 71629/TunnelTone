@@ -33,7 +33,7 @@ namespace TunnelTone.UI.SongList
             currentSong = songData;
         }
 
-        private void ShowInfo(ref MusicPlayDescription mpd)
+        private void ShowInfo()
         {
             title.text = currentSong.songTitle;
             artist.text = currentSong.artist;
