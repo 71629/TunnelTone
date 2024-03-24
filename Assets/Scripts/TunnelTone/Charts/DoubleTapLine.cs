@@ -20,28 +20,49 @@ namespace TunnelTone.Charts
     public class DoubleTapLine : MonoBehaviour
     {
         [SerializeField] private Transform NoteRender;
-        [SerializeField] private bool isEnd;
+        [SerializeField] private bool isStart;
         [SerializeField] private GameObject [] Taps;
         [SerializeField] private GameObject[] pairObjects;
         [SerializeField] private bool isPair;
         private Color c;
+        LineRenderer lineRenderer;
         // Start is called before the first frame update
         void Start()
         {
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.startColor = c;
+            lineRenderer.endColor = c;
             c = Color.red;
-            isEnd = false;
+            isStart = false;
             isPair = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(NoteRender.childCount != 0 && isEnd == false)
+            if(NoteRender.childCount != 0 && isStart == false)
             {
                 Taps = new GameObject[countTap()];
                 insertTap();
                 pairTaps();
-                isEnd = true;
+                isStart = true;
+            }
+            if (isStart)
+            {
+                pairTapsLineDraw();
+            }
+        }
+        private void pairTapsLineDraw()
+        {
+            lineRenderer.positionCount = pairObjects.Length;
+
+            for (int i = 0; i < pairObjects.Length; i++)
+            {
+                if (pairObjects[i] != null && pairObjects[i + 1] != null)
+                {
+                    lineRenderer.SetPosition(i, pairObjects[i].transform.position);
+                }
+                
             }
         }
         private void pairTaps() // pair Taps array that have the same time
@@ -66,10 +87,10 @@ namespace TunnelTone.Charts
                         {
                             
                             pairObjects[count] = Taps[i];
-                            pairObjects[count].GetComponent<Image>().color = c;
+                            //pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red
                             count++;
                             pairObjects[count] = Taps[j];
-                            pairObjects[count].GetComponent<Image>().color = c;
+                            //pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red
                             count++;
                         }
                     }
