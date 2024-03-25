@@ -34,18 +34,20 @@ namespace TunnelTone.PlayArea
         private void UpdateDisplay(int difficulty)
         {
             currentDifficulty = difficulty;
-            UpdateDisplayText();
+            currentLevel = SongListManager.currentlySelected.GetDifficulty(currentDifficulty);
+            UpdateText();
         }
 
         private void UpdateDisplay(SongData songData)
         {
             currentLevel = songData.GetDifficulty(currentDifficulty);
-            UpdateDisplayText();
+            UpdateText();
         }
 
-        private void UpdateDisplayText()
+        private void UpdateText()
         {
             var level = Dictionaries.Instance.levelDictionary[currentLevel];
+            
             difficultyDisplay.text = $"{level}<size=30>/ {Dictionaries.Instance.difficultyDictionary[currentDifficulty]}</size>";
             difficultyColorDisplay.color = currentDifficulty switch
             {
