@@ -31,7 +31,7 @@ namespace TunnelTone.Charts
         void Start()
         {
             position = new Vector3[2];
-        c = Color.red;
+            c = Color.red;
             isStart = false;
             isPair = false;
         }
@@ -42,14 +42,18 @@ namespace TunnelTone.Charts
             if(NoteRender.childCount != 0 && isStart == false)
             {
                 Taps = new GameObject[countTap()];
-                insertTap();
-                pairTaps();
-                pairTapsLineDraw();
+                insertTap(); //Collect all taps inside the Trail
+                pairTaps(); //Match the taps that have the same time
+                pairTapsLineDraw();//Draw map line
                 isStart = true;
             }
             if (isStart)
             {
-                pairTapsLineUpdate();
+                pairTapsLineUpdate(); //Update line position per frame when start
+            }
+            if(NoteRender.childCount == 0)
+            {
+                isStart = false;
             }
         }
         private void pairTapsLineUpdate()
@@ -102,28 +106,16 @@ namespace TunnelTone.Charts
                         if (isPair)
                         {
                             pairObjects[count] = Taps[i];
-                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red //VERY USEFUL TO DEBUG MAP
+                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red and VERY USEFUL TO DEBUG A MAP
                             count++;
                             pairObjects[count] = Taps[j];
-                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red //VERY USEFUL TO DEBUG MAP
+                            pairObjects[count].GetComponent<Image>().color = c; //Change the pair taps in to red and VERY USEFUL TO DEBUG A MAP
                             count++;
                         }
                     }
                 }
             }
             Taps = new GameObject[0]; //Release array memory
-            //Taps = new GameObject[count / 2]; //This is the fuckup shit no use anymore
-            //count = 0;
-            //for(int i=0; i < Taps.Length; i++)
-            //{
-                //Taps[i] = pairObjects[count];
-                //count++;
-                //i++;
-                //Taps[i] = pairObjects[count];
-                //count++;
-                //count++;
-                //count++;
-            //}
         }
         private int countTap() //Count the tap number
         {
@@ -134,7 +126,7 @@ namespace TunnelTone.Charts
                 {
                     for (int j = 0; j < NoteRender.GetChild(i).childCount; j++)
                     {
-                        if (NoteRender.GetChild(i).GetChild(j).name.Equals("Tap(Clone)"))
+                        if (NoteRender.GetChild(i).GetChild(j).GetComponent<Tap>() != null)
                         {
                             tapNumber++;
                         }
@@ -151,7 +143,7 @@ namespace TunnelTone.Charts
             {
                 for (int j = 0; j < NoteRender.GetChild(i).childCount; j++)
                 {
-                    if (NoteRender.GetChild(i).GetChild(j).name.Equals("Tap(Clone)"))
+                    if (NoteRender.GetChild(i).GetChild(j).GetComponent<Tap>() != null)
                     {
                         Taps[tapIndex] = NoteRender.GetChild(i).GetChild(j).gameObject;
                         tapIndex++;
