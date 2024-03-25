@@ -31,16 +31,21 @@ namespace TunnelTone.PlayArea
             ResultScreen.playResult.level = currentLevel;
         }
 
-        private static void UpdateDisplay(int difficulty)
+        private void UpdateDisplay(int difficulty)
         {
             currentDifficulty = difficulty;
+            UpdateDisplayText();
         }
 
         private void UpdateDisplay(SongData songData)
         {
             currentLevel = songData.GetDifficulty(currentDifficulty);
+            UpdateDisplayText();
+        }
+
+        private void UpdateDisplayText()
+        {
             var level = Dictionaries.Instance.levelDictionary[currentLevel];
-            
             difficultyDisplay.text = $"{level}<size=30>/ {Dictionaries.Instance.difficultyDictionary[currentDifficulty]}</size>";
             difficultyColorDisplay.color = currentDifficulty switch
             {
