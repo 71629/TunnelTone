@@ -1,4 +1,5 @@
 using System.Collections;
+using TunnelTone.Core;
 using TunnelTone.Events;
 using TunnelTone.Gauge;
 using TunnelTone.PlayArea;
@@ -136,11 +137,8 @@ namespace TunnelTone.Elements
                 <= 120 => Bad,
             };
 
-            GameObject effect = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), hitHint.transform.position, Quaternion.identity, hitHint.transform.parent);
-            effect.transform.localScale = Vector3.one * 1.25f;
-            var component = effect.GetComponent<Image>();
-            component.sprite = sprite;
-            Destroy(effect, 0.34f);
+            GameObject gb = (GameObject)Instantiate(Resources.Load("Prefabs/HitEffect"), hitHint.transform.position, Quaternion.identity, hitHint.transform.parent);
+            gb.GetComponent<HitEffect>().Initialize(sprite);
             Destroy();
         }
         
@@ -176,6 +174,26 @@ namespace TunnelTone.Elements
             ChartEventReference.Instance.OnSongEnd.RemoveListener(OnSongEnd);
             IntegrityGauge.OnSuddenDeath.RemoveListener(AssumeMiss);
             Destroy(hitHint);
+        }
+
+        public override void OnPause()
+        {
+            LeanTween.pause(hitHint);
+        }
+
+        public override void OnResume()
+        {
+            LeanTween.resume(hitHint);
+        }
+
+        public override void OnRetry()
+        {
+            LeanTween.cancel(hitHint);
+        }
+
+        public override void OnQuit()
+        {
+            LeanTween.cancel(hitHint);
         }
     }
 }

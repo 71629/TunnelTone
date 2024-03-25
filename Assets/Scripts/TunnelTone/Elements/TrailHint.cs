@@ -64,6 +64,21 @@ namespace TunnelTone.Elements
             }, 0, 1, .55f);
         }
 
+        public void Pause()
+        {
+            LeanTween.pause(gameObject);
+        }
+
+        public void Stop()
+        {
+            LeanTween.cancel(gameObject);
+        }
+
+        public void Resume()
+        {
+            LeanTween.resume(gameObject);
+        }
+
         internal void EnableImage()
         {
             back.enabled = true;

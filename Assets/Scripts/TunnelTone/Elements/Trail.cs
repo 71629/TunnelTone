@@ -238,6 +238,26 @@ namespace TunnelTone.Elements
         {
             if (trailContext is RealTrail) trailHint.OnParentDestroy.Invoke();
         }
+
+        public override void OnPause()
+        {
+            trailHint.Pause();
+        }
+
+        public override void OnResume()
+        {
+            trailHint.Resume();
+        }
+
+        public override void OnRetry()
+        {
+            trailHint.Stop();
+        }
+
+        public override void OnQuit()
+        {
+            trailHint.Stop();
+        }
     }
 
     internal abstract class TrailState
