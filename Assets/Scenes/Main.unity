@@ -25095,7 +25095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: 10404.677}
+  m_AnchoredPosition: {x: 340, y: 10891.579}
   m_SizeDelta: {x: 680, y: 189.0779}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &692248052
@@ -38744,7 +38744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -757215.06}
+  m_AnchoredPosition: {x: 0, y: -758115.06}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138453214
@@ -49994,6 +49994,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59949efbe661e6b49b35f1a9ca38b953, type: 2}
   - {fileID: 11400000, guid: c91f478ee4ec18b43aa467be0497e124, type: 2}
   - {fileID: 11400000, guid: 8a3d465fa3b56334aad52f8612ff4b09, type: 2}
+  - {fileID: 11400000, guid: f563167c7474d7c46b005512734a2f7f, type: 2}
   container: {fileID: 692248050}
   currentBackground: {fileID: 8679249125492562313}
 --- !u!1 &1486329909

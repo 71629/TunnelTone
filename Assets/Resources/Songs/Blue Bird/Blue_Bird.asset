@@ -21,8 +21,8 @@ MonoBehaviour:
   previewDuration: 70000
   charts:
   - difficulty: 2
-    chartDesigner: '[Redacted]'
-    chart: {fileID: 0}
+    chartDesigner: DebugUsed
+    chart: {fileID: 4900000, guid: 87e0343c008cd3f4496dc89d13980fb1, type: 3}
     timingSheet:
       serializedVersion: 2
       m_Curve:
