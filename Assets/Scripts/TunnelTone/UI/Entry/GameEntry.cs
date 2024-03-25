@@ -68,23 +68,41 @@ namespace TunnelTone.UI.Entry
                 start.interactable = true;
                 OnInitializeComplete.RemoveAllListeners();
             });
-            if (!online)
+            
+            switch (online)
             {
-                DisplayNotice($"Offline Mode");
-                status.text = "Touch to start";
-                start.interactable = true;
-                OnInitializeComplete.RemoveAllListeners();
-            }
-            else
-            {
-                NetworkManager.OnStatusChanged.AddListener(delegate
-                {
-                    DisplayNotice($"Logged in as {NetworkManager.username}");
-                });
+                case true:
+                            NetworkManager.OnStatusChanged.AddListener(delegate
+                            {
+                                try
+                                {
+                                    if (NetworkManager.username.Length <= 0)
+                                    {
+                                        throw new Exception("1");
+                                    }
+                                    if (NetworkManager.username.Length>0)
+                                    {
+                                        DisplayNotice($"Logged in as {NetworkManager.username}");
+                                    }
+                                }   catch (Exception e) {
+                                    OfflineMode();
+                                }  
+                            });
+                    break;
+                case false:
+                    OfflineMode();
+                    break;
             }
             NetworkManager.AutoLoginJson();
             LeanTween.value(status.gameObject, f => { status.color = new(1, 1, 1, f); }, 1, .35f, .9f)
     .setLoopPingPong(); //Tap to start pingpong display
+        }
+        public void OfflineMode()
+        {
+            DisplayNotice($"Offline Mode");
+            status.text = "Touch to start";
+            start.interactable = true;
+            OnInitializeComplete.RemoveAllListeners();
         }
         public void StartGame()
         {
